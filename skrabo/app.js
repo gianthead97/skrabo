@@ -13,6 +13,7 @@ app.use(cors());
 app.use("/", routes);
 
 
+
 app.use(errorHandler);
 
 
@@ -32,7 +33,6 @@ function errorHandler(error, req, res, next) {
     }
   });
 }
-
 
 
 
