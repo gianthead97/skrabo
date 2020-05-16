@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d1b2c599-55ab-4743-bd01-73a1461819af" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/skrabo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/skrabo/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="d1b2c599-55ab-4743-bd01-73a1461819af" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +32,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588692144533</updated>
       <workItem from="1588692151341" duration="88000" />
-      <workItem from="1589465999642" duration="71000" />
+      <workItem from="1589465999642" duration="434000" />
     </task>
     <servers />
   </component>

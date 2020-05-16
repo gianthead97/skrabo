@@ -4,6 +4,7 @@ const Controller = require('../controllers/controller');
 
 router.get("/", Controller.getFirstMessage);
 
+router.post("/createRoom", )
 
 
 module.exports = router;
