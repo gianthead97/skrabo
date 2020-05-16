@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "skrabo"
+    }
+  },
+  "defaultProject": "skrabo",
+  "cli": {
+    "analytics": "e36ebaf2-308c-429d-8dc7-3a09032232cd"
+  }
 }
