@@ -21,10 +21,18 @@ export class WhiteboardComponent implements OnInit {
 
     this.board = <HTMLCanvasElement>document.getElementById('board');
     this.ctx = this.board.getContext('2d');
-
-    this.board.addEventListener("mousedown", this.startDrawing);
-    this.board.addEventListener("mouseup", this.endDrawing);
-    this.board.addEventListener("mousemove", this.draw);
+    this.board.addEventListener('mousedown', (evt) => {
+      // console.log(evt);
+      this.startDrawing(evt);
+    });
+    this.board.addEventListener('mouseup', (evt) => {
+      // console.log(evt);
+      this.endDrawing();
+    });
+    this.board.addEventListener('mousemove', (evt) => {
+      // console.log(evt);
+      this.draw(evt);
+    });
 
   }
 
@@ -39,7 +47,7 @@ export class WhiteboardComponent implements OnInit {
   }
 
   endDrawing(): void {
-    
+
     this.active = false;
     this.ctx.beginPath();
     console.log("end drawing: active:" + this.active);
