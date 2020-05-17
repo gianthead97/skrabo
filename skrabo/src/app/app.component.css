@@ -1,5 +1,12 @@
+/*body {
+    height: 100%;
+}
+/*
 .image {
-    height:40em; background-size:cover; width:auto;
-    background-image:url('22534.jpg');
+    height: 100vh;  width: auto;
+    /*background-image: url("22534.jpg"); /*height: 100%;
+    background-position: center; background-repeat: no-repeat; background-size: cover;
+    /*width: 100%; height: 100%;
     background-position:50% 50%;
 }
+*/
