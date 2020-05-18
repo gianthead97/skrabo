@@ -93,6 +93,10 @@
     100%{width: 140px;}
   }
   
+  .form-control {
+    padding: 0% 2%;
+  }
+  
   .form-group {
     margin: 10px 50px; position: relative;
   }
