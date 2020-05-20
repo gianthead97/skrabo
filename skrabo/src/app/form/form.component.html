@@ -1,0 +1,65 @@
+<!--<p>form works!</p>-->
+<head>
+	<link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+	<div class="content">
+		<h1 style="cursor:default">Škrabo
+		  <div class="olovka olovka_naslov">
+				<div class="gumica"></div>
+				<div class="sredina"></div>
+				<div class="spic">
+					<span class="vrh"></span>
+				</div>
+      </div>
+		</h1>
+		
+		<div class="alert-primary">
+			<div class="form-group">
+				<label for="ocena">Unesi ime:</label>
+				<input type="text" id="ime" class="form-control">
+			</div>
+			
+			<div class="okvir">
+				<span class="animacija"></span>
+				<div class="olovka">
+					<div class="gumica"></div>
+					<div class="sredina"></div>
+					<div class="spic">
+						<span class="vrh"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="dugme">
+				<button class="btn-primary" [routerLink]="['/game']" >Igraj</button>
+			</div>
+			<div class="dugme">
+				<button class="btn-primary" id="dugme2">Kreiraj privatnu sobu</button>
+			</div>
+		</div>
+		
+		<div class="parent">
+			<img class="image1" src="assets/cope.jpg" alt="skrabo" width="150" height="150">
+			<img class="image2" src="assets/ananas.png" alt="skrabo" width="150" height="150">
+			<img class="image3" src="assets/ker.png" alt="skrabo" width="150" height="150">
+		</div>
+		
+		<div class="sadrzaj">
+			<h2 (click)="onPrikaziInfo()" style="cursor:help">O nama</h2>
+			<p *ngIf="prikaziInfo" class="tekst">
+				Ovo je tekst o nama... <br> 
+				Ovo je tekst o nama... <br>
+				Ovo je tekst o nama... <br>
+			</p>
+			
+			<h2 (click)="onPrikaziPravila()" style="cursor:help">Pravila igre</h2>
+			<p *ngIf="prikaziPravila" class="tekst">
+				Uputstva za igru idu ovde... <br>
+				Uputstva za igru idu ovde... <br>
+				Uputstva za igru idu ovde... <br>
+			</p>
+		</div>
+	</div>
+</body>
