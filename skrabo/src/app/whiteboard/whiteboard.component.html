@@ -1,1 +1,5 @@
-<canvas id="board" width="550" height="550"> </canvas>
+<canvas id="board" width="550" height="550"
+(mousedown)="startDrawing($event)"
+(mouseup)="endDrawing()"
+(mousemove)="draw($event)"
+> </canvas>
