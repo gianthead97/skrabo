@@ -11,10 +11,10 @@ import { WhiteboardComponent } from './whiteboard/whiteboard.component';
     AppComponent,
     FormComponent,
     WhiteboardComponent
-  ],
+    ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
