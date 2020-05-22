@@ -11,6 +11,8 @@ export class WhiteboardComponent implements OnInit {
   board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   active = false;
+  htmlCanvas: HTMLElement;
+  rectCanvas: ClientRect;
 
   constructor() {
 
@@ -19,6 +21,8 @@ export class WhiteboardComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.htmlCanvas = document.getElementById('board');
+    this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
     this.board = (document.getElementById('board') as HTMLCanvasElement);
     this.ctx = this.board.getContext('2d');
     this.board.addEventListener('mousedown', (evt) => {
@@ -37,12 +41,13 @@ export class WhiteboardComponent implements OnInit {
   }
 
 
+
   startDrawing(e: MouseEvent): void {
 
     this.active = true;
     this.draw(e);
 
-    console.log('start drawing: active:' + this.active);
+    console.log('start drawing: active:' + this.active );
 
   }
 
@@ -55,18 +60,26 @@ export class WhiteboardComponent implements OnInit {
 
   draw(e: MouseEvent): void {
 
-    console.log('drawing...');
+    console.log('drawing...'+ this.rectCanvas.left +this.rectCanvas.top);
 
     if (!this.active) { return; }
 
-    this.ctx.lineWidth = 10;
+    this.ctx.lineWidth = 5;
     // this.ctx.strokeStyle = 'black';
     this.ctx.lineCap = 'round';
-    this.ctx.lineTo(e.clientX, e.clientY);
+    this.ctx.lineTo(e.clientX-this.rectCanvas.left, e.clientY-this.rectCanvas.top);
     this.ctx.stroke();
     this.ctx.beginPath();
-    this.ctx.moveTo(e.clientX, e.clientY);
+    this.ctx.moveTo(e.clientX-this.rectCanvas.left, e.clientY-this.rectCanvas.top);
 
   }
 
+
+
+
+
+
+
 }
+
+

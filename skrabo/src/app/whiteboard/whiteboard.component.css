@@ -1,8 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     background-image: url("22534.jpg");
@@ -12,6 +7,49 @@ body {
 }
 
 #board {
+
+
+
     background-color: white;
     border: 2px solid violet;
 }
+
+#canvas {
+
+    width: 750px;
+    height: 550px;
+    margin: auto;
+    padding-top:250px;
+}
+
+#icons{
+    width: 750px;
+    height:60px;
+    background:none;
+    margin:0px auto;
+    margin-top:10px;
+    display:flex;
+    justify-content: center;
+ 
+}
+.iconBig{
+    width: 58px;
+    height: 58px;
+    border:1px solid #333;
+}
+.iconSmall{
+    width:330px;
+    height:58px;    
+}
+.icon{
+    width:28px;
+    height:28px;
+    border:1px solid #333;
+    float:left;
+}
+
+
+#i0{
+background: black;
+}
+
