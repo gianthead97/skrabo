@@ -1,4 +1,3 @@
-
 body {
     background-image: url("22534.jpg");
     background-size: cover;
@@ -6,50 +5,52 @@ body {
     font-family: sans-serif;
 }
 
+h1 {
+    display: block; width: 30%;
+    text-align: center; padding: 10px;
+    font-size: 50px; font-weight: 600;
+    color: lightseagreen;
+    position: absolute;
+    margin-left: 30%;
+}
+
 #board {
-
-
-
     background-color: white;
     border: 2px solid violet;
 }
 
 #canvas {
-
-    width: 750px;
-    height: 550px;
-    margin: auto;
-    padding-top:250px;
+    position: absolute;
+    margin-top: 80px;
+    margin-left: 20%;
 }
 
-#icons{
+#icons {
     width: 750px;
-    height:60px;
-    background:none;
-    margin:0px auto;
-    margin-top:10px;
-    display:flex;
+    height: 50px;
+    background: none;
+    display: flex;
     justify-content: center;
- 
+    position: absolute;
+    margin-top: 550px;
+    margin-left: 18%;
 }
-.iconBig{
+
+.iconBig {
     width: 58px;
-    height: 58px;
-    border:1px solid #333;
+    height: 56px;
+    border: 1px solid #333;
 }
-.iconSmall{
-    width:330px;
-    height:58px;    
+.iconSmall {
+    width: 330px;
+    height: 58px;    
 }
-.icon{
-    width:28px;
-    height:28px;
-    border:1px solid #333;
-    float:left;
+.icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #333;
+    float: left;
 }
-
-
-#i0{
-background: black;
+#i0 {
+    background: black;
 }
-
