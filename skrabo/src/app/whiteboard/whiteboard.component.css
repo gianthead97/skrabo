@@ -6,12 +6,13 @@ body {
 }
 
 h1 {
-    display: block; width: 30%;
-    text-align: center; padding: 10px;
+    display: block; width: 80%;
+    text-align: left; padding: 10px 0px;
     font-size: 50px; font-weight: 600;
     color: lightseagreen;
     position: absolute;
-    margin-left: 30%;
+    margin-left: 20%;
+    margin-top: 5px;
 }
 
 #board {
@@ -28,12 +29,11 @@ h1 {
 #icons {
     width: 750px;
     height: 50px;
-    background: none;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     position: absolute;
     margin-top: 550px;
-    margin-left: 18%;
+    margin-left: 20%;
 }
 
 .iconBig {
@@ -41,10 +41,12 @@ h1 {
     height: 56px;
     border: 1px solid #333;
 }
+
 .iconSmall {
-    width: 330px;
+    width: 335px;
     height: 58px;    
 }
+
 .icon {
     width: 28px;
     height: 28px;
@@ -52,116 +54,121 @@ h1 {
     float: left;
 }
 
+#iconBigCurrent {
+    border-width: 2px 1px 2px 2px;
+}
+
 #bigIcon0 {
     background-image: url("pensmall.png");
+    border-width: 2px 1px 2px 2px; /*top, right, bottom, left */
 }
-
 #bigIcon1 {
     background-image: url("penmidsmall.png");
+    border-width: 2px 1px 2px 1px;
 }
-
 #bigIcon2 {
     background-image: url("penmidbig.png");
+    border-width: 2px 1px 2px 1px;
 }
-
 #bigIcon3 {
     background-image: url("penbig.png");
+    border-width: 2px 1px 2px 1px;
 }
-
 #bigIcon4 {
     background-image: url("eraseicon.png");
+    border-width: 2px 1px 2px 1px;
 }
-
+#bigIcon5 {
+    border-width: 2px 2px 2px 1px;
+}
 
 #iconColor0 {
     background: black;
+    border-top-width: 2px;
 }
-
 #iconColor1 {
-    background: rgb(71, 71, 71);
+    background: rgb(128, 128, 128);
+    border-top-width: 2px;
 }
-
 #iconColor2 {
-    background: rgb(146, 146, 146);
+    background: rgb(153, 0, 76);
+    border-top-width: 2px;
 }
-
 #iconColor3 {
-    background: rgb(255, 255, 255);
-}
-
-#iconColor4 {
     background: rgb(255, 0, 0);
+    border-top-width: 2px;
 }
-
-#iconColor5 {
+#iconColor4 {
     background: rgb(255, 123, 0);
+    border-top-width: 2px;
 }
-
-#iconColor6 {
+#iconColor5 {
     background: rgb(255, 238, 0);
+    border-top-width: 2px;
 }
-
+#iconColor6 {
+    background: rgb(0, 255, 0);
+    border-top-width: 2px;
+}
 #iconColor7 {
-    background: rgb(255, 151, 151);
+    background: rgb(0, 153, 76);
+    border-top-width: 2px;
 }
-
 #iconColor8 {
-    background: rgb(43, 255, 0);
+    background: rgb(0, 204, 204);
+    border-top-width: 2px;
 }
-
 #iconColor9 {
-    background: rgb(102, 185, 158);
+    background: rgb(0, 102, 204);
+    border-top-width: 2px;
 }
-
 #iconColor10 {
-    background: rgb(108, 255, 248);
+    background: rgb(0, 0, 204);
+    border-top-width: 2px;
+    border-right-width: 2px;
 }
-
 #iconColor11 {
-    background: rgb(0, 26, 255);
+    background: rgb(255, 255, 255);
+    border-bottom-width: 2px;
 }
-
 #iconColor12 {
-    background: rgb(167, 151, 255);
+    background: rgb(192, 192, 192);
+    border-bottom-width: 2px;
 }
-
 #iconColor13 {
-    background: rgb(162, 0, 255);
+    background: rgb(255, 51, 153);
+    border-bottom-width: 2px;
 }
-
 #iconColor14 {
-    background: rgb(243, 151, 255);
+    background: rgb(255, 102, 102);
+    border-bottom-width: 2px;
 }
-
 #iconColor15 {
-    background: rgb(75, 27, 27);
+    background: rgb(255, 178, 102);
+    border-bottom-width: 2px;
 }
-
 #iconColor16 {
-    background: rgb(39, 29, 29);
+    background: rgb(255, 255, 102);
+    border-bottom-width: 2px;
 }
-
 #iconColor17 {
-    background: rgb(29, 56, 38);
+    background: rgb(102, 255, 102);
+    border-bottom-width: 2px;
 }
-
-#iconColor17 {
-    background: rgb(36, 59, 70);
-}
-
 #iconColor18 {
-    background: rgb(29, 56, 38);
+    background: rgb(0, 204, 102);
+    border-bottom-width: 2px;
 }
-
 #iconColor19 {
-    background: rgb(29, 56, 38);
+    background: rgb(51, 255, 153);
+    border-bottom-width: 2px;
 }
-
 #iconColor20 {
-    background: rgb(200, 255, 0);
+    background: rgb(255, 102, 255);
+    border-bottom-width: 2px;
 }
-
 #iconColor21 {
-    background: rgb(88, 57, 92);
+    background: rgb(153, 0, 153);
+    border-bottom-width: 2px;
+    border-right-width: 2px; 
 }
-
