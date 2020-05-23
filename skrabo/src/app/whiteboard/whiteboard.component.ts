@@ -13,6 +13,8 @@ export class WhiteboardComponent implements OnInit {
   active = false;
   htmlCanvas: HTMLElement;
   rectCanvas: ClientRect;
+  penSize: number;
+  penColor: string;
 
   constructor() {
 
@@ -20,7 +22,8 @@ export class WhiteboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.penColor = 'black';
+    this.penSize = 5;
     this.htmlCanvas = document.getElementById('board');
     this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
     this.board = (document.getElementById('board') as HTMLCanvasElement);
@@ -64,8 +67,8 @@ export class WhiteboardComponent implements OnInit {
 
     if (!this.active) { return; }
 
-    this.ctx.lineWidth = 5;
-    // this.ctx.strokeStyle = 'black';
+    this.ctx.lineWidth = this.penSize;
+    this.ctx.strokeStyle = this.penColor;
     this.ctx.lineCap = 'round';
     this.ctx.lineTo(e.clientX-this.rectCanvas.left, e.clientY-this.rectCanvas.top);
     this.ctx.stroke();
@@ -75,8 +78,30 @@ export class WhiteboardComponent implements OnInit {
   }
 
 
+  onClearCanvas(): void{
+    this.ctx.clearRect(0, 0, this.board.width, this.board.height);
+  }
+
+  onPenSmall(): void{
+    this.penSize = 5;
+  }
+
+  onPenMidSmall(): void{
+    this.penSize = 10;
+  }
+  onPenMidBig(): void{
+    this.penSize = 20;
+  }
+  onPenBig(): void{
+    this.penSize = 35;
+  }
+
+  public setColor(){
+  
+    return {'background': this.penColor};
 
 
+  }
 
 
 

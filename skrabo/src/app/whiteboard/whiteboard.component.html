@@ -9,93 +9,92 @@
       <canvas id="board" width="700px" height="450px"> </canvas>
     </div>
     <div id="icons">
-        <div class="iconBig">
+        <div class="iconBig" id="iconBigCurrent" [ngStyle]="setColor()">
  
         </div>
         <div class="iconSmall">
            <div class="icon" id="iconColor0">
- 
            </div>
-           <div class="icon" id="iconColor1">
-             
+
+           <div class="icon" id="iconColor1">           
            </div>
-           <div class="icon" id="iconColor2">
-             
+
+           <div class="icon" id="iconColor2"> 
            </div>
+
            <div class="icon" id="iconColor3">
+           </div>
+
+           <div class="icon" id="iconColor4">
+           </div>
+           <div class="icon" id="iconColor5">
              
            </div>
-           <div class="icon" id="4">
+           <div class="icon" id="iconColor6">
              
            </div>
-           <div class="icon" id="5">
+           <div class="icon" id="iconColor7">
              
            </div>
-           <div class="icon" id="6">
+           <div class="icon" id="iconColor8">
              
            </div>
-           <div class="icon" id="7">
+           <div class="icon" id="iconColor9">
              
            </div>
-           <div class="icon" id="8">
+           <div class="icon" id="iconColor10">
              
            </div>
-           <div class="icon" id="9">
-             
-           </div>
-           <div class="icon" id="10">
-             
-           </div>
-           <div class="icon" id="11">
+           <div class="icon" id="iconColor11">
  
            </div>
-           <div class="icon" id="12">
+           <div class="icon" id="iconColor12">
              
            </div>
-           <div class="icon" id="13">
+           <div class="icon" id="iconColor13">
              
            </div>
-           <div class="icon" id="14">
+           <div class="icon" id="iconColor14">
              
            </div>
-           <div class="icon" id="15">
+           <div class="icon" id="iconColor15">
              
            </div>
-           <div class="icon" id="16">
+           <div class="icon" id="iconColor16">
              
            </div>
-           <div class="icon" id="17">
+           <div class="icon" id="iconColor17">
              
            </div>
-           <div class="icon" id="18">
+           <div class="icon" id="iconColor18">
              
            </div>
-           <div class="icon" id="19">
+           <div class="icon" id="iconColor19">
              
            </div>
-           <div class="icon" id="20">
+           <div class="icon" id="iconColor20">
              
            </div>
-           <div class="icon" id="21">
+           <div class="icon" id="iconColor21">
              
            </div>
         </div>
-        <div class="iconBig">
+        <div class="iconBig" id="bigIcon0" (click)="onPenSmall()">
  
         </div>
-        <div class="iconBig">
+        <div class="iconBig" id="bigIcon1" (click)="onPenMidSmall()">
           
        </div>
-       <div class="iconBig">
+       <div class="iconBig" id="bigIcon2" (click)="onPenMidBig()">
           
        </div>
-       <div class="iconBig">
+       <div class="iconBig" id="bigIcon3" (click)="onPenBig()">
           
        </div>
-       <div class="iconBig">
+       <div class="iconBig" id="bigIcon4" (click)="onClearCanvas()">
           
        </div>
-       <div class="iconBig">
+       <div class="iconBig" id="bigIcon5">
           
        </div>
     </div>

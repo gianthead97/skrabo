@@ -51,6 +51,117 @@ h1 {
     border: 1px solid #333;
     float: left;
 }
-#i0 {
+
+#bigIcon0 {
+    background-image: url("pensmall.png");
+}
+
+#bigIcon1 {
+    background-image: url("penmidsmall.png");
+}
+
+#bigIcon2 {
+    background-image: url("penmidbig.png");
+}
+
+#bigIcon3 {
+    background-image: url("penbig.png");
+}
+
+#bigIcon4 {
+    background-image: url("eraseicon.png");
+}
+
+
+#iconColor0 {
     background: black;
 }
+
+#iconColor1 {
+    background: rgb(71, 71, 71);
+}
+
+#iconColor2 {
+    background: rgb(146, 146, 146);
+}
+
+#iconColor3 {
+    background: rgb(255, 255, 255);
+}
+
+#iconColor4 {
+    background: rgb(255, 0, 0);
+}
+
+#iconColor5 {
+    background: rgb(255, 123, 0);
+}
+
+#iconColor6 {
+    background: rgb(255, 238, 0);
+}
+
+#iconColor7 {
+    background: rgb(255, 151, 151);
+}
+
+#iconColor8 {
+    background: rgb(43, 255, 0);
+}
+
+#iconColor9 {
+    background: rgb(102, 185, 158);
+}
+
+#iconColor10 {
+    background: rgb(108, 255, 248);
+}
+
+#iconColor11 {
+    background: rgb(0, 26, 255);
+}
+
+#iconColor12 {
+    background: rgb(167, 151, 255);
+}
+
+#iconColor13 {
+    background: rgb(162, 0, 255);
+}
+
+#iconColor14 {
+    background: rgb(243, 151, 255);
+}
+
+#iconColor15 {
+    background: rgb(75, 27, 27);
+}
+
+#iconColor16 {
+    background: rgb(39, 29, 29);
+}
+
+#iconColor17 {
+    background: rgb(29, 56, 38);
+}
+
+#iconColor17 {
+    background: rgb(36, 59, 70);
+}
+
+#iconColor18 {
+    background: rgb(29, 56, 38);
+}
+
+#iconColor19 {
+    background: rgb(29, 56, 38);
+}
+
+#iconColor20 {
+    background: rgb(200, 255, 0);
+}
+
+#iconColor21 {
+    background: rgb(88, 57, 92);
+}
+
