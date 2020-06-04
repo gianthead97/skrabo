@@ -50,7 +50,7 @@ export class WhiteboardComponent implements OnInit {
     this.active = true;
     this.draw(e);
 
-    console.log('start drawing: active:' + this.active );
+    console.log('start drawing: active:' + this.active);
 
   }
 
@@ -63,42 +63,42 @@ export class WhiteboardComponent implements OnInit {
 
   draw(e: MouseEvent): void {
 
-    console.log('drawing...'+ this.rectCanvas.left +this.rectCanvas.top);
+    console.log('drawing...' + this.rectCanvas.left + this.rectCanvas.top);
 
     if (!this.active) { return; }
 
     this.ctx.lineWidth = this.penSize;
     this.ctx.strokeStyle = this.penColor;
     this.ctx.lineCap = 'round';
-    this.ctx.lineTo(e.clientX-this.rectCanvas.left, e.clientY-this.rectCanvas.top);
+    this.ctx.lineTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
     this.ctx.stroke();
     this.ctx.beginPath();
-    this.ctx.moveTo(e.clientX-this.rectCanvas.left, e.clientY-this.rectCanvas.top);
+    this.ctx.moveTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
 
   }
 
 
-  onClearCanvas(): void{
+  onClearCanvas(): void {
     this.ctx.clearRect(0, 0, this.board.width, this.board.height);
   }
 
-  onPenSmall(): void{
+  onPenSmall(): void {
     this.penSize = 5;
   }
 
-  onPenMidSmall(): void{
+  onPenMidSmall(): void {
     this.penSize = 10;
   }
-  onPenMidBig(): void{
+  onPenMidBig(): void {
     this.penSize = 20;
   }
-  onPenBig(): void{
+  onPenBig(): void {
     this.penSize = 35;
   }
 
-  public setColor(){
-  
-    return {'background': this.penColor};
+  public setColor() {
+
+    return { background: this.penColor };
 
 
   }

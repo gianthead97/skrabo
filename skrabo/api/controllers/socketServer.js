@@ -20,6 +20,7 @@ class SocketServer {
 
             socket.on('new-message', (message) => {
                 console.log(message);
+                this.io.emit('message', message);
             });
         });
     }
