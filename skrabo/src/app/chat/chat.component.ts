@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as io from 'socket.io-client';
+//import {Observable} from 'rxjs/Observable';
+//import as Rx from 'rxjs/Rx';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
+  private socket;
+  private message; // skloni private 
+
+
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+
+  public onSend(){
+    this.socket.emit('msg',"");
+  }
+
 
 }
