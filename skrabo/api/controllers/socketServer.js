@@ -17,6 +17,10 @@ class SocketServer {
             socket.on('client_draw', (data) => {
                 socket.broadcast.emit('drawing', data);
             });
+
+            socket.on('new-message', (message) => {
+                console.log(message);
+            });
         });
     }
     
