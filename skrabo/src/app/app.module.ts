@@ -26,7 +26,7 @@ import { ChatService } from './services/chat.service';
     // tslint:disable-next-line: deprecation
     HttpModule
   ],
-  providers: [ChatService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,15 +1,13 @@
 <div>
-    <div>
-        <textarea id="chat" rows="20" cols="30" readonly>{{chatArea}}</textarea>
+    <div id="chat">
+        <div id="message" style="display: block" *ngFor="let message of messages">
+            {{message}}
+        </div>
     </div>
 
-
-    <!-- <div *ngFor="let message of messages">
-        {{message}}
-    </div> -->
-
-    <div>
+    <div id="input">
         <input id="text" [(ngModel)]="message">
         <button id="send" (click)="sendMessage()">Send</button>
     </div>
+
 </div>

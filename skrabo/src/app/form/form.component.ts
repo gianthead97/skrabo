@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-form',
@@ -10,7 +11,7 @@ export class FormComponent implements OnInit {
   public prikaziInfo: boolean;
   public prikaziPravila: boolean;
 
-  constructor() { 
+  constructor(private chatService: ChatService) {
     this.prikaziInfo = false;
     this.prikaziPravila = false;
   }
@@ -23,5 +24,9 @@ export class FormComponent implements OnInit {
   }
   public onPrikaziPravila(): void {
     this.prikaziPravila = !this.prikaziPravila;
+  }
+
+  public onUnosImena(username: string) {
+    this.chatService.setUsername(username);
   }
 }

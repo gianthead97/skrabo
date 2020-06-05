@@ -18,7 +18,7 @@
 		<div class="alert-primary">
 			<div class="form-group">
 				<label for="ocena">Unesi ime:</label>
-				<input type="text" id="ime" class="form-control">
+				<input type="text" id="ime" class="form-control" #ime>
 			</div>
 			
 			<div class="okvir">
@@ -33,7 +33,7 @@
 			</div>
 			
 			<div class="dugme">
-				<button class="btn-primary" [routerLink]="['/game']" >Igraj</button>
+				<button class="btn-primary" [routerLink]="['/game']" (click)="onUnosImena(ime.value)">Igraj</button>
 			</div>
 			<div class="dugme">
 				<button class="btn-primary" id="dugme2">Kreiraj privatnu sobu</button>
