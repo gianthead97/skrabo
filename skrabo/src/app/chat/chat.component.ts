@@ -11,7 +11,6 @@ export class ChatComponent implements OnInit {
   message: string;
   messages: string[] = [];
   input: HTMLElement;
-  chatArea: HTMLElement;
 
   constructor(private chatService: ChatService) {
     this.chatService
@@ -35,8 +34,6 @@ export class ChatComponent implements OnInit {
         document.getElementById('send').click();
       }
     });
-
-    this.chatArea = document.getElementById('chat');
   }
 
 }

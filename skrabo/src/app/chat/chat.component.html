@@ -1,5 +1,5 @@
 <div>
-    <div id="chat">
+    <div id="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
         <div id="message" style="display: block" *ngFor="let message of messages">
             {{message}}
         </div>
