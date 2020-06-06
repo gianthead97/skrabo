@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CanvasService } from '../services/canvas.service';
 
 @Component({
   selector: 'app-whiteboard',
@@ -6,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./whiteboard.component.css']
 })
 export class WhiteboardComponent implements OnInit {
-
 
   board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -16,9 +16,19 @@ export class WhiteboardComponent implements OnInit {
   penSize: number;
   penColor: string;
 
-  constructor() {
+  constructor(private canvasService: CanvasService) {
+    this.canvasService
+      .getCanvasEvent()
+      .subscribe((data: string) => {
+        const img = new Image();
+        img.src = data;
+        console.log(data);
+        this.ctx.drawImage(img, 0, 0);
+      });
+  }
 
-
+  sendCanvasData() {
+    this.canvasService.sendCanvasData(this.board.toDataURL());
   }
 
   ngOnInit(): void {
@@ -30,14 +40,17 @@ export class WhiteboardComponent implements OnInit {
     this.ctx = this.board.getContext('2d');
     this.board.addEventListener('mousedown', (evt) => {
       // console.log(evt);
+      this.sendCanvasData();
       this.startDrawing(evt);
     });
     this.board.addEventListener('mouseup', (evt) => {
       // console.log(evt);
+      this.sendCanvasData();
       this.endDrawing();
     });
     this.board.addEventListener('mousemove', (evt) => {
       // console.log(evt);
+      this.sendCanvasData();
       this.draw(evt);
     });
 
@@ -80,6 +93,7 @@ export class WhiteboardComponent implements OnInit {
 
   onClearCanvas(): void {
     this.ctx.clearRect(0, 0, this.board.width, this.board.height);
+    this.sendCanvasData();
   }
 
   onPenSmall(): void {

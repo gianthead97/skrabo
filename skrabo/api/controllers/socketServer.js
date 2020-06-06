@@ -14,7 +14,7 @@ class SocketServer {
                 console.log('User is disconnected');
             });
 
-            socket.on('client_draw', (data) => {
+            socket.on('client-drawing', (data) => {
                 socket.broadcast.emit('drawing', data);
             });
 

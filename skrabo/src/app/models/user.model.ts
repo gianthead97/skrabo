@@ -1,4 +1,4 @@
-export class User {
+export class UserData {
     // koristicemo javne prom da bismo
     // im lakse pristupali
     constructor(

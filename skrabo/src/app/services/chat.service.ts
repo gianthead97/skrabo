@@ -1,6 +1,7 @@
-import * as io from 'socket.io-client';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import * as io from 'socket.io-client';
 
 @Injectable({
     providedIn: 'root',
@@ -17,11 +18,9 @@ export class ChatService {
 
     public setUsername(username: string) {
         this.username = username;
-        console.log(this.username);
     }
 
     public sendMessage(message) {
-        console.log(this.username);
         this.socket.emit('new-message', `${this.username}: ${message}`);
     }
 
