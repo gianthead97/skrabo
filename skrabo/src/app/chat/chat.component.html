@@ -1,6 +1,7 @@
 <div>
     <div id="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-        <div id="message" *ngFor="let message of messages">
+        <div id="message" *ngFor="let message of data.messages; let i = index;" 
+        [ngStyle]="{'color': data.colors[i]}">
             {{message}}
         </div>
     </div>

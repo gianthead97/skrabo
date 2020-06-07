@@ -22,7 +22,7 @@ export class WhiteboardComponent implements OnInit {
       .subscribe((data: string) => {
         const img = new Image();
         img.src = data;
-        console.log(data);
+        // console.log(data);
         this.ctx.drawImage(img, 0, 0);
       });
   }

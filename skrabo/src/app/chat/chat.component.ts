@@ -9,14 +9,18 @@ import { ChatService } from '../services/chat.service';
 export class ChatComponent implements OnInit {
 
   message: string;
-  messages: string[] = [];
+  data = {
+    messages: [],
+    colors: []
+  };
   input: HTMLElement;
 
   constructor(private chatService: ChatService) {
     this.chatService
       .getMessages()
-      .subscribe((message: string) => {
-        this.messages.push(message);
+      .subscribe(({ message, color }) => {
+        this.data.messages.push(message);
+        this.data.colors.push(color);
       });
   }
 

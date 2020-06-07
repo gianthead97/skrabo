@@ -18,9 +18,12 @@ class SocketServer {
                 socket.broadcast.emit('drawing', data);
             });
 
-            socket.on('new-message', (message) => {
+            socket.on('new-message', ({ message, color }) => {
                 console.log(message);
-                this.io.emit('message', message);
+                this.io.emit('message', {
+                    'message': message,
+                    'color': color
+                });
             });
         });
     }
