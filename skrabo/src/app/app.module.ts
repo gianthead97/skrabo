@@ -6,14 +6,16 @@ import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 import { ChatComponent } from './chat/chat.component';
+import { PlaygroundComponent } from './playground/playground.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     WhiteboardComponent,
-    ChatComponent
-    ],
+    ChatComponent,
+    PlaygroundComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

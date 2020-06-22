@@ -1,5 +1,5 @@
 body {
-    background-image: url("22534.jpg");
+    background-image: url("../../assets/pozadina.jpg");
     background-size: cover;
     width: 100vw; height: 100vh;
     font-family: sans-serif;
@@ -71,23 +71,23 @@ h1 {
 }
 
 #bigIcon0 {
-    background-image: url("pensmall.png");
+    background-image: url("../../assets/pensmall.png");
     border-width: 2px 1px 2px 2px; /*top, right, bottom, left */
 }
 #bigIcon1 {
-    background-image: url("penmidsmall.png");
+    background-image: url("../../assets/penmidsmall.png");
     border-width: 2px 1px 2px 1px;
 }
 #bigIcon2 {
-    background-image: url("penmidbig.png");
+    background-image: url("../../assets/penmidbig.png");
     border-width: 2px 1px 2px 1px;
 }
 #bigIcon3 {
-    background-image: url("penbig.png");
+    background-image: url("../../assets/penbig.png");
     border-width: 2px 1px 2px 1px;
 }
 #bigIcon4 {
-    background-image: url("eraseicon.png");
+    background-image: url("../../assets/eraseicon.png");
     border-width: 2px 2px 2px 1px;
 }
 

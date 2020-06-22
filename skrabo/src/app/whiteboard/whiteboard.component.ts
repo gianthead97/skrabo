@@ -97,10 +97,7 @@ export class WhiteboardComponent implements OnInit {
   }
 
   public setColor(){
-  
     return {'background': this.penColor};
-
-
   }
 
 
