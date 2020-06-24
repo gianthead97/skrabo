@@ -1,5 +1,14 @@
-<div id="chatBox"></div>
-<form id="">
-    <input type="text" id="msgInput">
-    <button type="submit" id="sendButton">Send</button>
-</form>
+<div>
+    <div id="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <div id="message" *ngFor="let message of data.messages; let i = index;" 
+        [ngStyle]="{'color': data.colors[i]}">
+            {{message}}
+        </div>
+    </div>
+
+    <div id="input">
+        <input id="text" [(ngModel)]="message">
+        <button id="send" (click)="sendMessage()">Send</button>
+    </div>
+
+</div>

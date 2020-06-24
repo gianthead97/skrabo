@@ -1,15 +1,16 @@
+const Room = require('../models/room');
+const uuid = require('uuid');
+
 class Controller {
 
-    static #rooms = [];
-    static getFirstMessage(req, res, next) {
-        res.status(200);
-        res.json({
-            message: "JS KNINDŽE"
-        });
-    }
-
+    static rooms = [];
+    
     static createRoom(req, res, next) {
-
+        console.log(req.body.name);
+        let room = new Room(uuid.v1().substr(0, 6), req.body.name);
+        Controller.rooms.push(room);
+        res.status(201);
+        res.json({"code": room.id});
     }
 
 }

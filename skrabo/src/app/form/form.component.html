@@ -1,4 +1,3 @@
-<!--<p>form works!</p>-->
 <head>
 	<link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
 </head>
@@ -17,8 +16,8 @@
 		
 		<div class="alert-primary">
 			<div class="form-group">
-				<label for="ocena">Unesi ime:</label>
-				<input type="text" id="ime" class="form-control">
+				<label for="ime">Unesi ime:</label>
+				<input type="text" id="ime" class="form-control" #ime>
 			</div>
 			
 			<div class="okvir">
@@ -33,10 +32,23 @@
 			</div>
 			
 			<div class="dugme">
-				<button class="btn-primary" [routerLink]="['/game']" >Igraj</button>
+				<button class="dugme-osnovno" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Igraj</button>
 			</div>
 			<div class="dugme">
-				<button class="btn-primary" id="dugme2">Kreiraj privatnu sobu</button>
+				<button class="dugme-osnovno" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruzi se postojecoj sobi.</button>
+				<div *ngIf="getPridruzivanjeSobi">
+					<label for="kodSobe">Unesi ime sobe:</label>
+					<br>
+					<input type="text" name="kodSobe" id="kodSobe" #kodSobe>
+				</div>
+			</div>
+			<div class="dugme">
+				<button class="dugme-osnovno" id="btnNovaSoba" (click)="onPravljenjeNoveSobe()">Kreiraj privatnu sobu</button>
+				<div *ngIf="getPravljenjeNoveSobe">
+					<label for="imeSobe">Unesi ime sobe:</label>
+					<br>
+					<input type="text" name="imeSobe" id="imeSobe" #imeSobe>
+				</div>
 			</div>
 		</div>
 		
@@ -48,14 +60,14 @@
 		
 		<div class="sadrzaj">
 			<h2 (click)="onPrikaziInfo()" style="cursor:help">O nama</h2>
-			<p *ngIf="prikaziInfo" class="tekst">
+			<p *ngIf="getPrikaziInfo" class="tekst">
 				Ovo je tekst o nama... <br> 
 				Ovo je tekst o nama... <br>
 				Ovo je tekst o nama... <br>
 			</p>
 			
 			<h2 (click)="onPrikaziPravila()" style="cursor:help">Pravila igre</h2>
-			<p *ngIf="prikaziPravila" class="tekst">
+			<p *ngIf="getPrikaziPravila" class="tekst">
 				Uputstva za igru idu ovde... <br>
 				Uputstva za igru idu ovde... <br>
 				Uputstva za igru idu ovde... <br>
