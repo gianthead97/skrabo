@@ -63,7 +63,7 @@ export class WhiteboardComponent implements OnInit {
     this.active = true;
     this.draw(e);
 
-    console.log('start drawing: active:' + this.active);
+    // console.log('start drawing: active:' + this.active);
 
   }
 
@@ -71,12 +71,12 @@ export class WhiteboardComponent implements OnInit {
 
     this.active = false;
     this.ctx.beginPath();
-    console.log('end drawing: active:' + this.active);
+    // console.log('end drawing: active:' + this.active);
   }
 
   draw(e: MouseEvent): void {
 
-    console.log('drawing...' + this.rectCanvas.left + this.rectCanvas.top);
+    // console.log('drawing...' + this.rectCanvas.left + this.rectCanvas.top);
 
     if (!this.active) { return; }
 

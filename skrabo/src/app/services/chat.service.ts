@@ -1,20 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
+import { catchError } from 'rxjs/operators';
 
 import * as io from 'socket.io-client';
 import { UserData } from '../models/user.model';
+import { HttpErrorHandler } from '../utils/http-error-handler.model';
 
 @Injectable({
     providedIn: 'root',
 })
 
-export class ChatService {
+export class ChatService extends HttpErrorHandler {
     private readonly url = 'http://localhost:3000';
+
     private socket;
     private user: UserData;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, router: Router) {
+        super(router);
         this.socket = io(this.url);
         this.user = new UserData('', 0, '', '');
     }
@@ -33,7 +39,11 @@ export class ChatService {
 
     public createNewRoomRequest(roomName: string): void {
         this.http.post(this.url + '/createRoom', {"name": roomName})
-                 .subscribe(code => console.log(code));
+                 .pipe(catchError(super.handleError()))
+                 .subscribe(code => {
+                    this.socket.emit('joinGame', code);
+                    window.alert(code);
+                 });
     }
 
     public sendMessage(message) {
@@ -44,7 +54,7 @@ export class ChatService {
         });
     }
 
-    public getMessages() {
+    public getMessages(): Observable<any> {
         return new Observable((observer) => {
             this.socket.on('message', ({message, color}) => {
                 observer.next({message, color});

@@ -10,8 +10,8 @@ export class FormComponent implements OnInit {
 
   private prikaziInfo: boolean = false;
   private prikaziPravila: boolean = false;
-  private pridruzivanjeSobi: boolean = false;
-  private pravljenjeNoveSobe: boolean = false;
+  private pridruzivanjeSobi: boolean = true;
+  private pravljenjeNoveSobe: boolean = true;
   constructor(private chatService: ChatService) {
     
   }
@@ -44,11 +44,12 @@ export class FormComponent implements OnInit {
 
   public onPridruzivanjeSobi(): void {
     this.pridruzivanjeSobi = !this.pridruzivanjeSobi;
+    this.pravljenjeNoveSobe = true;
   }
 
   public onPravljenjeNoveSobe(): void {
     this.pravljenjeNoveSobe = !this.pravljenjeNoveSobe;
-
+    this.pridruzivanjeSobi = true;
   }
 
 

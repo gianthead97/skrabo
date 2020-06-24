@@ -5,7 +5,7 @@ module.exports = class Room {
         this.roomName = roomName;
     }
     get roomId() {
-        return this.roomId;
+        return this.id;
     }
     
 }

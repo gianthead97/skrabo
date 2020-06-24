@@ -36,7 +36,7 @@
 			</div>
 			<div class="dugme">
 				<button class="dugme-osnovno" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruzi se postojecoj sobi.</button>
-				<div *ngIf="getPridruzivanjeSobi">
+				<div [hidden]="getPridruzivanjeSobi">
 					<label for="kodSobe">Unesi ime sobe:</label>
 					<br>
 					<input type="text" name="kodSobe" id="kodSobe" #kodSobe>
@@ -44,10 +44,10 @@
 			</div>
 			<div class="dugme">
 				<button class="dugme-osnovno" id="btnNovaSoba" (click)="onPravljenjeNoveSobe()">Kreiraj privatnu sobu</button>
-				<div *ngIf="getPravljenjeNoveSobe">
+				<div [hidden]="getPravljenjeNoveSobe">
 					<label for="imeSobe">Unesi ime sobe:</label>
 					<br>
-					<input type="text" name="imeSobe" id="imeSobe" #imeSobe>
+					<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
 				</div>
 			</div>
 		</div>
