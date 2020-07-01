@@ -8,20 +8,18 @@ import { catchError } from 'rxjs/operators';
 import * as io from 'socket.io-client';
 import { UserData } from '../models/user.model';
 import { HttpErrorHandler } from '../utils/http-error-handler.model';
+import { SocketService } from './socket.service';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class ChatService extends HttpErrorHandler {
-    private readonly url = 'http://localhost:3000';
 
-    private socket;
     private user: UserData;
 
-    constructor(private http: HttpClient, router: Router) {
+    constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
-        this.socket = io(this.url);
         this.user = new UserData('', 0, '', '');
     }
 
@@ -34,21 +32,21 @@ export class ChatService extends HttpErrorHandler {
     }
 
     public joinToRoom(code: string): void {
-        this.socket.emit('joinGame', {code});
+        this.socketService.socket.emit('joinGame', {code});
     }
 
     public createNewRoomRequest(roomName: string): void {
-        this.http.post(this.url + '/createRoom', {"name": roomName})
+        this.http.post(this.socketService.url + '/createRoom', {"name": roomName})
                  .pipe(catchError(super.handleError()))
                  .subscribe(code => {
-                    this.socket.emit('joinGame', code);
+                    this.socketService.socket.emit('joinGame', code);
                     window.alert(code);
                  });
     }
 
     public sendMessage(message) {
         this.user.message = message;
-        this.socket.emit('new-message', {
+        this.socketService.socket.emit('new-message', {
             message: `${this.user.name}: ${this.user.message}`,
             color: this.user.color
         });
@@ -56,7 +54,7 @@ export class ChatService extends HttpErrorHandler {
 
     public getMessages(): Observable<any> {
         return new Observable((observer) => {
-            this.socket.on('message', ({message, color}) => {
+            this.socketService.socket.on('message', ({message, color}) => {
                 observer.next({message, color});
             });
         });

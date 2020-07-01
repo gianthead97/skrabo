@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import * as io from 'socket.io-client';
 import { CanvasData } from '../models/canvasData.model';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,19 @@ import { CanvasData } from '../models/canvasData.model';
 export class CanvasService {
 
   private url = 'http://localhost:3000';
-  private socket;
+  
 
-  constructor() {
-    this.socket = io(this.url);
+  constructor(private socketService: SocketService) {
+    
   }
 
   public sendCanvasData(data) {
-    this.socket.emit('client-drawing', data);
+    this.socketService.socket.emit('client-drawing', data);
   }
 
   public getCanvasEvent() {
     return new Observable((observer) => {
-      this.socket.on('drawing', (data) => {
+      this.socketService.socket.on('drawing', (data) => {
         observer.next(data);
       });
     });
