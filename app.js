@@ -10,11 +10,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
+let distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 app.use("/", routes);
 
 
 
 app.use(errorHandler);
+
 
 
 app.use((req, res, next) => {
