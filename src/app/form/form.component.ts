@@ -13,7 +13,6 @@ export class FormComponent implements OnInit {
   private pridruzivanjeSobi: boolean = true;
   private pravljenjeNoveSobe: boolean = true;
   constructor(private chatService: ChatService) {
-    
   }
 
   ngOnInit(): void {

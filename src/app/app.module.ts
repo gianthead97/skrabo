@@ -11,7 +11,6 @@ import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 import { ChatComponent } from './chat/chat.component';
 import { PlaygroundComponent } from './playground/playground.component';
 
-import { ChatService } from './services/chat.service';
 
 @NgModule({
   declarations: [
