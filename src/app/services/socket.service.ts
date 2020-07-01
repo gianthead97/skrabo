@@ -9,6 +9,7 @@ export class SocketService {
   private URL: string = 'http://localhost:' + (process.env.PORT || 3000);
   private sock = io(this.URL);
   constructor() {
+    console.log(process.env.PORT);
 
   }
 

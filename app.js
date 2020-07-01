@@ -6,9 +6,9 @@ const cors = require('cors');
 const routes = require('./api/routes/routes');
 
 // app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(cors());
 
 let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
