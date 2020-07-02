@@ -4,6 +4,7 @@ class SocketServer {
 
     constructor(server) {
         this.io = socketIO(server);
+        this.io.origins('*:*');
     }
 
     start() {

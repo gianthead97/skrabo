@@ -13,6 +13,7 @@ export class SocketService {
     this.http.get<{url}>(window.location.origin + '/socketPort').subscribe(response => {
       this.URL += response.url;
       this.sock = io(this.URL);
+      
     });
   }
 
