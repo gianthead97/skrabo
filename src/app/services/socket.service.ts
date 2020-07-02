@@ -10,7 +10,7 @@ export class SocketService {
   private URL: string = 'http://localhost:';
   private sock;
   constructor(private http: HttpClient) {
-    this.http.get(window.location.origin + '/socketPort').subscribe(response => {
+    this.http.get<{url}>(window.location.origin + '/socketPort').subscribe(response => {
       this.URL += response.url;
       this.sock = io(this.URL);
     });
