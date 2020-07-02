@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import * as io from 'socket.io-client';
 
 
@@ -6,11 +7,13 @@ import * as io from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketService {
-  private URL: string = 'http://localhost:' + (process.env['PORT'] || 3000);
+  private URL: string = 'http://localhost:';;
   private sock = io(this.URL);
-  constructor() {
+  constructor(private http: Http) {
     console.log(process.env.PORT);
-
+    this.http.get(window.location.origin + '/socketPort').subscribe((response: Response) => {
+      console.log(response.json());
+    });
   }
 
   get socket() {

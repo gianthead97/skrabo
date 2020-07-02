@@ -5,5 +5,8 @@ const Controller = require('../controllers/controller');
 
 router.post("/createRoom", Controller.createRoom);
 
+router.get("/socketPort", (req, res, next) => {
+    res.json({url: process.env.PORT});
+})
 
 module.exports = router;
