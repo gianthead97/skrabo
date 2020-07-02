@@ -8,11 +8,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SocketService {
   private URL: string = 'http://localhost:';
-  private sock = io(this.URL);
+  private sock;
   constructor(private http: HttpClient) {
-    console.log(process.env.PORT);
     this.http.get(window.location.origin + '/socketPort').subscribe(response => {
-      console.log(response);
+      this.URL += response.url;
+      this.sock = io(this.URL);
     });
   }
 
