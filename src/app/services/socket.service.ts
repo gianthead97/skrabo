@@ -6,7 +6,7 @@ import * as io from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketService {
-  private URL: string = 'http://localhost:' + (3000);
+  private URL: string = 'http://localhost:' + (process.env['PORT'] || 3000);
   private sock = io(this.URL);
   constructor() {
     console.log(process.env.PORT);
