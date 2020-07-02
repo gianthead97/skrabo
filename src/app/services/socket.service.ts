@@ -11,8 +11,8 @@ export class SocketService {
   private sock = io(this.URL);
   constructor(private http: HttpClient) {
     console.log(process.env.PORT);
-    this.http.get(window.location.origin + '/socketPort').subscribe((response: Response) => {
-      console.log(response.json());
+    this.http.get(window.location.origin + '/socketPort').subscribe(response => {
+      console.log(response);
     });
   }
 
