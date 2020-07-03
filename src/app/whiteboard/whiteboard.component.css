@@ -17,51 +17,48 @@ h1 {
 }
 
 
-#chat {
-    position: absolute;
-    margin-top: 80px;
-    margin-left: 60%;
-}
-
-
 #board {
     background-color: white;
     border: 2px solid violet;
+    width: 40vw; 
+    height: 70vh;
+
 }
 
 #canvas { 
-    position: absolute;
+    /*position: absolute;*/
     margin-top: 80px;
-    margin-left: 20%; 
-    /*position: relative; margin: auto;*/
-}
+    /*margin-left: 20%; */
+    position: relative;
+}    
 
 #icons {
     width: 750px;
     height: 50px;
     display: flex;
-    justify-content: left;
-    position: absolute;
-    margin-top: 550px;
-    margin-left: 20%;
-    padding-left: 30px;
-    /*position: relative; margin: auto;*/
+    /*justify-content: left;*/
+    /*position: absolute;*/
+    margin-top: 40vh;
+    
+    padding-top: 1vh;
+    position: relative; margin: auto;
 }
 
 .iconBig {
-    width: 58px;
-    height: 56px;
+    width: 4vw;
+    height: 8vh;
     border: 1px solid #333;
+    padding-left: 3vw;
 }
 
 .iconSmall {
-    width: 332px;
-    height: 58px;    
+    width: 22vw;
+    height: 4vh;    
 }
 
 .icon {
-    width: 28px;
-    height: 28px;
+    width: 2vw;
+    height: 4vh;
     border: 1px solid #333;
     float: left;
 }

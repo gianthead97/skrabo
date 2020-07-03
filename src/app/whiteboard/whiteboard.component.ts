@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CanvasService } from '../services/canvas.service';
+import { CanvasData } from '../models/canvasData.model';
 
 @Component({
   selector: 'app-whiteboard',
@@ -19,16 +20,22 @@ export class WhiteboardComponent implements OnInit {
   constructor(private canvasService: CanvasService) {
     this.canvasService
       .getCanvasEvent()
-      .subscribe((data: string) => {
-        const img = new Image();
-        img.src = data;
-        // console.log(data);
-        this.ctx.drawImage(img, 0, 0);
+      .subscribe((data: CanvasData) => {
+        
+        if (typeof(data.event)  === 'string') {
+          this.onClearCanvas();
+        } else if (data.mouseMove == 'mousedown') {
+          this.startDrawing(data.event);
+        } else if (data.mouseMove == 'mousemove') {
+          this.draw(data.event, data.penSize, data.penColor);
+        } else {
+          this.endDrawing();
+        }
       });
   }
 
-  sendCanvasData() {
-    this.canvasService.sendCanvasData(this.board.toDataURL());
+  sendCanvasData(mouseMove: string,evt: MouseEvent | string) {
+    this.canvasService.sendCanvasData(new CanvasData(evt, this.penSize, this.penColor, mouseMove));
   }
 
   ngOnInit(): void {
@@ -38,19 +45,20 @@ export class WhiteboardComponent implements OnInit {
     this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
     this.board = (document.getElementById('board') as HTMLCanvasElement);
     this.ctx = this.board.getContext('2d');
+    this.ctx.scale(0.5, 0.31);
     this.board.addEventListener('mousedown', (evt) => {
       // console.log(evt);
-      this.sendCanvasData();
+      this.sendCanvasData('mousedown',evt);
       this.startDrawing(evt);
     });
     this.board.addEventListener('mouseup', (evt) => {
       // console.log(evt);
-      this.sendCanvasData();
+      this.sendCanvasData('mouseup',evt);
       this.endDrawing();
     });
     this.board.addEventListener('mousemove', (evt) => {
       // console.log(evt);
-      this.sendCanvasData();
+      this.sendCanvasData('mousemove', evt);
       this.draw(evt);
     });
 
@@ -74,26 +82,31 @@ export class WhiteboardComponent implements OnInit {
     // console.log('end drawing: active:' + this.active);
   }
 
-  draw(e: MouseEvent): void {
+  draw(e: MouseEvent, penSize?: number, penColor?: string): void {
 
-    // console.log('drawing...' + this.rectCanvas.left + this.rectCanvas.top);
+   
 
     if (!this.active) { return; }
-
-    this.ctx.lineWidth = this.penSize;
-    this.ctx.strokeStyle = this.penColor;
+    
+    this.ctx.lineWidth = penSize || this.penSize;
+    this.ctx.strokeStyle = penColor ||  this.penColor;
     this.ctx.lineCap = 'round';
-    this.ctx.lineTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
+    const X = e.clientX - this.rectCanvas.left; 
+    const Y = e.clientY - this.rectCanvas.top;
+    this.ctx.lineTo(X, Y);
     this.ctx.stroke();
     this.ctx.beginPath();
-    this.ctx.moveTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
+    this.ctx.moveTo(X, Y);
+
 
   }
 
 
   onClearCanvas(): void {
+    this.ctx.scale(1/0.5, 1/0.31);
     this.ctx.clearRect(0, 0, this.board.width, this.board.height);
-    this.sendCanvasData();
+    this.ctx.scale(0.5, 0.31);
+    this.sendCanvasData('', 'clear');
   }
 
   onPenSmall(): void {

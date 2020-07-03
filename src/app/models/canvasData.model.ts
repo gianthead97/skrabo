@@ -1,8 +1,9 @@
 export class CanvasData {
     constructor(
-        public event: MouseEvent,
+        public event: MouseEvent | string,
         public penSize: number,
-        public penColor: string
+        public penColor: string,
+        public mouseMove: string
     ) {
 
     }

@@ -3,9 +3,15 @@
 </head>
 
 <body>
-    <app-whiteboard></app-whiteboard>
-
-    <div id="chat">
-        <app-chat></app-chat>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-7">
+                <app-whiteboard></app-whiteboard>
+            </div>
+            <div class="col-sm-2"></div>
+            <div id="chat" class="col-sm-3">
+                <app-chat></app-chat>
+            </div>
+        </div>
     </div>
 </body>

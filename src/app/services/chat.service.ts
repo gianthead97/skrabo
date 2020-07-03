@@ -41,7 +41,7 @@ export class ChatService extends HttpErrorHandler {
                  .pipe(catchError(super.handleError()))
                  .subscribe(code => {
                     this.socketService.socket.emit('joinGame', code);
-                    window.alert(code);
+                    window.alert(code.code);
                  });
     }
 
