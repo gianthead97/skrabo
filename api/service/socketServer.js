@@ -3,7 +3,7 @@ const Conteroller = require('../controllers/controller');
 class SocketServer {
 
     constructor(server) {
-        this.io = socketIO(server).listen(server);
+        this.io = socketIO.listen(server);
         this.io.origins('*:*');
     }
 
