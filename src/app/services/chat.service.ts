@@ -36,6 +36,7 @@ export class ChatService extends HttpErrorHandler {
     }
 
     public createNewRoomRequest(roomName: string): void {
+        console.log('happens');
         this.http.post(this.socketService.url + '/createRoom', {"name": roomName})
                  .pipe(catchError(super.handleError()))
                  .subscribe(code => {
