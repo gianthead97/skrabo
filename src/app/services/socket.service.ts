@@ -7,14 +7,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SocketService {
-  private URL: string = 'http://localhost:';
-  private sock;
+  private URL: string = 'http://localhost:3000';
+  private sock = io(this.URL);
   constructor(private http: HttpClient) {
-    this.http.get<{url}>(window.location.origin + '/socketPort').subscribe(response => {
-      this.URL += response.url;
-      this.sock = io(this.URL);
+    // this.http.get<{url}>('http://localhost:3000' + '/socketPort', {
+    //   withCredentials: false
+    // }).subscribe(response => {
+    //   this.URL += response.url;
+    //   console.log(this.URL);
+    //   this.sock = io(this.URL);
       
-    });
+    // });
   }
 
   get socket() {
