@@ -1,7 +1,7 @@
 body {
     background-image: url("../../assets/pozadina.jpg");
     background-size: cover;
-    width: 100vw; height: 100vh;
+    width: 100%; height: 100%;
     font-family: sans-serif;
 }
 
@@ -20,8 +20,8 @@ h1 {
 #board {
     background-color: white;
     border: 2px solid violet;
-    width: 40vw; 
-    height: 70vh;
+    width: 100%;
+    height: 100%;
 
 }
 
@@ -30,35 +30,37 @@ h1 {
     margin-top: 80px;
     /*margin-left: 20%; */
     position: relative;
+    height: 70%;
+    width: 100%;
 }    
 
 #icons {
-    width: 750px;
-    height: 50px;
+    width: 100%;
+    height: 30%;
     display: flex;
     /*justify-content: left;*/
     /*position: absolute;*/
-    margin-top: 40vh;
+    margin-top: 40%;
     
-    padding-top: 1vh;
+    padding-top: 1%;
     position: relative; margin: auto;
 }
 
 .iconBig {
-    width: 4vw;
-    height: 8vh;
-    border: 1px solid #333;
-    padding-left: 3vw;
+    width: 8.33%;
+    height: 40%;
+    border: solid #333;
+    padding-left: 3%;
 }
 
 .iconSmall {
-    width: 22vw;
-    height: 4vh;    
+    width: 50%;
+    height: 40%;
 }
 
 .icon {
-    width: 2vw;
-    height: 4vh;
+    width: 9%;
+    height: 50%;
     border: 1px solid #333;
     float: left;
 }
@@ -74,18 +76,36 @@ h1 {
 #bigIcon1 {
     background-image: url("../../assets/penmidsmall.png");
     border-width: 2px 1px 2px 1px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
 }
 #bigIcon2 {
     background-image: url("../../assets/penmidbig.png");
     border-width: 2px 1px 2px 1px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 #bigIcon3 {
     background-image: url("../../assets/penbig.png");
     border-width: 2px 1px 2px 1px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
 }
 #bigIcon4 {
     background-image: url("../../assets/eraseicon.png");
     border-width: 2px 2px 2px 1px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 #iconColor0 {

@@ -9,10 +9,10 @@ class SocketServer {
     start() {
         //Wait for 'connection' event
         this.io.on('connection', (socket) => {
-            // console.log('New user is here');
+            console.log('New user is here');
             
             //after connection happens wait on socket for event 'JoinGame'
-            socket.on('joinGame', ({code}) => {  
+            socket.on('joinGame', (code) => {  
                 console.log(code);              
                 if (Conteroller.rooms.some((room) => room.roomId === code)) {
                     //set socket to listen on concrete channel

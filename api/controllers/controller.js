@@ -10,7 +10,7 @@ class Controller {
         let room = new Room(uuid.v1().substr(0, 6), req.body.name);
         Controller.rooms.push(room);
         res.status(201);
-        res.json({"code": room.id});
+        res.json(room.id);
     }
 
 }

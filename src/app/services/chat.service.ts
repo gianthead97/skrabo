@@ -32,16 +32,16 @@ export class ChatService extends HttpErrorHandler {
     }
 
     public joinToRoom(code: string): void {
-        this.socketService.socket.emit('joinGame', {code});
+        this.socketService.socket.emit('joinGame', code);
     }
 
     public createNewRoomRequest(roomName: string): void {
         console.log('happens');
-        this.http.post(this.socketService.url + '/createRoom', {"name": roomName})
+        this.http.post<string>(this.socketService.url + '/createRoom', {"name": roomName})
                  .pipe(catchError(super.handleError()))
-                 .subscribe(code => {
+                 .subscribe((code: string) => {
                     this.socketService.socket.emit('joinGame', code);
-                    window.alert(code.code);
+                    console.log('nakon joingame', code);
                  });
     }
 
