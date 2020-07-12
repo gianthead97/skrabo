@@ -44,7 +44,7 @@ class SocketServer {
 
 
             socket.on('disconnect', () => {
-                // console.log('User is disconnected');
+                console.log('User is disconnected');
             });
 
             

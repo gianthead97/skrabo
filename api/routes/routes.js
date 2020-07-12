@@ -7,6 +7,8 @@ router.post("/createRoom", Controller.createRoom);
 
 router.get("/socketPort", (req, res, next) => {
     res.json({url: (process.env.PORT || 3000)});
-})
+});
+
+router.get("/getName/:idSobe", Controller.getNameOfRoom);
 
 module.exports = router;

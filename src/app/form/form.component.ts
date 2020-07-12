@@ -8,10 +8,10 @@ import { ChatService } from '../services/chat.service';
 })
 export class FormComponent implements OnInit {
 
-  private prikaziInfo: boolean = false;
-  private prikaziPravila: boolean = false;
-  private pridruzivanjeSobi: boolean = true;
-  private pravljenjeNoveSobe: boolean = true;
+  private prikaziInfo = false;
+  private prikaziPravila = false;
+  private pridruzivanjeSobi = true;
+  private pravljenjeNoveSobe = true;
   constructor(private chatService: ChatService) {
   }
 
@@ -54,7 +54,7 @@ export class FormComponent implements OnInit {
 
 
   // Metod za komunikaciju sa chat servisom. Postavlja username naseg korisnika.
-  // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje 
+  // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje
   // nove sobe chat servis vrsi neophodne operacije.
   public onUnosImena(username: string, roomCode: string, roomName: string) {
     this.chatService.setUsername(username);

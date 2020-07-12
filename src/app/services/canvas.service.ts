@@ -11,10 +11,10 @@ import { SocketService } from './socket.service';
 export class CanvasService {
 
   private url = 'http://localhost:3000';
-  
+
 
   constructor(private socketService: SocketService) {
-    
+
   }
 
   public sendCanvasData(data) {
@@ -23,7 +23,7 @@ export class CanvasService {
 
   public getCanvasEvent() {
     return new Observable((observer) => {
-      this.socketService.socket.on('drawing', (data) => {
+      this.socketService.socket.on('drawing', (data: CanvasData) => {
         observer.next(data);
       });
     });

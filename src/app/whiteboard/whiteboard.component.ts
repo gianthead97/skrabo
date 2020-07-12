@@ -1,126 +1,117 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CanvasService } from '../services/canvas.service';
-import { CanvasData } from '../models/canvasData.model';
-const Atrament = require('atrament');
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-whiteboard',
   templateUrl: './whiteboard.component.html',
   styleUrls: ['./whiteboard.component.css']
 })
-export class WhiteboardComponent implements OnInit {
+export class WhiteboardComponent implements OnInit, OnDestroy {
 
   board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   active = false;
-  atrament;
+  htmlCanvas: HTMLElement;
+  rectCanvas: ClientRect;
   penSize: number;
   penColor: string;
+  subscriptions: Subscription[] = [];
 
   constructor(private canvasService: CanvasService) {
-    this.canvasService
-        .getCanvasEvent()
-        .subscribe((data) => this.drawOthersData(data));
+    this.subscriptions.push(this.canvasService
+      .getCanvasEvent()
+      .subscribe((data: string) => {
+        const img = new Image();
+        img.src = data;
+        this.ctx.drawImage(img, 0, 0);
+      }));
   }
 
-
-  drawOthersData(stroke): void {
-    //This piece of code is taken from 
-    //https://github.com/jakubfiala/atrament.js
-    this.atrament.mode = stroke.mode;
-    this.atrament.weight = stroke.weight;
-    this.atrament.smoothing = stroke.smoothing;
-    this.atrament.color = stroke.color;
-    this.atrament.adaptiveStroke = stroke.adaptiveStroke;
-
-    // don't want to modify original data
-    const points = stroke.points.slice();
-
-    const firstPoint = points.shift();
-    // // beginStroke moves the "pen" to the given position and starts the path
-    this.atrament.beginStroke(firstPoint.x, firstPoint.y);
-
-    let prevPoint = firstPoint;
-    while (points.length > 0) {
-      const point = points.shift();
-
-    //   // the `draw` method accepts the current real coordinates
-    //   // (i. e. actual cursor position), and the previous processed (filtered)
-    //   // position. It returns an object with the current processed position.
-      const { x, y } = this.atrament.draw(point.x, point.y, prevPoint.x, prevPoint.y);
-
-    //   // the processed position is the one where the line is actually drawn to
-    //   // so we have to store it and pass it to `draw` in the next step
-      prevPoint = { x, y };
+  ngOnDestroy(): void {
+        this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
     }
 
-    // // endStroke closes the path
-    this.atrament.endStroke(prevPoint.x, prevPoint.y);
-  }
-
-  sendCanvasData(stroke) {
-    this.canvasService.sendCanvasData(stroke);
+  sendCanvasData() {
+    this.canvasService.sendCanvasData(this.board.toDataURL());
   }
 
   ngOnInit(): void {
     this.penColor = 'black';
     this.penSize = 5;
-
+    this.htmlCanvas = document.getElementById('board');
+    this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
     this.board = (document.getElementById('board') as HTMLCanvasElement);
     this.ctx = this.board.getContext('2d');
-    this.atrament = new Atrament(this.board, {
-      width: this.board.offsetWidth,
-      height: this.board.offsetHeight,
-      smoothing: 1.5,
-      adaptiveStroke: false
+    this.board.height = this.board.offsetHeight;
+    this.board.width = this.board.offsetWidth;
+    this.board.addEventListener('mousedown', (evt) => {
+      this.sendCanvasData();
+      this.startDrawing(evt);
     });
-    this.atrament.recordStrokes = true;
-    this.atrament.addEventListener('strokerecorded', ({ stroke }) => {
-                    this.sendCanvasData(stroke);
-                  });
-    window.onresize = () => {
-      this.atrament.height = this.board.offsetHeight; 
-      this.atrament.width = this.board.offsetWidth;
-      console.log(this.atrament.width, this.atrament.height);
-    };
+    this.board.addEventListener('mouseup', (evt) => {
+      this.sendCanvasData();
+      this.endDrawing();
+    });
+    this.board.addEventListener('mousemove', (evt) => {
+      this.sendCanvasData();
+      this.draw(evt);
+    });
 
   }
 
 
 
+  startDrawing(e: MouseEvent): void {
+
+    this.active = true;
+    this.draw(e);
 
 
-  startDrawing(e: MouseEvent): void {}
+  }
 
   endDrawing(): void {
 
+    this.active = false;
+    this.ctx.beginPath();
   }
 
-  draw(e: MouseEvent, penSize?: number, penColor?: string){
+  draw(e: MouseEvent): void {
+
+
+    if (!this.active) { return; }
+
+    this.ctx.lineWidth = this.penSize;
+    this.ctx.strokeStyle = this.penColor;
+    this.ctx.lineCap = 'round';
+    this.ctx.lineTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
+    this.ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
 
   }
 
 
   onClearCanvas(): void {
-    this.atrament.clear();
+    this.ctx.clearRect(0, 0, this.board.width, this.board.height);
+    this.sendCanvasData();
   }
 
   onPenSmall(): void {
-    this.atrament.weight = 5;
+    this.penSize = 5;
   }
 
   onPenMidSmall(): void {
-    this.atrament.weight = 10;
+    this.penSize = 10;
   }
   onPenMidBig(): void {
-    this.atrament.weight = 20;
+    this.penSize = 20;
   }
   onPenBig(): void {
-    this.atrament.weight= 35;
+    this.penSize = 35;
   }
 
   public setColor() {
-    this.atrament.color = this.penColor;
     return { background: this.penColor };
   }
 

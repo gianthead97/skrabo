@@ -13,6 +13,14 @@ class Controller {
         res.json(room.id);
     }
 
+
+    static getNameOfRoom(req, res, next) {
+       
+        console.log(Controller.rooms);
+        let room = Controller.rooms.find(x => x.roomId === req.params.idSobe);
+        res.status(200).json(room.roomName);
+    }
+
 }
 
 
