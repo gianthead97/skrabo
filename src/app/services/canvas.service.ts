@@ -11,7 +11,7 @@ import { SocketService } from './socket.service';
 export class CanvasService {
 
   // private url = 'http://localhost:3000';
-  private url = 'https://skrabo.herokuapp.com:3000';
+  private url = 'https://skrabo.herokuapp.com:' + (process.env.PORT || 3000);
 
 
 

@@ -19,7 +19,7 @@ export class ChatService extends HttpErrorHandler {
     private user: UserData;
     private _code: string;
     private _roomName: string;
-    private url = 'https://skrabo.herokuapp.com:3000';
+    private url = 'https://skrabo.herokuapp.com:' + (process.env.PORT || 3000);
     //private url = 'http://localhost:3000';
 
 
