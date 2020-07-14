@@ -10,7 +10,9 @@ import { SocketService } from './socket.service';
 })
 export class CanvasService {
 
-  private url = 'http://localhost:3000';
+  // private url = 'http://localhost:3000';
+  private url = 'https://skrabo.herokuapp.com:3000';
+
 
 
   constructor(private socketService: SocketService) {

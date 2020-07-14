@@ -19,7 +19,8 @@ export class ChatService extends HttpErrorHandler {
     private user: UserData;
     private _code: string;
     private _roomName: string;
-    private url = 'http://localhost:3000/';
+    private url = 'https://skrabo.herokuapp.com:3000';
+    //private url = 'http://localhost:3000';
 
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
