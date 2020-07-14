@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SocketService {
-  private URL: string = 'https://skrabo.herokuapp.com:' + (process.env.PORT || 3000);
+  private URL: string = '0.0.0.0:' + (process.env.PORT || 3000);
   //private URL = 'http://localhost:3000';
   private sock = io(this.URL);
   constructor(private http: HttpClient) {
