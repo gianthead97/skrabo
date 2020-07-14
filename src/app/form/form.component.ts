@@ -60,8 +60,10 @@ export class FormComponent implements OnInit {
     this.chatService.setUsername(username);
     if (roomCode !== '') {
       this.chatService.joinToRoom(roomCode);
+      this.chatService.code = roomCode;
     } else if (roomName !== '') {
       this.chatService.createNewRoomRequest(roomName);
+      this.chatService.roomName = roomName;
     }
 
   }

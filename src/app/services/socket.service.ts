@@ -11,7 +11,6 @@ export class SocketService {
   private URL = 'http://localhost:3000';
   private sock = io(this.URL);
   constructor(private http: HttpClient) {
-    console.log('socket ', this.sock);
   }
 
   get socket() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ChatService} from '../services/chat.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-playground',
@@ -8,14 +8,18 @@ import {Observable} from 'rxjs';
   styleUrls: ['./playground.component.css']
 })
 export class PlaygroundComponent implements OnInit {
-
+  roomName: Observable<string>;
   constructor(private chatService: ChatService) {
-   this.getRoomName();
+    this.roomName = this.getRoomName();
   }
 
   ngOnInit(): void {
   }
-  getRoomName(): void {
-    this.chatService.getRoomName().subscribe(name => console.info(name));
+  getRoomName(): Observable<string> {
+    if (this.chatService.roomName) {
+      return of(this.chatService.roomName);
+    } else {
+      return this.chatService.getRoomName();
+    }
   }
 }

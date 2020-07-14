@@ -18,7 +18,8 @@ export class ChatService extends HttpErrorHandler {
 
     private user: UserData;
     private _code: string;
-    private url = "http://localhost:3000/";
+    private _roomName: string;
+    private url = 'http://localhost:3000/';
 
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
@@ -45,10 +46,10 @@ export class ChatService extends HttpErrorHandler {
         this.http.post<string>(this.socketService.url + '/createRoom', {name: roomName})
                  .pipe(catchError(super.handleError()))
                  .subscribe((code: string) => {
-                    this.socketService.socket.emit('joinGame', code);
-                    this._code = code;
                     window.alert(code);
-                 });
+                    this.socketService.socket.emit('joinGame', code);
+
+                });
     }
 
     public sendMessage(message) {
@@ -66,11 +67,27 @@ export class ChatService extends HttpErrorHandler {
             });
         });
     }
+    getRoomName(): Observable<string> {
+
+        return this.http.get<string>(this.url + 'getName/' + this._code);
+    }
+
+
     get code(): string {
         return this._code;
     }
-    getRoomName(): Observable<string> {
-        console.log('getRoomName');
-        return this.http.get<string>(this.url + "getName/" + this._code);
+
+
+    set code(value: string) {
+        this._code = value;
     }
+
+    get roomName(): string {
+        return this._roomName;
+    }
+
+    set roomName(value: string) {
+        this._roomName = value;
+    }
+
 }

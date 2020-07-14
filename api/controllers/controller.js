@@ -3,7 +3,9 @@ const uuid = require('uuid');
 
 class Controller {
 
+
     static rooms = [];
+    
     
     static createRoom(req, res, next) {
         console.log(req.body.name);
@@ -12,7 +14,6 @@ class Controller {
         res.status(201);
         res.json(room.id);
     }
-
 
     static getNameOfRoom(req, res, next) {
        
