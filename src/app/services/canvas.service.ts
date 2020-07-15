@@ -10,11 +10,6 @@ import { SocketService } from './socket.service';
 })
 export class CanvasService {
 
-  // private url = 'http://localhost:3000';
-  private url = '0.0.0.0:' + (process.env.PORT || 3000);
-
-
-
   constructor(private socketService: SocketService) {
     
   }

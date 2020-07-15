@@ -19,7 +19,7 @@ export class ChatService extends HttpErrorHandler {
     private user: UserData;
     private _code: string;
     private _roomName: string;
-    private url = '0.0.0.0:' + (process.env.PORT || 3000);
+    private url = 'http://0.0.0.0:' + (process.env.PORT || 3000);
     //private url = 'http://localhost:3000';
 
 
@@ -70,7 +70,7 @@ export class ChatService extends HttpErrorHandler {
     }
     getRoomName(): Observable<string> {
 
-        return this.http.get<string>(this.url + 'getName/' + this._code);
+        return this.http.get<string>(this.url + '/getName/' + this._code);
     }
 
 
