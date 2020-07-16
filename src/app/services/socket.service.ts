@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SocketService {
-  private URL = '';
-  // private URL = 'http://localhost:3000';
+  // private URL = '';
+  private URL = 'http://localhost:3000';
   private sock = io(this.URL);
   constructor(private http: HttpClient) {
   
