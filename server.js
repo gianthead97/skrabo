@@ -9,6 +9,6 @@ const socketServer = require('./api/service/socketServer');
 new socketServer(server).start();
 
 console.log(process.env.PORT);
-server.listen(port, 'localhost', () => {
+server.listen(port, () => {
   console.log(`Server listen on port ${port}.`);
 });
