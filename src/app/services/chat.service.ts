@@ -19,8 +19,8 @@ export class ChatService extends HttpErrorHandler {
     private user: UserData;
     private _code: string;
     private _roomName: string;
-    private url = 'skrabo.herokuapp.com:' + (process.env.PORT || 3000);
-    //private url = 'http://localhost:3000';
+    private url = '0.0.0.0:80';
+    // private url = 'http://localhost:3000';
 
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
@@ -38,7 +38,6 @@ export class ChatService extends HttpErrorHandler {
 
     public joinToRoom(code: string): void {
         this._code = code;
-        window.alert(code);
         this.socketService.socket.emit('joinGame', code);
     }
 
