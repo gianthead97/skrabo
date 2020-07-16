@@ -1,4 +1,3 @@
-
 # Project 14-Škrabo
 
 Igrac crta odabranu rec dok ostali igraci pogadjaju u chatu sve dok se njihova napisana rec ne poklopi sa odabranom reci koja se crta. Igraci menjaju poziciju ko crta i skupljaju poene u odnosu na to koliko su brzo pogodili.
@@ -9,3 +8,6 @@ Igrac crta odabranu rec dok ostali igraci pogadjaju u chatu sve dok se njihova n
 - [Nikola Janković, 77/2016](https://gitlab.com/gianthead97)
 - [Ana Marković, 127/2016](https://gitlab.com/anamarkovic)
 - [Anđela Milićević, 53/2016](https://gitlab.com/andjaam)
+
+
+## [KLIKNI DA ZAPOČNEŠ IGRU] (https://skrabo.herokuapp.com)
