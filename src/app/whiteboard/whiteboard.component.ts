@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import { CanvasService } from '../services/canvas.service';
 import {Subscription} from 'rxjs';
 
@@ -28,7 +28,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
       }));
   }
 
-  ngOnDestroy(): void {
+   ngOnDestroy(): void {
         this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
     }
 
@@ -43,8 +43,12 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
     this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
     this.board = (document.getElementById('board') as HTMLCanvasElement);
     this.ctx = this.board.getContext('2d');
+    // Ovaj deo je zbog resizinga
     this.board.height = this.board.offsetHeight;
     this.board.width = this.board.offsetWidth;
+    // ***********************
+
+
     this.board.addEventListener('mousedown', (evt) => {
       this.sendCanvasData();
       this.startDrawing(evt);
@@ -78,7 +82,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
   draw(e: MouseEvent): void {
 
-
+    console.warn("DRAW");
     if (!this.active) { return; }
 
     this.ctx.lineWidth = this.penSize;

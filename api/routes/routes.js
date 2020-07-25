@@ -11,4 +11,9 @@ router.get("/socketPort", (req, res, next) => {
 
 router.get("/getName/:idSobe", Controller.getNameOfRoom);
 
+/*
+path that catches data from
+dialog form
+ */
+router.patch("/sendRules", Controller.setRules);
 module.exports = router;

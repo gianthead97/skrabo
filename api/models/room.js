@@ -1,8 +1,12 @@
+const LanguageEnum = Object.freeze({"ENGLISH": 0, "SRPSKI": 1});
+
 module.exports = class Room {
     #players = [];
+    #language
     #closed = false;
     #numOfRounds;
-    constructor(roomId, roomName) {
+    #duration;
+    constructor(roomId, roomName, language, numOfRounds, duration) {
         this.id = roomId;
         this.roomName = roomName;
     }
@@ -12,6 +16,14 @@ module.exports = class Room {
 
     set numberOfRounds(num) {
         this.#numOfRounds = num;
+    }
+
+    set language(language) {
+        this.#language = ("srpski" === language ? LanguageEnum.SRPSKI : LanguageEnum.ENGLISH);
+    }
+
+    set duration(duration) {
+        this.#duration = duration;
     }
 
     get isClosed() {
