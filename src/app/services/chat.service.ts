@@ -1,4 +1,4 @@
-import {Injectable, Input, isDevMode, OnDestroy} from '@angular/core';
+import {Injectable, Input, OnDestroy} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
         this.user = new UserData('', 0, '', '');
-    
     }
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
@@ -51,7 +50,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public createNewRoomRequest(roomName: string): void {
-        console.log('createRoomReq');
         this.http.post<string>(this.socketService.url + '/createRoom', {name: roomName})
                  .pipe(catchError(super.handleError()))
                  .subscribe((code: string) => {

@@ -12,7 +12,7 @@ import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 import { ChatComponent } from './chat/chat.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { GameInfoFormComponent } from './game-info-form/game-info-form.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -31,8 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // tslint:disable-next-line: deprecation
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

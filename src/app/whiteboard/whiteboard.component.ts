@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
 import { CanvasService } from '../services/canvas.service';
 import {Subscription} from 'rxjs';
 
@@ -7,9 +7,11 @@ import {Subscription} from 'rxjs';
   templateUrl: './whiteboard.component.html',
   styleUrls: ['./whiteboard.component.css']
 })
-export class WhiteboardComponent implements OnInit, OnDestroy {
+export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit{
+  
 
-  board: HTMLCanvasElement;
+  @ViewChild('whiteboard', {static: true})
+  board: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
   active = false;
   htmlCanvas: HTMLElement;
@@ -27,40 +29,41 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
         this.ctx.drawImage(img, 0, 0);
       }));
   }
+  ngAfterViewInit(): void {
+    this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
+    this.ctx = this.board.nativeElement.getContext('2d');
+    // Ovaj deo je zbog resizinga
+    this.board.nativeElement.height = this.board.nativeElement.offsetHeight;
+    this.board.nativeElement.width = this.board.nativeElement.offsetWidth;
+    // ***********************
 
-   ngOnDestroy(): void {
-        this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-    }
+
+    this.board.nativeElement.addEventListener('mousedown', (evt) => {
+      this.sendCanvasData();
+      this.startDrawing(evt);
+    });
+    this.board.nativeElement.addEventListener('mouseup', (evt) => {
+      this.sendCanvasData();
+      this.endDrawing();
+    });
+    this.board.nativeElement.addEventListener('mousemove', (evt) => {
+      this.sendCanvasData();
+      this.draw(evt);
+    });
+
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+  
 
   sendCanvasData() {
-    this.canvasService.sendCanvasData(this.board.toDataURL());
+    this.canvasService.sendCanvasData(this.board.nativeElement.toDataURL());
   }
 
   ngOnInit(): void {
     this.penColor = 'black';
     this.penSize = 5;
-    this.htmlCanvas = document.getElementById('board');
-    this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
-    this.board = (document.getElementById('board') as HTMLCanvasElement);
-    this.ctx = this.board.getContext('2d');
-    // Ovaj deo je zbog resizinga
-    this.board.height = this.board.offsetHeight;
-    this.board.width = this.board.offsetWidth;
-    // ***********************
-
-
-    this.board.addEventListener('mousedown', (evt) => {
-      this.sendCanvasData();
-      this.startDrawing(evt);
-    });
-    this.board.addEventListener('mouseup', (evt) => {
-      this.sendCanvasData();
-      this.endDrawing();
-    });
-    this.board.addEventListener('mousemove', (evt) => {
-      this.sendCanvasData();
-      this.draw(evt);
-    });
 
   }
 
@@ -82,7 +85,6 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
   draw(e: MouseEvent): void {
 
-    console.warn("DRAW");
     if (!this.active) { return; }
 
     this.ctx.lineWidth = this.penSize;
@@ -97,7 +99,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
 
   onClearCanvas(): void {
-    this.ctx.clearRect(0, 0, this.board.width, this.board.height);
+    this.ctx.clearRect(0, 0, this.board.nativeElement.width, this.board.nativeElement.height);
     this.sendCanvasData();
   }
 
