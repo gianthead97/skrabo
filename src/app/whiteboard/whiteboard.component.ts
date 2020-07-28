@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   
 
-  @ViewChild('whiteboard', {static: false})
+  @ViewChild('whiteboard', {static: true})
   board: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
   active = false;
