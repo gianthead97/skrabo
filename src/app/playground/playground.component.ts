@@ -14,9 +14,9 @@ export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
   constructor(private chatService: ChatService, private dialog: MatDialog) {
     this.roomName = this.getRoomName();
-    this.dialog.open(GameInfoFormComponent, {
-      width: "450"
-    });
+    //this.dialog.open(GameInfoFormComponent, {
+      //width: "450"
+    //});
   }
 
   ngOnInit(): void {

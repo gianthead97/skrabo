@@ -7,14 +7,13 @@ import {Subscription} from 'rxjs';
   templateUrl: './whiteboard.component.html',
   styleUrls: ['./whiteboard.component.css']
 })
-export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit{
+export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   
 
-  @ViewChild('whiteboard', {static: true})
+  @ViewChild('whiteboard', {static: false})
   board: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
   active = false;
-  htmlCanvas: HTMLElement;
   rectCanvas: ClientRect;
   penSize: number;
   penColor: string;
@@ -30,7 +29,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit{
       }));
   }
   ngAfterViewInit(): void {
-    this.rectCanvas = this.htmlCanvas.getBoundingClientRect();
+    this.rectCanvas = this.board.nativeElement.getBoundingClientRect();
     this.ctx = this.board.nativeElement.getContext('2d');
     // Ovaj deo je zbog resizinga
     this.board.nativeElement.height = this.board.nativeElement.offsetHeight;
@@ -50,8 +49,17 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit{
       this.sendCanvasData();
       this.draw(evt);
     });
-
   }
+
+
+
+  ngOnInit(): void {
+    this.penColor = 'black';
+    this.penSize = 5;
+    
+  }
+
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -61,11 +69,6 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit{
     this.canvasService.sendCanvasData(this.board.nativeElement.toDataURL());
   }
 
-  ngOnInit(): void {
-    this.penColor = 'black';
-    this.penSize = 5;
-
-  }
 
 
 
