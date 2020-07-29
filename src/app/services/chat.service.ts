@@ -30,19 +30,13 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
-        this.user = new UserData('', 0, '', '');
+        this.user = new UserData('', 0, '', '', false);
     }
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
-    public setUsername(username: string) {
-        this.user = new UserData(username, 0, '', '');
-    }
-
-    public getColor() {
-        return this.user.color;
-    }
 
     public joinToRoom(code: string): void {
         this._code = code;
@@ -50,6 +44,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public createNewRoomRequest(roomName: string): void {
+        this.adminPermission = true;
         this.http.post<string>(this.socketService.url + '/createRoom', {name: roomName})
                  .pipe(catchError(super.handleError()))
                  .subscribe((code: string) => {
@@ -75,6 +70,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             });
         });
     }
+
     getRoomName(): Observable<string> {
 
         return this.http.get<string>(this.url + '/getName/' + this._code);
@@ -90,21 +86,40 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             });
         this.subscriptions.push(sub);
     }
+
+
     get code(): string {
         return this._code;
-    }
-
-
-    set code(value: string) {
-        this._code = value;
     }
 
     get roomName(): string {
         return this._roomName;
     }
 
+    get adminPermission(): boolean {
+        return this.user.isAdmin;
+    }
+
+    get userColor() {
+        return this.user.color;
+    }
+
     set roomName(value: string) {
         this._roomName = value;
     }
+
+    set code(value: string) {
+        this._code = value;
+    }
+
+    set username(username: string) {
+        this.user.name = username;
+    }
+
+    set adminPermission(newValue: boolean) {
+        this.user.isAdmin = newValue;
+    }
+
+  
 
 }

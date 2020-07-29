@@ -1,7 +1,9 @@
 module.exports = class Player {
     #_points = 0;
-    constructor(name) {
+    #_admin;
+    constructor(name, admin) {
         this.#name = name;
+        this.#_admin = admin;
     }
 
 
@@ -13,7 +15,9 @@ module.exports = class Player {
         this.#_points += newPoints;
     }
 
-
+    get admin() {
+        return this.#_admin;
+    }
 
 
 }

@@ -13,6 +13,8 @@ import { ChatComponent } from './chat/chat.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { GameInfoFormComponent } from './game-info-form/game-info-form.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PlayerComponent } from './player/player.component';
+import { PlayerListComponent } from './player-list/player-list.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
     WhiteboardComponent,
     ChatComponent,
     PlaygroundComponent,
-    GameInfoFormComponent
+    GameInfoFormComponent,
+    PlayerComponent,
+    PlayerListComponent
   ],
   imports: [
     BrowserModule,

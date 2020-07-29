@@ -57,7 +57,7 @@ export class FormComponent implements OnInit {
   // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje
   // nove sobe chat servis vrsi neophodne operacije.
   public onUnosImena(username: string, roomCode: string, roomName: string) {
-    this.chatService.setUsername(username);
+    this.chatService.username = username;
     if (roomCode !== '') {
       this.chatService.joinToRoom(roomCode);
       this.chatService.code = roomCode;

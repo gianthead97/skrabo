@@ -12,15 +12,19 @@ import { GameInfoFormComponent } from '../game-info-form/game-info-form.componen
 })
 export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
+  
   constructor(private chatService: ChatService, private dialog: MatDialog) {
     this.roomName = this.getRoomName();
-    //this.dialog.open(GameInfoFormComponent, {
-      //width: "450"
-    //});
+    if (this.chatService.adminPermission) {
+      this.dialog.open(GameInfoFormComponent, {
+        width: "450"
+      });
+    }
   }
 
   ngOnInit(): void {
   }
+
   getRoomName(): Observable<string> {
     if (this.chatService.roomName) {
       return of(this.chatService.roomName);

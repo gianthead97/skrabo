@@ -15,13 +15,20 @@ export class GameInfoFormComponent implements OnInit {
       rounds: [''],
       language: ['', [Validators.required]]
     });
+    this.gameInfoForm.patchValue({
+      duration: "30",
+      rounds: "2",
+      language: "srpski"
+    });
   }
+
 
   ngOnInit(): void {
   }
 
+
   public submitForm(data): void {
-    console.log(data);
+    
     this.chatService.sendRules(data);
   }
 

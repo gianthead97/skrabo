@@ -83,7 +83,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   endDrawing(): void {
 
     this.active = false;
-    this.ctx.beginPath();
+    this.ctx.closePath();
   }
 
   draw(e: MouseEvent): void {
