@@ -1,9 +1,19 @@
+const Controller = require("../controllers/controller");
+const SocketController = require("../controllers/socketController");
+
+/**
+ * 
+ * @class Player
+ */
 module.exports = class Player {
     #_points = 0;
     #_admin;
-    constructor(name, admin) {
-        this.#name = name;
+    #_name;
+    #_code;
+    constructor(name, admin, code) {
+        this.#_name = name;
         this.#_admin = admin;
+        this.#_code = code;
     }
 
 
@@ -13,6 +23,7 @@ module.exports = class Player {
 
     increasePoints(newPoints) {
         this.#_points += newPoints;
+        SocketController.emitChangeInRoom(this.#_code);
     }
 
     get admin() {
@@ -21,3 +32,4 @@ module.exports = class Player {
 
 
 }
+

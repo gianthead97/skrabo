@@ -1,43 +1,103 @@
-const Controller = require('./controller')
-module.exports.onDisconnect = () => {
-    console.log('User is disconnected');
-};
+const Controller = require('./controller');
+const Player = require('../models/player');
 
-let onNewMessage = function(code) {
-        return function({ message, color })  {
-        this.io.in(code).emit('message', {
-            'message': message,
-            'color': color
-        });
+/**
+ * @class SocketController
+ * @description Class which implements methods for handling events which 
+ *              are sent via TCP socket
+ */
+module.exports = class SocketController {
+
+    /**
+    * @description Map that contains all channel ids and their associated sockets 
+    */
+    static sockets = new Map(); 
+
+    
+    /** 
+    * @description Function which handle event that contains data for drawing  
+    *              which comes from channel with some code
+    *              and broadcasts to all other clients that listening on same channel 
+    * @param {string} code Channel id
+    * @returns {Function} Callback function which will broadcast object that contains necessary data 
+    *                   to other client for drawing elements on canvas when some client sends to channel 
+    */
+    static onClientDrawing(code) {
+        console.warn(code);
+        return function(data) {
+            this.to(code).emit('drawing', data);
+        };
     }
-};
 
-
-let onClientDrawing =  function(code) {
-    console.warn(code);
-    return function(data) {
-        this.to(code).emit('drawing', data);
-    };
-}
-
-
-
-module.exports.onJoinGame = function(socket) {
-    return function(code) {
-        console.log(code);
-        if (Controller.rooms.some((room) => room.roomId === code)) {
-            //set socket to listen on concrete channel
-            console.log('New user is in the room.');
-            socket.join(code);
-            //waiting for drawing event and broadast data to all players in room
-            socket.on('client-drawing', onClientDrawing(code).bind(socket));
-
-            //waiting for message data and broadcast
-            socket.on('new-message', onNewMessage(code).bind(this));
-
-        } else {
-            socket.emit('error-msg', `Room with code: ${code} does not exist.`);
+    /** 
+    * @description Function which handle message which comes from channel with some code
+    *               and broadcasts to all other clients that listening on same channel 
+    * @param {string} code Channel id
+    * @returns {Function} Callback function which will broadcast new message when some client sends to channel 
+    */
+    static onNewMessage(code) {
+        return function({ message, color })  {
+            this.io.in(code).emit('message', {
+                'message': message,
+                'color': color
+            });
         }
+    }
 
-    };
+
+
+    /**
+     * @description Main function that handle connection event of new clients to server, and call all other
+     *              callbacks that are necessary.
+     * @param {SocketIO.Socket} socket 
+     */
+    static onJoinGame(socket) {
+        return function({code, username}) {
+            console.log(code);
+            let room = Controller.rooms.find((room) => room.roomId === code);
+            if (room) {
+                //set socket to listen on concrete channel
+                console.log('New user is in the room.');
+                socket.join(code);
+                
+                room.joinNewPlayer(new Player(username, false, code));
+                if (SocketController.sockets.has(code)) {
+                    SocketController.sockets.get(code).push(socket);
+                } else {
+                    SocketController.sockets.set(code, [socket]);
+                }
+                //waiting for drawing event and broadast data to all players in room
+                socket.on('client-drawing', onClientDrawing(code).bind(socket));
+    
+                //waiting for message data and broadcast
+                socket.on('new-message', onNewMessage(code).bind(this));
+    
+            } else {
+                socket.emit('error-msg', `Room with code: ${code} does not exist.`);
+            }
+    
+        };
+    }
+
+
+    /**
+     * @description Function which log when some user is gone
+     */
+    static onDisconnect() {
+        console.log('User is disconnected');
+    }
+
+
+    /**
+     * @description For every change in room with `code` notify all cients that something happened.
+     * @param {string} code 
+     */
+    static emitChangeInRoom(code) {
+        SocketController.sockets.get(code).foreach(socket => socket.to(code).emit("changeInRoom"));
+    }
 }
+
+
+
+
+

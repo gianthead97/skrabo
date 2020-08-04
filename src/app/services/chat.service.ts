@@ -1,4 +1,4 @@
-import {Injectable, Input, OnDestroy} from '@angular/core';
+import { Injectable, Input, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { HttpErrorHandler } from '../utils/http-error-handler.model';
 import { SocketService } from './socket.service';
 import { Rules } from '../models/rules.model';
 import { Subscription } from 'rxjs';
+import { Player } from '../models/player.model';
 
 @Injectable({
     providedIn: 'root',
@@ -22,7 +23,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     private _code: string;
     private _roomName: string;
 
-    // FIXME url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
+    // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
 
     private url = 'http://localhost:3000';
@@ -40,7 +41,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public joinToRoom(code: string): void {
         this._code = code;
-        this.socketService.socket.emit('joinGame', code);
+        this.socketService.socket.emit('joinGame', {code: code, username: this.username});
     }
 
     public createNewRoomRequest(roomName: string): void {
@@ -50,8 +51,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
                  .subscribe((code: string) => {
                     window.alert(code);
                     this._code = code;
-                    this.socketService.socket.emit('joinGame', code);
-
+                    this.socketService.socket.emit('joinGame', {code: code , username: this.username});
                 });
     }
 
@@ -88,6 +88,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
 
+    public getPlayers(): Observable<Player[]> {
+        console.debug('getPlayers');
+        return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);  
+    }
+
     get code(): string {
         return this._code;
     }
@@ -102,6 +107,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     get userColor() {
         return this.user.color;
+    }
+
+    get username() {
+        return this.user.name;
     }
 
     set roomName(value: string) {
