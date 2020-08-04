@@ -1,18 +1,11 @@
 <head>
 	<link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
+	<link href='https://fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
 </head>
 
 <body>
 	<div class="content">
-		<h1 style="cursor:default">Škrabo
-		  	<div class="olovka olovka_naslov">
-				<div class="gumica"></div>
-				<div class="sredina"></div>
-				<div class="spic">
-					<span class="vrh"></span>
-				</div>
-     		</div>
-		</h1>
+		<h1 style="cursor:default">Škrabo</h1>
 		
 		<div class="alert-primary">
 			<div class="form-group">
@@ -35,7 +28,7 @@
 				<button class="dugme-osnovno" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Igraj</button>
 			</div>
 			<div class="dugme">
-				<button class="dugme-osnovno" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruzi se postojecoj sobi.</button>
+				<button class="dugme-osnovno" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruži se privatnoj sobi</button>
 				<div [hidden]="getPridruzivanjeSobi">
 					<label for="kodSobe">Unesi ime sobe:</label>
 					<br>
@@ -59,14 +52,13 @@
 		</div>
 		
 		<div class="sadrzaj">
-			<h2 (click)="onPrikaziInfo()" style="cursor:help">O nama</h2>
+			<h2 (click)="onPrikaziInfo()" style="cursor:pointer">O nama</h2>
 			<p *ngIf="getPrikaziInfo" class="tekst">
-				Ovo je tekst o nama... <br> 
-				Ovo je tekst o nama... <br>
-				Ovo je tekst o nama... <br>
+				Škrabo je igra crtanja i pogađanja. Jedan igrač crta odabranu reč, dok ostali
+				pogađaju u četu koja je to reč. Ko pogodi dobija poene. Igrač sa najviše poena je pobednik.
 			</p>
 			
-			<h2 (click)="onPrikaziPravila()" style="cursor:help">Pravila igre</h2>
+			<h2 (click)="onPrikaziPravila()" style="cursor:pointer">Pravila igre</h2>
 			<p *ngIf="getPrikaziPravila" class="tekst">
 				Uputstva za igru idu ovde... <br>
 				Uputstva za igru idu ovde... <br>

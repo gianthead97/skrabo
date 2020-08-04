@@ -1,4 +1,4 @@
-* {
+  * {
     margin: 0;
     padding: 0;
   }
@@ -6,7 +6,7 @@
   body {
     background-image: url("../../assets/pozadina.jpg");
     background-size: cover;
-    width: 100vw; height: 100vh;
+    width: 100vw; height: 120vh;
     font-family: sans-serif;
   }
   
@@ -19,28 +19,20 @@
   h1 {
     display: block; width: 100%;
     text-align: center; padding: 10px;
-    font-size: 60px; font-weight: 600;
+    font-size: 80px; font-weight: 600;
     color: lightseagreen;
     position: relative; margin-top:10px;
+    font-family: 'Annie Use Your Telescope';
   }
-  
-  .content h1 .olovka_naslov {top: initial; left: initial; display: inline-block; transform: rotate(30deg)}
-  .olovka_naslov .sredina {width: 14px; height: 40px}
-  .olovka_naslov .sredina:after {left: 2px; height: 40px; width: 1px}
-  .olovka_naslov .sredina:before {right: 2px; height: 40px; width: 1px}
-  .olovka_naslov .gumica {width: 14px; height: 8px}
-  .olovka_naslov .spic {border-top: 14px solid #ffbf80; border-right: 6px solid transparent; border-left: 6px solid transparent; position: relative; width: 0px}
-  .olovka_naslov .spic:before {height: 15px; top:-16px; left:-4px}
-  .olovka_naslov .spic:after {height: 15px; top:-16px; right:-4px}
-  .olovka_naslov .vrh {border-top: 6px solid #0a0a0a; border-right: 3px solid transparent; border-left: 3px solid transparent; top: -5px; right: -2px}
-  
+
   .sadrzaj {
     height: max-content; width: 20%;
     text-align: center; font-size: 30px;
     color: violet; margin: 40px 10px 10px 40px;
     position: absolute; top: 150px; left: 70%;
   }
-  h2 {font-size: 30px}
+  h2 {font-size: 40px; font-family: 'Annie Use Your Telescope';}
+  h2:hover {text-decoration: underline}
   
   /*OKVIR ZA CRTANJE*/
   .okvir {background: #fff; width: 400px; height: 200px; margin: 10px 50px; position: relative}
@@ -119,11 +111,10 @@
   }
   
   #btnPridruziSeSobi {
-    background-color: darkorange;
-  }
-
-  #btnNovaSoba {
     background-color: blueviolet;
+  }
+  #btnNovaSoba {
+    background-color: rgb(255, 51, 153);
   }
   
   .alert-primary {
