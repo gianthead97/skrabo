@@ -7,13 +7,19 @@
 	<div class="content">
 		<h1 style="cursor:default">Škrabo</h1>
 		
-		<div class="alert-primary">
+		<div class="container">
+		<div class="row">
+		
+		<div class="col-4" style="margin-left: 5%">
+		<div class="alert alert-primary">
 			<div class="form-group">
-				<label for="ime">Unesi ime:</label>
-				<input type="text" id="ime" class="form-control" #ime>
+				<label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
+				<input type="text" id="ime" class="form-control mb-3" #ime>
 			</div>
 			
 			<div class="okvir">
+				<img src = "assets/source.gif">
+				<!--
 				<span class="animacija"></span>
 				<div class="olovka">
 					<div class="gumica"></div>
@@ -22,15 +28,16 @@
 						<span class="vrh"></span>
 					</div>
 				</div>
+				-->
 			</div>
 			
 			<div class="dugme">
-				<button class="dugme-osnovno" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Igraj</button>
+				<button class="dugme-osnovno" id="btnIgraj" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Igraj</button>
 			</div>
 			<div class="dugme">
 				<button class="dugme-osnovno" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruži se privatnoj sobi</button>
 				<div [hidden]="getPridruzivanjeSobi">
-					<label for="kodSobe">Unesi ime sobe:</label>
+					<label for="kodSobe">Unesi ID sobe:</label>
 					<br>
 					<input type="text" name="kodSobe" id="kodSobe" #kodSobe>
 				</div>
@@ -44,15 +51,19 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="parent">
-			<img class="image1" src="assets/cope.jpg" alt="skrabo" width="150" height="150">
-			<img class="image2" src="assets/ananas.png" alt="skrabo" width="150" height="150">
-			<img class="image3" src="assets/ker.png" alt="skrabo" width="150" height="150">
 		</div>
 		
+		<div class="col-3">
+		<div class="parent">
+			<img class="image1" src="assets/cope.jpg" alt="skrabo">
+			<img class="image2" src="assets/ananas.png" alt="skrabo">
+			<img class="image3" src="assets/ker.png" alt="skrabo">
+		</div>
+		</div>
+		
+		<div class="col-4">
 		<div class="sadrzaj">
-			<h2 (click)="onPrikaziInfo()" style="cursor:pointer">O nama</h2>
+			<h2 (click)="onPrikaziInfo()" style="cursor:pointer">Opis</h2>
 			<p *ngIf="getPrikaziInfo" class="tekst">
 				Škrabo je igra crtanja i pogađanja. Jedan igrač crta odabranu reč, dok ostali
 				pogađaju u četu koja je to reč. Ko pogodi dobija poene. Igrač sa najviše poena je pobednik.
@@ -64,6 +75,22 @@
 				Uputstva za igru idu ovde... <br>
 				Uputstva za igru idu ovde... <br>
 			</p>
+
+			<h2 (click)="onPrikaziAutore()" style="cursor:pointer">Autori</h2>
+			<p *ngIf="getPrikaziAutore" class="tekst">
+				<img src="assets/person_male.png" width="60" height="60">
+				Nikola Janković <br>
+				<img src="assets/person_female.png" width="60" height="60">
+				Ana Marković <br>
+				<img src="assets/person_female.png" width="60" height="60">
+				Anđela Milićević <br> 
+				<img src="assets/person_male.png" width="60" height="60">
+				Jovan Mirkov <br>
+			</p>
+		</div>
+		</div>
+
+		</div>
 		</div>
 	</div>
 </body>
