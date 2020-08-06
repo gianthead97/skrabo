@@ -39,14 +39,20 @@ export class FormComponent implements OnInit {
 
   public onPrikaziInfo(): void {
     this.prikaziInfo = !this.prikaziInfo;
+    this.prikaziPravila = false;
+    this.prikaziAutore = false;
   }
   public onPrikaziPravila(): void {
     this.prikaziPravila = !this.prikaziPravila;
+    this.prikaziInfo = false;
+    this.prikaziAutore = false;
   }
   public onPrikaziAutore(): void {
     this.prikaziAutore = !this.prikaziAutore;
+    this.prikaziInfo = false;
+    this.prikaziPravila = false;
   }
-
+  
   public onPridruzivanjeSobi(): void {
     this.pridruzivanjeSobi = !this.pridruzivanjeSobi;
     this.pravljenjeNoveSobe = true;
