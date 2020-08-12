@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
+import { urlString } from '../../../const';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class SocketService {
   // FIXME url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
   // private URL = '';
-  private URL = 'http://localhost:3000';
+  private URL = urlString;
   private sock = io(this.URL);
   constructor(private http: HttpClient) {
 

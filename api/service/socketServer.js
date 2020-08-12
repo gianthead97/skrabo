@@ -1,3 +1,4 @@
+const Constants = require('../../const');
 const socketIO = require('socket.io');
 const SocketController = require('../controllers/socketController');
 
@@ -13,13 +14,13 @@ class SocketServer {
 
     start() {
         //Wait for 'connection' event
-        this.io.on('connection', (socket) => {
+        this.io.on(Constants.connection, (socket) => {
             // console.log('New user is here');
             //after connection happens wait on socket for event 'JoinGame'
-            socket.on('joinGame', SocketController.onJoinGame(socket).bind(this));
+            socket.on(Constants.joinGame, SocketController.onJoinGame(socket).bind(this));
 
             //check for disconnection
-            socket.on('disconnect', SocketController.onDisconnect);
+            socket.on(Constants.disconnect, SocketController.onDisconnect);
         });
     }
 

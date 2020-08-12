@@ -1,5 +1,6 @@
 export interface Player {
-    points: number;
-    name: string;
-    admin: boolean;
+    _points: number;
+    _name: string;
+    _admin: boolean;
+    _code: string;
 }

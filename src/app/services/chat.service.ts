@@ -13,6 +13,8 @@ import { Rules } from '../models/rules.model';
 import { Subscription } from 'rxjs';
 import { Player } from '../models/player.model';
 
+import * as Constants from '../../../const.js';
+
 @Injectable({
     providedIn: 'root',
 })
@@ -26,14 +28,17 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
 
-    private url = 'http://localhost:3000';
+    private url = Constants.urlString;
     private subscriptions: Subscription[] = [];
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
         this.user = new UserData('', 0, '', '', false);
-        this.socketService.socket.on('changeInRoom', () => {
-            this.getPlayers().subscribe((data) => console.debug(data));
+        this.socketService.socket.on(Constants.changeInRoom, () => {
+            console.debug(Constants.changeInRoom);
+            this.getPlayers().subscribe((data: Player[]) => {
+                data.forEach(player => console.log(player._name));
+            });
         });
     }
 
@@ -44,7 +49,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public joinToRoom(code: string): void {
         this._code = code;
-        this.socketService.socket.emit('joinGame', {code: code, username: this.username});
+        this.socketService.socket.emit(Constants.joinGame, {code: code, username: this.username});
     }
 
     public createNewRoomRequest(roomName: string): void {
@@ -54,13 +59,13 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
                  .subscribe((code: string) => {
                     window.alert(code);
                     this._code = code;
-                    this.socketService.socket.emit('joinGame', {code: code , username: this.username});
+                    this.socketService.socket.emit(Constants.joinGame, {code: code , username: this.username});
                 });
     }
 
     public sendMessage(message) {
         this.user.message = message;
-        this.socketService.socket.emit('new-message', {
+        this.socketService.socket.emit(Constants.newMessage, {
             message: `${this.user.name}: ${this.user.message}`,
             color: this.user.color
         });
@@ -68,7 +73,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public getMessages(): Observable<any> {
         return new Observable((observer) => {
-            this.socketService.socket.on('message', ({message, color}) => {
+            this.socketService.socket.on(Constants.message, ({message, color}) => {
                 observer.next({message, color});
             });
         });
@@ -92,8 +97,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
 
     public getPlayers(): Observable<Player[]> {
-        console.debug('getPlayers');
-        return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);  
+      return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);  
     }
 
     get code(): string {

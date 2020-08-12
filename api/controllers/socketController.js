@@ -1,9 +1,8 @@
+const Constants = require('../../const');
 const Player = require('../models/player');
 const Controller = require('../controllers/controller');
 
 
-console.log('Player:', Player);
-console.log("Controller: ", Controller);
 
 /**
  * @class SocketController
@@ -31,7 +30,7 @@ module.exports = class SocketController {
     static onClientDrawing(code) {
         console.warn(code);
         return function(data) {
-            this.to(code).emit('drawing', data);
+            this.to(code).emit(Constants.drawing, data);
         };
     }
 
@@ -43,7 +42,7 @@ module.exports = class SocketController {
     */
     static onNewMessage(code) {
         return function({ message, color })  {
-            this.io.in(code).emit('message', {
+            this.io.in(code).emit(Constants.message, {
                 'message': message,
                 'color': color
             });
@@ -59,14 +58,14 @@ module.exports = class SocketController {
      */
     static onJoinGame(socket) {
         return function({code, username}) {
-            // console.log(code);
+            
             let room = Controller.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
-                // console.log('New user is in the room.');
+                console.log('New user is in the room.');
                 socket.join(code);
-
-                room.joinNewPlayer(new Player(username, false, code));
+                let newPlayer = new Player(username, false, code);
+                room.joinNewPlayer(newPlayer);
                 if (SocketController.sockets.has(code)) {
                     SocketController.sockets.get(code).push(socket);
                 } else {
@@ -74,13 +73,13 @@ module.exports = class SocketController {
                 }
                 SocketController.emitChangeInRoom(code);
                 //waiting for drawing event and broadast data to all players in room
-                socket.on('client-drawing', SocketController.onClientDrawing(code).bind(socket));
+                socket.on(Constants.clientDrawing , SocketController.onClientDrawing(code).bind(socket));
 
                 //waiting for message data and broadcast
-                socket.on('new-message', SocketController.onNewMessage(code).bind(this));
+                socket.on(Constants.newMessage, SocketController.onNewMessage(code).bind(this));
 
             } else {
-                socket.emit('error-msg', `Room with code: ${code} does not exist.`);
+                socket.emit(Constants.errorMsg, `Room with code: ${code} does not exist.`);
             }
 
         };
@@ -100,7 +99,7 @@ module.exports = class SocketController {
      * @param {string} code
      */
     static emitChangeInRoom(code) {
-        SocketController.sockets.get(code).forEach(socket => socket.to(code).emit("changeInRoom"));
+        SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.changeInRoom));
     }
 }
 
