@@ -1,26 +1,32 @@
-const Controller = require('./controller');
 const Player = require('../models/player');
+const Controller = require('../controllers/controller');
+
+
+console.log('Player:', Player);
+console.log("Controller: ", Controller);
 
 /**
  * @class SocketController
- * @description Class which implements methods for handling events which 
+ * @description Class which implements methods for handling events which
  *              are sent via TCP socket
  */
 module.exports = class SocketController {
 
-    /**
-    * @description Map that contains all channel ids and their associated sockets 
-    */
-    static sockets = new Map(); 
+    constructor() {}
 
-    
-    /** 
-    * @description Function which handle event that contains data for drawing  
+    /**
+    * @description Map that contains all channel ids and their associated sockets
+    */
+    static sockets = new Map();
+
+
+    /**
+    * @description Function which handle event that contains data for drawing
     *              which comes from channel with some code
-    *              and broadcasts to all other clients that listening on same channel 
+    *              and broadcasts to all other clients that listening on same channel
     * @param {string} code Channel id
-    * @returns {Function} Callback function which will broadcast object that contains necessary data 
-    *                   to other client for drawing elements on canvas when some client sends to channel 
+    * @returns {Function} Callback function which will broadcast object that contains necessary data
+    *                   to other client for drawing elements on canvas when some client sends to channel
     */
     static onClientDrawing(code) {
         console.warn(code);
@@ -29,11 +35,11 @@ module.exports = class SocketController {
         };
     }
 
-    /** 
+    /**
     * @description Function which handle message which comes from channel with some code
-    *               and broadcasts to all other clients that listening on same channel 
+    *               and broadcasts to all other clients that listening on same channel
     * @param {string} code Channel id
-    * @returns {Function} Callback function which will broadcast new message when some client sends to channel 
+    * @returns {Function} Callback function which will broadcast new message when some client sends to channel
     */
     static onNewMessage(code) {
         return function({ message, color })  {
@@ -49,33 +55,34 @@ module.exports = class SocketController {
     /**
      * @description Main function that handle connection event of new clients to server, and call all other
      *              callbacks that are necessary.
-     * @param {SocketIO.Socket} socket 
+     * @param {SocketIO.Socket} socket
      */
     static onJoinGame(socket) {
         return function({code, username}) {
-            console.log(code);
+            // console.log(code);
             let room = Controller.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
-                console.log('New user is in the room.');
+                // console.log('New user is in the room.');
                 socket.join(code);
-                
+
                 room.joinNewPlayer(new Player(username, false, code));
                 if (SocketController.sockets.has(code)) {
                     SocketController.sockets.get(code).push(socket);
                 } else {
-                    SocketController.sockets.set(code, [socket]);
+                    SocketController.sockets.set(code, new Array(socket));
                 }
+                SocketController.emitChangeInRoom(code);
                 //waiting for drawing event and broadast data to all players in room
-                socket.on('client-drawing', onClientDrawing(code).bind(socket));
-    
+                socket.on('client-drawing', SocketController.onClientDrawing(code).bind(socket));
+
                 //waiting for message data and broadcast
-                socket.on('new-message', onNewMessage(code).bind(this));
-    
+                socket.on('new-message', SocketController.onNewMessage(code).bind(this));
+
             } else {
                 socket.emit('error-msg', `Room with code: ${code} does not exist.`);
             }
-    
+
         };
     }
 
@@ -90,10 +97,10 @@ module.exports = class SocketController {
 
     /**
      * @description For every change in room with `code` notify all cients that something happened.
-     * @param {string} code 
+     * @param {string} code
      */
     static emitChangeInRoom(code) {
-        SocketController.sockets.get(code).foreach(socket => socket.to(code).emit("changeInRoom"));
+        SocketController.sockets.get(code).forEach(socket => socket.to(code).emit("changeInRoom"));
     }
 }
 

@@ -32,6 +32,9 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
         this.user = new UserData('', 0, '', '', false);
+        this.socketService.socket.on('changeInRoom', () => {
+            this.getPlayers().subscribe((data) => console.debug(data));
+        });
     }
 
     ngOnDestroy(): void {

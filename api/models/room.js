@@ -1,5 +1,3 @@
-const Controller = require("../controllers/controller");
-const SocketController = require("../controllers/socketController");
 
 /**
  * @enum
@@ -50,7 +48,7 @@ module.exports = class Room {
      */
     joinNewPlayer(player) {    
         this.#players.push(player);
-        SocketController.emitChangeInRoom(this.id);
+        
     }
     
 }

@@ -1,23 +1,22 @@
-
 const Room = require('../models/room');
 const uuid = require('uuid');
-const Player = require('../models/player');
+
 
 /**
  * @classdesc class which controls REST API on server
  */
-class Controller {
+module.exports = class Controller {
+
+    constructor() {}
 
     /**
      * @static
      * @private
      */
-    static #rooms = [];
+    static rooms = [];
     
 
-    static get rooms() {
-        return this.#rooms;
-    }
+    
     
     /**
      * @summary Callback for handling post request for creating new private room
@@ -28,7 +27,7 @@ class Controller {
     static createRoom(req, res, next) {
         console.log(req.body.name);
         let room = new Room(uuid.v1().substr(0, 6), req.body.name);
-        Controller.#rooms.push(room);
+        Controller.rooms.push(room);
         res.status(201).json(room.id);
     }
 
@@ -40,7 +39,7 @@ class Controller {
      */
     static getNameOfRoom(req, res, next) {
        
-        let room = Controller.#rooms.find(x => x.roomId === req.params.idSobe);
+        let room = Controller.rooms.find(x => x.roomId === req.params.idSobe);
         if (room === undefined) {
             next();
         } else {
@@ -52,7 +51,7 @@ class Controller {
         console.log(req.body);
         let {id, duration, numOfRounds, language} = req.body;
 
-        let room = Controller.#rooms.find(value => (value.roomId === id));
+        let room = Controller.rooms.find(value => (value.roomId === id));
         if (room !== undefined) {
             room.duration = duration;
             room.numberOfRounds = numOfRounds;
@@ -72,7 +71,7 @@ class Controller {
      */
     static getPlayers(req, res, next) {
         let roomId = req.params.roomId;
-        let room = Controller.#rooms.find(value => (value.roomId === roomId));
+        let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
             res.status(200).json(room.players);
         } else {
@@ -81,5 +80,3 @@ class Controller {
     }
 }
 
-
-module.exports = Controller;
