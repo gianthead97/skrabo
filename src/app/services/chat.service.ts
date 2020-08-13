@@ -60,10 +60,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public sendMessage(message) {
         this.user.message = message;
-        this.socketService.socket.emit(Constants.newMessage, {
-            message: `${this.user.name}: ${this.user.message}`,
-            color: this.user.color
-        });
+        if (this.user.message.trim().length !== 0) {
+            this.socketService.socket.emit(Constants.newMessage, {
+                message: `${this.user.name}: ${this.user.message}`,
+                color: this.user.color
+            });
+        }
     }
 
     public getMessages(): Observable<any> {
@@ -102,13 +104,24 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     get code(): string {
         return this._code;
     }
+    set code(value: string) {
+        this._code = value;
+    }
 
     get roomName(): string {
         return this._roomName;
     }
 
+    set roomName(value: string) {
+        this._roomName = value;
+    }
+
     get adminPermission(): boolean {
         return this.user.isAdmin;
+    }
+
+    set adminPermission(newValue: boolean) {
+        this.user.isAdmin = newValue;
     }
 
     get userColor() {
@@ -118,20 +131,9 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     get username() {
         return this.user.name;
     }
-
-    set roomName(value: string) {
-        this._roomName = value;
-    }
-
-    set code(value: string) {
-        this._code = value;
-    }
-
     set username(username: string) {
-        this.user.name = username;
-    }
-
-    set adminPermission(newValue: boolean) {
-        this.user.isAdmin = newValue;
+        if (username.trim().length !== 0) {
+            this.user.name = username;
+        }
     }
 }

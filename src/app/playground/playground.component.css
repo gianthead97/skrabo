@@ -3,6 +3,11 @@
     margin-top: 80px;
     /*margin-left: 60%;*/
 }
+
+#cards {
+    margin-top: 80px;
+}
+
 body {
     background-image: url("../../assets/pozadina.jpg");
     background-size: cover;
