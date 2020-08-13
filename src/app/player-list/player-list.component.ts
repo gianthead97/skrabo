@@ -3,6 +3,7 @@ import { PlayerComponent } from '../player/player.component';
 import { Player } from '../models/player.model';
 import { ChatService } from '../services/chat.service';
 import { Observable } from 'rxjs';
+import * as Constants from '../../../const.js';
 
 @Component({
   selector: 'app-player-list',
@@ -10,12 +11,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./player-list.component.css']
 })
 export class PlayerListComponent implements OnInit, OnChanges {
-  players: Observable<Player[]>;
-  constructor(private chatService: ChatService) { 
+  players: Player[] = [];
+  constructor(private chatService: ChatService) {
+    this.chatService.getSocketService.socket.on(Constants.changeInRoom, () => {
+      this.chatService.getPlayers().subscribe((data: Player[]) => {
+        this.players = [];
+        data.forEach(player => this.players.push(player));
+      });
+    });
   }
 
   ngOnChanges(): void {
-    this.players = this.chatService.getPlayers();
   }
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 <div>
-    <div *ngFor="let player of (players | async)">
-        {{player.name}} {{player.points}}
+    <div *ngFor="let player of players; let i = index;" id='card'>
+        <p>#{{i+1}} {{player._name}}</p>
+        <p>{{player._points}}</p>
     </div>
 </div>

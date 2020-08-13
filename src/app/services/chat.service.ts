@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { Player } from '../models/player.model';
 
 import * as Constants from '../../../const.js';
+import { PlayerListComponent } from '../player-list/player-list.component';
 
 @Injectable({
     providedIn: 'root',
@@ -34,12 +35,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
         this.user = new UserData('', 0, '', '', false);
-        this.socketService.socket.on(Constants.changeInRoom, () => {
-            console.debug(Constants.changeInRoom);
-            this.getPlayers().subscribe((data: Player[]) => {
-                data.forEach(player => console.log(player._name));
-            });
-        });
     }
 
     ngOnDestroy(): void {
@@ -49,18 +44,18 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public joinToRoom(code: string): void {
         this._code = code;
-        this.socketService.socket.emit(Constants.joinGame, {code: code, username: this.username});
+        this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
     }
 
     public createNewRoomRequest(roomName: string): void {
         this.adminPermission = true;
-        this.http.post<string>(this.socketService.url + '/createRoom', {name: roomName})
-                 .pipe(catchError(super.handleError()))
-                 .subscribe((code: string) => {
-                    window.alert(code);
-                    this._code = code;
-                    this.socketService.socket.emit(Constants.joinGame, {code: code , username: this.username});
-                });
+        this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
+            .pipe(catchError(super.handleError()))
+            .subscribe((code: string) => {
+                window.alert(code);
+                this._code = code;
+                this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
+            });
     }
 
     public sendMessage(message) {
@@ -73,8 +68,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public getMessages(): Observable<any> {
         return new Observable((observer) => {
-            this.socketService.socket.on(Constants.message, ({message, color}) => {
-                observer.next({message, color});
+            this.socketService.socket.on(Constants.message, ({ message, color }) => {
+                observer.next({ message, color });
             });
         });
     }
@@ -85,9 +80,9 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public sendRules(data): void {
-        console.log({id: this._code, ...data});
+        console.log({ id: this._code, ...data });
         let sub: Subscription;
-        sub = this.http.patch<Rules>(this.url + '/sendRules', {id: this._code, ...data})
+        sub = this.http.patch<Rules>(this.url + '/sendRules', { id: this._code, ...data })
             .pipe(catchError(super.handleError))
             .subscribe((data: Rules) => {
                 console.log(data);
@@ -97,7 +92,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
 
     public getPlayers(): Observable<Player[]> {
-      return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);  
+        return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);
+    }
+
+    get getSocketService() {
+        return this.socketService;
     }
 
     get code(): string {
@@ -135,7 +134,4 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     set adminPermission(newValue: boolean) {
         this.user.isAdmin = newValue;
     }
-
-  
-
 }
