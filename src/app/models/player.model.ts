@@ -3,4 +3,5 @@ export interface Player {
     _name: string;
     _admin: boolean;
     _code: string;
+    _profile: string;
 }

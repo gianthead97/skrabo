@@ -7,18 +7,21 @@ const SocketController = require("../controllers/socketController");
  */
 module.exports = class Player {
     _points = 0;
-    
+
     constructor(name, admin, code) {
         this._name = name;
         this._admin = admin;
         this._code = code;
+
+        const num = Math.floor(Math.random() * 27);
+        this._profile = "../../assets/pandice/" + num + ".png";
     }
 
 
     get points() {
         return this._points;
     }
-    
+
     get admin() {
         return this._admin;
     }
@@ -26,6 +29,11 @@ module.exports = class Player {
     get name() {
         return this._name;
     }
+
+    get profile() {
+        return this._profile;
+    }
+
     increasePoints(newPoints) {
         this._points += newPoints;
         SocketController.emitChangeInRoom(this._code);

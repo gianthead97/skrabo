@@ -1,6 +1,10 @@
 <div>
-    <div *ngFor="let player of players; let i = index;" id='card'>
-        <p>#{{i+1}} {{player._name}}</p>
-        <p>{{player._points}}</p>
+    <div *ngFor="let player of players; let i = index;" id="card">
+        <div id="text">
+            <p>#{{i+1}} {{player._name}}
+                <img id="pic" src='{{player._profile}}' alt="panda" width="50" height="50">
+            </p>
+            <p>{{player._points}}</p>
+        </div>
     </div>
 </div>
