@@ -1,0 +1,15 @@
+#card {
+    border: 2px solid palevioletred;
+    margin: 1px;
+    background-color: #ffeeee;
+    display: block;
+}
+
+#pic {
+    float: right;
+}
+
+p {
+    margin-top: 0em ;
+    margin-bottom: 0em ;
+}

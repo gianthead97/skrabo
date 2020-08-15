@@ -1,5 +1,5 @@
 <head>
-	<link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
+    <link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
 </head>
 
 <body>
@@ -7,11 +7,12 @@
 
     <div class="container-fluid">
         <div class="row">
+            <div id="cards" class="col-2">
+                <app-player-list></app-player-list>
+            </div>
             <div class="col-6">
                 <app-whiteboard></app-whiteboard>
             </div>
-            <div class="col-3"></div>
-            
             <div id="chat" class="col-3">
                 <h4 style="padding-bottom: 10%">{{roomName | async }}</h4>
                 <app-chat></app-chat>
