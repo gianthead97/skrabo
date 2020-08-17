@@ -20,6 +20,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
 
   constructor(private canvasService: CanvasService) {
+/*
     this.subscriptions.push(this.canvasService
       .getCanvasEvent()
       .subscribe((data: string) => {
@@ -27,6 +28,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
         img.src = data;
         this.ctx.drawImage(img, 0, 0);
       }));
+*/
   }
   ngAfterViewInit(): void {
     this.rectCanvas = this.board.nativeElement.getBoundingClientRect();
@@ -61,9 +63,10 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+   // this.subscriptions.forEach(sub => sub.unsubscribe());
   }
   
+
 
   sendCanvasData() {
     this.canvasService.sendCanvasData(this.board.nativeElement.toDataURL());
@@ -75,6 +78,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   startDrawing(e: MouseEvent): void {
 
     this.active = true;
+    this.ctx.beginPath()
     this.draw(e);
 
 
@@ -84,6 +88,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.active = false;
     this.ctx.closePath();
+    //this.ctx.beginPath();
   }
 
   draw(e: MouseEvent): void {
@@ -95,7 +100,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ctx.lineCap = 'round';
     this.ctx.lineTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
     this.ctx.stroke();
-    this.ctx.beginPath();
+    //this.ctx.beginPath();
     this.ctx.moveTo(e.clientX - this.rectCanvas.left, e.clientY - this.rectCanvas.top);
 
   }
