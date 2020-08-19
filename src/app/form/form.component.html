@@ -7,8 +7,8 @@
 	<div class="row justify-content-center"> <h1>Škrabo</h1> </div>
 
 	<div class="row">
-		<div class="col-4" style="margin-left: 5%">
-			<div class="alert alert-primary">
+		<div class="col-4" style="margin-left: 5%;">
+			<div class="random">
 				<div class="form-group">
 					<label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
 					<input type="text" id="ime" class="form-control mb-3" #ime>
@@ -55,22 +55,20 @@
 			</div>
 		</div>
 	</div>
-		
+	
 	<div class="row>">
-		<div class="col-4" style="margin-left: 5%">
-			<div [hidden]="getPridruzivanjeSobi">
-				<label for="kodSobe">Unesi ID sobe:</label>
-				<br>
-				<input type="text" name="kodSobe" id="kodSobe" #kodSobe>
+		<div class="col-4" style="margin-left: 5%; margin-top:2%; background-color: #B0E0E6; color: #483D8B;">
+			<div [hidden]="getPridruzivanjeSobi" style="padding: 4% 10% 5%;">
+				<div class="form-group">
+					<label for="kodSobe" style="font-size: 2.5vh">Unesi ID sobe:</label>
+					<input type="text" name="kodSobe" id="kodSobe" class="form-control mb-3" #kodSobe>
+				</div>
+				<button class="dugme" style="margin-top: -2%" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Potvrdi</button>
 			</div>
 			
-			<div [hidden]="getPravljenjeNoveSobe">
+			<div [hidden]="getPravljenjeNoveSobe" style="padding: 4% 10% 5%;">
 				<label for="imeSobe">Unesi ime sobe:</label>
 				<br>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
 				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
 				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
 				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
