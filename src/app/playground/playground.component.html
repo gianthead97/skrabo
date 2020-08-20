@@ -1,22 +1,29 @@
 <head>
-	<link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
+    <link rel="icon" href="assets/cope.jpg" type="image/gif" sizes="16x16">
+    <link href='https://fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
 </head>
 
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3">
-                <!-- spisak ljudi u sobi -->
-            </div>
+<div class="container-fluid bg">
+    <div class="row justify-content-center"> <h1>Škrabo</h1> </div>
+    
+    <div class="row" style="/*background-color: yellow;*/">
+        <div class="col-3">
+            <!--spisak ljudi u sobi-->
+        </div>
 
-            <div class="col-6">
-                <app-whiteboard></app-whiteboard>
-            </div>
+        <div class="col-6">
+            <app-whiteboard></app-whiteboard>
+        </div>
 
-            <div id="chat" class="col-3">
-                <h4 style="padding-bottom: 10%">{{roomName | async }}</h4>
-                <app-chat></app-chat>
-            </div>
+        <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
+            <h4 style="padding-bottom: 10%">{{roomName | async }}</h4> <!--zbog ovoga je cet spusten-->
+            <app-chat></app-chat>
         </div>
     </div>
-</body>
+    
+    <!--visina rowa zavisi od najvece visine necega unutra-->
+    <div class="row">  
+        <div style="height: 20vh"></div>
+    </div>
+
+</div>
