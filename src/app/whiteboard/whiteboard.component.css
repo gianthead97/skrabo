@@ -1,49 +1,25 @@
-body {
-    background-image: url("../../assets/pozadina.jpg");
-    background-size: cover;
-    width: 100%; height: 100%;
-    font-family: sans-serif;
+#parent {
+    height: 80vh;
 }
 
-h1 {
-    display: block; width: 80%;
-    text-align: left; padding: 10px 0px;
-    font-size: 50px; font-weight: 600;
-    color: lightseagreen;
-    position: absolute;
-    margin-left: 20%;
-    margin-top: 5px;
-    /*position: relative; margin: auto;*/
-}
-
+#canvas { 
+    width: 100%;
+    height: 85%;
+}    
 
 #board {
     background-color: white;
     border: 2px solid violet;
     width: 100%;
     height: 100%;
-
 }
-
-#canvas { 
-    /*position: absolute;*/
-    margin-top: 80px;
-    /*margin-left: 20%; */
-    position: relative;
-    height: 70%;
-    width: 100%;
-}    
 
 #icons {
     width: 100%;
     height: 30%;
     display: flex;
-    /*justify-content: left;*/
-    /*position: absolute;*/
-    margin-top: 40%;
-    
     padding-top: 1%;
-    position: relative; margin: auto;
+    position: relative;
 }
 
 .iconBig {
@@ -56,6 +32,7 @@ h1 {
 .iconSmall {
     width: 50%;
     height: 40%;
+    padding-right: 1%;
 }
 
 .icon {
@@ -72,6 +49,9 @@ h1 {
 #bigIcon0 {
     background-image: url("../../assets/pensmall.png");
     border-width: 2px 1px 2px 2px; /*top, right, bottom, left */
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #bigIcon1 {
     background-image: url("../../assets/penmidsmall.png");
@@ -79,8 +59,6 @@ h1 {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
-
 }
 #bigIcon2 {
     background-image: url("../../assets/penmidbig.png");
@@ -88,7 +66,6 @@ h1 {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
 }
 #bigIcon3 {
     background-image: url("../../assets/penbig.png");
@@ -96,8 +73,6 @@ h1 {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
-
 }
 #bigIcon4 {
     background-image: url("../../assets/eraseicon.png");
@@ -105,7 +80,6 @@ h1 {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
 }
 
 #iconColor0 {

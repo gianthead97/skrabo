@@ -9,7 +9,7 @@ import * as io from 'socket.io-client';
 import { UserData } from '../models/user.model';
 import { HttpErrorHandler } from '../utils/http-error-handler.model';
 import { SocketService } from './socket.service';
-import { Rules } from '../models/rules.model';
+import { Rules, Language } from '../models/rules.model';
 import { Subscription } from 'rxjs';
 import { Player } from '../models/player.model';
 
@@ -26,6 +26,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     private formData: Rules;
     private _code: string;
     private _roomName: string;
+    private _roomLanguage: Language;
+    private _roomTime: Rules;
 
     // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
@@ -55,7 +57,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             .subscribe((code: string) => {
                 window.alert(code);
                 this._code = code;
-                this.sendRules(data)
                 this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
             });
     }

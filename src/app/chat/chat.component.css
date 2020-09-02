@@ -1,15 +1,15 @@
 #chat {
     overflow-y: scroll;
     overflow-x: hidden;
-    /*width: 100%;*/
-    height: 500px;
+    width: 100%;
+    height: 80%;
     background-color: white;
 }
 
 #input {
-    position: relative;
+    margin-top: 2%;
+    width: 100%;
 }
-
 
 @font-face {
     font-family: 'Comic Sans MS';
@@ -17,8 +17,8 @@
 }
 
 #message {
-    word-wrap:break-word;
-    width: 250px;
+    word-wrap: break-word;
+    width: 60%;
     display: block;
     font-size: large;
     font-style: bold;

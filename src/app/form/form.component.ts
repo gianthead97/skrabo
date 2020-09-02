@@ -10,6 +10,7 @@ export class FormComponent implements OnInit {
 
   private prikaziInfo = false;
   private prikaziPravila = false;
+  private prikaziAutore = false;
   private pridruzivanjeSobi = true;
   private pravljenjeNoveSobe = true;
   constructor(private chatService: ChatService) {
@@ -28,6 +29,9 @@ export class FormComponent implements OnInit {
   get getPrikaziInfo(): boolean {
     return this.prikaziInfo;
   }
+  get getPrikaziAutore(): boolean {
+    return this.prikaziAutore;
+  }
 
   get getPridruzivanjeSobi(): boolean {
     return this.pridruzivanjeSobi;
@@ -35,12 +39,20 @@ export class FormComponent implements OnInit {
 
   public onPrikaziInfo(): void {
     this.prikaziInfo = !this.prikaziInfo;
+    this.prikaziPravila = false;
+    this.prikaziAutore = false;
   }
   public onPrikaziPravila(): void {
     this.prikaziPravila = !this.prikaziPravila;
+    this.prikaziInfo = false;
+    this.prikaziAutore = false;
   }
-
-
+  public onPrikaziAutore(): void {
+    this.prikaziAutore = !this.prikaziAutore;
+    this.prikaziInfo = false;
+    this.prikaziPravila = false;
+  }
+  
   public onPridruzivanjeSobi(): void {
     this.pridruzivanjeSobi = !this.pridruzivanjeSobi;
     this.pravljenjeNoveSobe = true;
@@ -51,8 +63,7 @@ export class FormComponent implements OnInit {
     this.pridruzivanjeSobi = true;
   }
 
-
-
+  
   // Metod za komunikaciju sa chat servisom. Postavlja username naseg korisnika.
   // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje
   // nove sobe chat servis vrsi neophodne operacije.
