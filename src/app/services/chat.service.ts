@@ -23,6 +23,7 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     private user: UserData;
+    private formData: Rules;
     private _code: string;
     private _roomName: string;
 
@@ -54,6 +55,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             .subscribe((code: string) => {
                 window.alert(code);
                 this._code = code;
+                this.sendRules(data)
                 this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
             });
     }

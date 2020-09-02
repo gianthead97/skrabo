@@ -15,11 +15,11 @@ export class PlaygroundComponent implements OnInit {
   
   constructor(private chatService: ChatService, private dialog: MatDialog) {
     this.roomName = this.getRoomName();
-    if (this.chatService.adminPermission) {
-      this.dialog.open(GameInfoFormComponent, {
-        width: "450"
-      });
-    }
+    // if (this.chatService.adminPermission) {
+    //   this.dialog.open(GameInfoFormComponent, {
+    //     width: "450"
+    //   });
+    // }
   }
 
   ngOnInit(): void {

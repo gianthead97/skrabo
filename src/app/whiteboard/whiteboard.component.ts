@@ -20,7 +20,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
 
   constructor(private canvasService: CanvasService) {
-/*
+
     this.subscriptions.push(this.canvasService
       .getCanvasEvent()
       .subscribe((data: string) => {
@@ -28,7 +28,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
         img.src = data;
         this.ctx.drawImage(img, 0, 0);
       }));
-*/
+
   }
   ngAfterViewInit(): void {
     this.rectCanvas = this.board.nativeElement.getBoundingClientRect();
@@ -63,7 +63,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngOnDestroy(): void {
-   // this.subscriptions.forEach(sub => sub.unsubscribe());
+   this.subscriptions.forEach(sub => sub.unsubscribe());
   }
   
 
