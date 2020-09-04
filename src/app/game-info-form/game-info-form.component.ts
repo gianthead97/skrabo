@@ -11,6 +11,7 @@ export class GameInfoFormComponent implements OnInit {
   public gameInfoForm: FormGroup;
   constructor(private formBuilder: FormBuilder, private chatService: ChatService) {
     this.gameInfoForm = this.formBuilder.group({
+      name: [''],
       duration: [''],
       rounds: [''],
       language: ['', [Validators.required]]

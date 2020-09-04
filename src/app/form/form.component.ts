@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { type } from 'os';
 
 @Component({
   selector: 'app-form',
@@ -67,14 +69,16 @@ export class FormComponent implements OnInit {
   // Metod za komunikaciju sa chat servisom. Postavlja username naseg korisnika.
   // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje
   // nove sobe chat servis vrsi neophodne operacije.
-  public onUnosImena(username: string, roomCode: string, roomName: string) {
-    this.chatService.username = username;
+  public onUnosImena(gameForm: FormGroup, roomCode: string, userName: string) {
+    let dataFromForm = gameForm.value;
+    console.log(dataFromForm);
+    this.chatService.username = userName;
     if (roomCode !== '') {
       this.chatService.joinToRoom(roomCode);
       this.chatService.code = roomCode;
-    } else if (roomName !== '') {
-      this.chatService.createNewRoomRequest(roomName);
-      this.chatService.roomName = roomName;
+    } else if (dataFromForm.name !== '') {
+      this.chatService.createNewRoomRequest(dataFromForm.name);
+      this.chatService.roomName = dataFromForm.name;
     }
 
   }

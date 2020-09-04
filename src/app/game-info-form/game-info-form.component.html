@@ -1,5 +1,9 @@
-<form [formGroup]="gameInfoForm" (ngSubmit)="submitForm(gameInfoForm.value)">
+<form [formGroup]="gameInfoForm" style="width: 100%">
     <div class = "form-group">
+        <div class="form-group">
+                <label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
+                <input formControlName="name" type="text" id="ime" class="form-control mb-3">
+        </div>
         <label for="duration">Duzina jedne runde:</label><br>
         <select class="form-control" name="duration" id="duration" formControlName="duration">
             <option selected="selected" value="30">30 sekundi</option>
@@ -23,8 +27,7 @@
             formControlName="language">
             <label for="english" class="form-check-label">engleski:</label>
         </div>
-        <br>
-        <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="gameInfoForm" >CONFIRM</button>
+        
     </div>
 
 </form>

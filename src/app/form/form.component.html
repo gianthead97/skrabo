@@ -3,20 +3,20 @@
 	<link href='https://fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
 </head>
 
-<div class="container-fluid bg">
+<div class="container-fluid bg flex-column d-flex">
 	<div class="row justify-content-center"> <h1>Škrabo</h1> </div>
 
 	<div class="row">
 		<div class="col-4" style="margin-left: 5%;">
 			<div class="random">
+				
 				<div class="form-group">
-					<label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
-					<input type="text" id="ime" class="form-control mb-3" #ime>
+						<label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
+						<input formControlName="name" type="text" id="ime" class="form-control mb-3" #ime>
 				</div>
-			
 				<div class="okvir"> <img src="assets/pen.gif"> </div>
 				
-				<button class="dugme" id="btnIgraj" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Igraj</button>
+				<button class="dugme" id="btnIgraj" [routerLink]="['/game']" (click)="onUnosImena(gameInfoComponent.gameInfoForm, kodSobe.value, ime.value)">Igraj</button>
 				<button class="dugme" id="btnPridruziSeSobi" (click)="onPridruzivanjeSobi()">Pridruži se privatnoj sobi</button>	
 				<button class="dugme" id="btnNovaSoba" (click)="onPravljenjeNoveSobe()">Kreiraj privatnu sobu</button>
 			</div>
@@ -56,23 +56,17 @@
 		</div>
 	</div>
 	
-	<div class="row>">
+	<div class="row">
 		<div class="col-4" style="margin-left: 5%; margin-top:2%; background-color: #B0E0E6; color: #483D8B;">
 			<div [hidden]="getPridruzivanjeSobi" style="padding: 4% 10% 5%;">
 				<div class="form-group">
 					<label for="kodSobe" style="font-size: 2.5vh">Unesi ID sobe:</label>
 					<input type="text" name="kodSobe" id="kodSobe" class="form-control mb-3" #kodSobe>
 				</div>
-				<button class="dugme" style="margin-top: -2%" [routerLink]="['/game']" (click)="onUnosImena(ime.value, kodSobe.value, imeSobe.value)">Potvrdi</button>
 			</div>
 			
 			<div [hidden]="getPravljenjeNoveSobe" style="padding: 4% 10% 5%;">
-				<label for="imeSobe">Unesi ime sobe:</label>
-				<br>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
-				<input  type="text" name="imeSobe" id="imeSobe" #imeSobe>
+				<app-game-info-form #gameInfoComponent></app-game-info-form>
 			</div>
 		</div>
 	</div>

@@ -28,6 +28,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     private _roomName: string;
     private _roomLanguage: Language;
     private _roomTime: Rules;
+    private rulesData;
 
     // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
@@ -58,6 +59,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
                 window.alert(code);
                 this._code = code;
                 this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
+                this.sendRules(this.rulesData);
             });
     }
 
@@ -138,5 +140,13 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         if (username.trim().length !== 0) {
             this.user.name = username;
         }
+    }
+
+    get rules() {
+        return this.rulesData;
+    }
+
+    set rules(data) {
+        this.rulesData = data;
     }
 }
