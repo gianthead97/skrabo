@@ -4,8 +4,50 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routes = require('./api/routes/routes');
+const mongoose = require('mongoose')
 
 // app.use(morgan('dev'));
+
+// remote access or make database from assets/database.json 
+const MONGODB_URI = 'mongodb+srv://user:JmBaUCHT47yEZPh@mycluster.3la6m.mongodb.net/MyCluster?retryWrites=true&w=majority'
+mongoose.connect(MONGODB_URI || 'mongodb://localhost/MyCluster', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose is connected.')
+});
+
+// Schema
+const Schema = mongoose.Schema
+const wordSchema = new Schema({
+  word: String,
+  chosen: Number,
+  given: Number,
+  hit: Number
+});
+
+// Model - it will automatically give collection a name 
+// with suffix s
+const wordModel = mongoose.model('word', wordSchema);
+
+// .save
+// data = {
+//   word: "papuca",
+//   chosen:0,
+//   given:0,
+//   hit:0
+// };
+
+// const newWord = new wordModel(data);
+// newWord.save((error) => {
+//   if(error) {
+//     console.log('Oooops, somsthing happend!');
+//   } else {
+//     console.log('Data has been saved!');
+//   }
+// })
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
