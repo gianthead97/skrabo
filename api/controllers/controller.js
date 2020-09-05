@@ -73,7 +73,7 @@ module.exports = class Controller {
         let roomId = req.params.roomId;
         let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
-            console.log(JSON.stringify(room.players));
+            // console.log(JSON.stringify(room.players));
             res.status(200).json(room.players);
         } else {
             next();

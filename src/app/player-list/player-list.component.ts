@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewChecked } from '@angular/core';
 import { PlayerComponent } from '../player/player.component';
 import { Player } from '../models/player.model';
 import { ChatService } from '../services/chat.service';
@@ -10,9 +10,15 @@ import * as Constants from '../../../const.js';
   templateUrl: './player-list.component.html',
   styleUrls: ['./player-list.component.css']
 })
-export class PlayerListComponent implements OnInit, OnChanges {
+export class PlayerListComponent implements OnInit, OnChanges, AfterViewChecked {
   players: Player[] = [];
   constructor(private chatService: ChatService) {
+
+  }
+
+  ngOnChanges(): void {
+  }
+  ngOnInit(): void {
     this.chatService.getSocketService.socket.on(Constants.changeInRoom, () => {
       this.chatService.getPlayers().subscribe((data: Player[]) => {
         this.players = [];
@@ -20,10 +26,11 @@ export class PlayerListComponent implements OnInit, OnChanges {
       });
     });
   }
-
-  ngOnChanges(): void {
-  }
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
+    this.chatService.getPlayers().subscribe((data: Player[]) => {
+      this.players = [];
+      data.forEach(player => this.players.push(player));
+    });
   }
 
 }
