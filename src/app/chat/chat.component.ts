@@ -27,9 +27,6 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     this.chatService.sendMessage(this.message);
-    // this.chatService.getWords().subscribe((data: Word[]) => {
-    //   data.forEach(word => console.log(word.word));
-    // });
     this.message = '';
   }
 
