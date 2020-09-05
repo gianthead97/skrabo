@@ -12,6 +12,7 @@ import { SocketService } from './socket.service';
 import { Rules, Language } from '../models/rules.model';
 import { Subscription } from 'rxjs';
 import { Player } from '../models/player.model';
+import { Word } from '../models/word.model';
 
 import * as Constants from '../../../const.js';
 import { PlayerListComponent } from '../player-list/player-list.component';
@@ -80,7 +81,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     getRoomName(): Observable<string> {
-
         return this.http.get<string>(this.url + '/getName/' + this._code);
     }
 
@@ -98,6 +98,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public getPlayers(): Observable<Player[]> {
         return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);
+    }
+
+    public getWords(): Observable<Word[]> {
+        return this.http.get<Word[]>(this.url + '/getWords');
     }
 
     get getSocketService() {

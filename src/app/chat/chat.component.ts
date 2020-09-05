@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
+import { Word } from '../models/word.model'
 
 @Component({
   selector: 'app-chat',
@@ -26,6 +27,9 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     this.chatService.sendMessage(this.message);
+    // this.chatService.getWords().subscribe((data: Word[]) => {
+    //   data.forEach(word => console.log(word.word));
+    // });
     this.message = '';
   }
 
