@@ -11,7 +11,7 @@ const Controller = require('../controllers/controller');
  */
 module.exports = class SocketController {
 
-    constructor() {}
+    constructor() { }
 
     /**
     * @description Map that contains all channel ids and their associated sockets
@@ -29,7 +29,7 @@ module.exports = class SocketController {
     */
     static onClientDrawing(code) {
         console.warn(code);
-        return function(data) {
+        return function (data) {
             this.to(code).emit(Constants.drawing, data);
         };
     }
@@ -41,7 +41,7 @@ module.exports = class SocketController {
     * @returns {Function} Callback function which will broadcast new message when some client sends to channel
     */
     static onNewMessage(code) {
-        return function({ message, color })  {
+        return function ({ message, color }) {
             this.io.in(code).emit(Constants.message, {
                 'message': message,
                 'color': color
@@ -57,8 +57,8 @@ module.exports = class SocketController {
      * @param {SocketIO.Socket} socket
      */
     static onJoinGame(socket) {
-        return function({code, username, admin}) {
-            
+        return function ({ code, username, admin }) {
+
             let room = Controller.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
@@ -73,16 +73,35 @@ module.exports = class SocketController {
                 }
                 SocketController.emitChangeInRoom(code);
                 //waiting for drawing event and broadast data to all players in room
-                socket.on(Constants.clientDrawing , SocketController.onClientDrawing(code).bind(socket));
+                socket.on(Constants.clientDrawing, SocketController.onClientDrawing(code).bind(socket));
 
                 //waiting for message data and broadcast
                 socket.on(Constants.newMessage, SocketController.onNewMessage(code).bind(this));
+
+                //waiting for word to be chosen
+                socket.on(Constants.wordChosen, SocketController.onWordChosen(code).bind(this));
 
             } else {
                 socket.emit(Constants.errorMsg, `Room with code: ${code} does not exist.`);
             }
 
         };
+    }
+
+    /**
+    * @description Function which handle message which comes from channel with some code
+    *               and broadcasts to all other clients that listening on same channel
+    * @param {string} code Channel id
+    * @returns {Function} Callback function which will broadcast new message when some client sends to channel
+    */
+    static onWordChosen(code) {
+        return function ({ word }) {
+            let room = Controller.rooms.find(x => x.roomId === code);
+            room.setWord(word);
+            this.io.in(code).emit(Constants.wordChosen, {
+                'word': word.length
+            });
+        }
     }
 
 

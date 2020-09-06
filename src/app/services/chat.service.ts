@@ -60,8 +60,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             .subscribe((code: string) => {
                 window.alert(code);
                 this._code = code;
-                this.socketService.socket.emit(Constants.joinGame, { code, username: this.username });
-                this.sendRules({id: this._code, ...this.rulesData});
+                this.socketService.socket.emit(Constants.joinGame, { code, username: this.username, admin: true });
+                this.sendRules({ id: this._code, ...this.rulesData });
             });
     }
 
@@ -80,6 +80,21 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             this.socketService.socket.on(Constants.message, ({ message, color }) => {
                 observer.next({ message, color });
             });
+        });
+    }
+
+    // wordChosen
+    public getWord(): Observable<any> {
+        return new Observable((observer) => {
+            this.socketService.socket.on(Constants.wordChosen, ({ word }) => {
+                observer.next({ word });
+            });
+        });
+    }
+
+    public sendWord(word) {
+        this.socketService.socket.emit(Constants.wordChosen, {
+            word
         });
     }
 

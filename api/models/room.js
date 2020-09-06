@@ -14,6 +14,7 @@ module.exports = class Room {
     closed = false;
     numOfRounds;
     duration;
+    choosenWord = '';
 
     constructor(roomId, roomName) {
         this.id = roomId;
@@ -44,6 +45,15 @@ module.exports = class Room {
     joinNewPlayer(player) {    
         console.log("new player ", player.name);
         this.players.push(player);   
+    }
+
+    /**
+     * @summary change current word after every round
+     * @param {word} word 
+     */
+    setWord(word) {    
+        console.log("new word ", word);
+        this.word = word;   
     }
     
 }

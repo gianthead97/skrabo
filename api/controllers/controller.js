@@ -79,5 +79,22 @@ module.exports = class Controller {
             next();
         }
     }
+
+        /**
+     * @summary Callback which sends data about players in room to client 
+     * @param {Function} req 
+     * @param {Function} res 
+     * @param {Function} next 
+     */
+    static getWord(req, res, next) {
+        let roomId = req.params.roomId;
+        let room = Controller.rooms.find(value => (value.roomId === roomId));
+        if (room !== undefined) {
+            // console.log(JSON.stringify(room.players));
+            res.status(200).json(room.word);
+        } else {
+            next();
+        }
+    }
 }
 

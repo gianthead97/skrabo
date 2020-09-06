@@ -12,6 +12,7 @@ import { GameInfoFormComponent } from '../game-info-form/game-info-form.componen
 })
 export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
+  wordLenght = 0;
 
   constructor(private chatService: ChatService, private dialog: MatDialog) {
     this.roomName = this.getRoomName();
@@ -20,6 +21,11 @@ export class PlaygroundComponent implements OnInit {
     //     width: "450"
     //   });
     // }
+    this.chatService
+      .getWord()
+      .subscribe(({ word }) => {
+        this.wordLenght = word;
+      });
   }
 
   ngOnInit(): void {
@@ -36,4 +42,5 @@ export class PlaygroundComponent implements OnInit {
   isUserTurn(): boolean {
     return this.chatService.isUserTurn;
   }
+
 }
