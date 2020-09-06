@@ -7,11 +7,11 @@ import {Subscription} from 'rxjs';
   templateUrl: './whiteboard.component.html',
   styleUrls: ['./whiteboard.component.css']
 })
-export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
+export class WhiteboardComponent implements OnInit, OnDestroy {
   
 
-  @ViewChild('whiteboard', {static: true})
-  board: ElementRef<HTMLCanvasElement>;
+  
+  board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   active = false;
   rectCanvas: ClientRect;
@@ -30,24 +30,27 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
       }));
 
   }
-  ngAfterViewInit(): void {
-    this.rectCanvas = this.board.nativeElement.getBoundingClientRect();
-    this.ctx = this.board.nativeElement.getContext('2d');
+  ngOnInit(): void {
+    this.penColor = 'black';
+    this.penSize = 5;
+    this.board = (document.getElementById('board') as HTMLCanvasElement);
+    this.rectCanvas = this.board.getBoundingClientRect();
+    this.ctx = this.board.getContext('2d');
     // Ovaj deo je zbog resizinga
-    this.board.nativeElement.height = this.board.nativeElement.offsetHeight;
-    this.board.nativeElement.width = this.board.nativeElement.offsetWidth;
+    this.board.height = this.board.offsetHeight;
+    this.board.width = this.board.offsetWidth;
     // ***********************
 
 
-    this.board.nativeElement.addEventListener('mousedown', (evt) => {
+    this.board.addEventListener('mousedown', (evt) => {
       this.sendCanvasData();
       this.startDrawing(evt);
     });
-    this.board.nativeElement.addEventListener('mouseup', (evt) => {
+    this.board.addEventListener('mouseup', (evt) => {
       this.sendCanvasData();
       this.endDrawing();
     });
-    this.board.nativeElement.addEventListener('mousemove', (evt) => {
+    this.board.addEventListener('mousemove', (evt) => {
       this.sendCanvasData();
       this.draw(evt);
     });
@@ -55,11 +58,6 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-  ngOnInit(): void {
-    this.penColor = 'black';
-    this.penSize = 5;
-    
-  }
 
 
   ngOnDestroy(): void {
@@ -69,7 +67,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   sendCanvasData() {
-    this.canvasService.sendCanvasData(this.board.nativeElement.toDataURL());
+    this.canvasService.sendCanvasData(this.board.toDataURL());
   }
 
 
@@ -107,7 +105,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   onClearCanvas(): void {
-    this.ctx.clearRect(0, 0, this.board.nativeElement.width, this.board.nativeElement.height);
+    this.ctx.clearRect(0, 0, this.board.width, this.board.height);
     this.sendCanvasData();
   }
 

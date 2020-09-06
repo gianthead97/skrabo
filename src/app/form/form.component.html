@@ -12,7 +12,7 @@
 				
 				<div class="form-group">
 						<label for="ime" style="font-size: 2.5vh">Unesi ime:</label>
-						<input formControlName="name" type="text" id="ime" class="form-control mb-3" #ime>
+						<input type="text" id="ime" class="form-control mb-3" #ime>
 				</div>
 				<div class="okvir"> <img src="assets/pen.gif"> </div>
 				
@@ -59,9 +59,9 @@
 	<div class="row">
 		<div class="col-4" style="margin-left: 5%; margin-top:2%; background-color: #B0E0E6; color: #483D8B;">
 			<div [hidden]="getPridruzivanjeSobi" style="padding: 4% 10% 5%;">
-				<div class="form-group">
+				<div class="">
 					<label for="kodSobe" style="font-size: 2.5vh">Unesi ID sobe:</label>
-					<input type="text" name="kodSobe" id="kodSobe" class="form-control mb-3" #kodSobe>
+					<input type="text" name="kodSobe" id="kodSobe" class="mb-3" #kodSobe>
 				</div>
 			</div>
 			

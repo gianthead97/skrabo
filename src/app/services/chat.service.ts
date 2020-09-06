@@ -58,8 +58,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             .subscribe((code: string) => {
                 window.alert(code);
                 this._code = code;
-                this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
-                this.sendRules(this.rulesData);
+                this.socketService.socket.emit(Constants.joinGame, { code, username: this.username });
+                this.sendRules({id: this._code, ...this.rulesData});
             });
     }
 

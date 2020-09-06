@@ -54,7 +54,7 @@ export class FormComponent implements OnInit {
     this.prikaziInfo = false;
     this.prikaziPravila = false;
   }
-  
+
   public onPridruzivanjeSobi(): void {
     this.pridruzivanjeSobi = !this.pridruzivanjeSobi;
     this.pravljenjeNoveSobe = true;
@@ -65,20 +65,23 @@ export class FormComponent implements OnInit {
     this.pridruzivanjeSobi = true;
   }
 
-  
+
   // Metod za komunikaciju sa chat servisom. Postavlja username naseg korisnika.
   // I u zavisnosti da li je popunio polje za pridruzivanje ili za kreiranje
   // nove sobe chat servis vrsi neophodne operacije.
   public onUnosImena(gameForm: FormGroup, roomCode: string, userName: string) {
-    let dataFromForm = gameForm.value;
-    console.log(dataFromForm);
+    // tslint:disable-next-line: one-variable-per-declaration
+    let name: string, rules: any;
+    ({name,  ...rules} = gameForm.value);
+    this.chatService.rules = rules;
+    console.log(rules);
     this.chatService.username = userName;
     if (roomCode !== '') {
       this.chatService.joinToRoom(roomCode);
       this.chatService.code = roomCode;
-    } else if (dataFromForm.name !== '') {
-      this.chatService.createNewRoomRequest(dataFromForm.name);
-      this.chatService.roomName = dataFromForm.name;
+    } else if (name !== '') {
+      this.chatService.createNewRoomRequest(name);
+      this.chatService.roomName = name;
     }
 
   }
