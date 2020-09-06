@@ -32,4 +32,8 @@ export class PlaygroundComponent implements OnInit {
       return this.chatService.getRoomName();
     }
   }
+
+  isUserTurn(): boolean {
+    return this.chatService.isUserTurn;
+  }
 }

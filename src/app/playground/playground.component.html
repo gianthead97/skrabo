@@ -7,16 +7,25 @@
     <div class="row justify-content-center">
         <h1>Škrabo</h1>
     </div>
-
+ 
     <div class="row" style="/*background-color: yellow;*/">
-        <div class="col-3">
+        <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
             <!--spisak ljudi u sobi-->
             <app-player-list></app-player-list>
         </div>
 
-        <div class="col-6">
-            <app-whiteboard></app-whiteboard>
-        </div>
+        <div *ngIf="isUserTurn(); then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <div class="col-6">
+                <app-word-picker></app-word-picker>
+            </div>
+        </ng-template>
+
+        <ng-template #elseBlock>
+            <div class="col-6">
+                <app-whiteboard></app-whiteboard>
+            </div>
+        </ng-template>
 
         <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
             <h4 style="padding-bottom: 10%">{{roomName | async }}</h4>
