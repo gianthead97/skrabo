@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import {ChatService} from '../services/chat.service';
-import {Observable, of} from 'rxjs';
+import { ChatService } from '../services/chat.service';
+import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GameInfoFormComponent } from '../game-info-form/game-info-form.component';
 
@@ -12,7 +12,7 @@ import { GameInfoFormComponent } from '../game-info-form/game-info-form.componen
 })
 export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
-  
+
   constructor(private chatService: ChatService, private dialog: MatDialog) {
     this.roomName = this.getRoomName();
     // if (this.chatService.adminPermission) {
@@ -31,5 +31,9 @@ export class PlaygroundComponent implements OnInit {
     } else {
       return this.chatService.getRoomName();
     }
+  }
+
+  isUserTurn(): boolean {
+    return this.chatService.isUserTurn;
   }
 }

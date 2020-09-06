@@ -12,7 +12,7 @@ import * as Constants from '../../../const.js';
 export class CanvasService {
 
   constructor(private socketService: SocketService) {
-    
+
   }
 
   public sendCanvasData(data) {

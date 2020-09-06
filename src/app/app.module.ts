@@ -15,6 +15,7 @@ import { GameInfoFormComponent } from './game-info-form/game-info-form.component
 // import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PlayerComponent } from './player/player.component';
 import { PlayerListComponent } from './player-list/player-list.component';
+import { WordPickerComponent } from './word-picker/word-picker.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { PlayerListComponent } from './player-list/player-list.component';
     PlaygroundComponent,
     GameInfoFormComponent,
     PlayerComponent,
-    PlayerListComponent
+    PlayerListComponent,
+    WordPickerComponent
   ],
   imports: [
     BrowserModule,

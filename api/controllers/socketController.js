@@ -57,14 +57,14 @@ module.exports = class SocketController {
      * @param {SocketIO.Socket} socket
      */
     static onJoinGame(socket) {
-        return function({code, username}) {
+        return function({code, username, admin}) {
             
             let room = Controller.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
                 console.log('New user is in the room.');
                 socket.join(code);
-                let newPlayer = new Player(username, false, code);
+                let newPlayer = new Player(username, admin, code);
                 room.joinNewPlayer(newPlayer);
                 if (SocketController.sockets.has(code)) {
                     SocketController.sockets.get(code).push(socket);

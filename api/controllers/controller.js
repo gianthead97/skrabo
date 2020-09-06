@@ -7,17 +7,17 @@ const uuid = require('uuid');
  */
 module.exports = class Controller {
 
-    constructor() {}
+    constructor() { }
 
     /**
      * @static
      * @private
      */
     static rooms = [];
-    
 
-    
-    
+
+
+
     /**
      * @summary Callback for handling post request for creating new private room
      * @param {Function} req 
@@ -38,7 +38,7 @@ module.exports = class Controller {
      * @param {Function} next 
      */
     static getNameOfRoom(req, res, next) {
-       
+
         let room = Controller.rooms.find(x => x.roomId === req.params.idSobe);
         if (room === undefined) {
             next();
@@ -49,7 +49,7 @@ module.exports = class Controller {
 
     static setRules(req, res, next) {
         console.log(req.body);
-        let {id, duration, numOfRounds, language} = req.body;
+        let { id, duration, numOfRounds, language } = req.body;
 
         let room = Controller.rooms.find(value => (value.roomId === id));
         if (room !== undefined) {
@@ -73,7 +73,7 @@ module.exports = class Controller {
         let roomId = req.params.roomId;
         let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
-            console.log(JSON.stringify(room.players));
+            // console.log(JSON.stringify(room.players));
             res.status(200).json(room.players);
         } else {
             next();

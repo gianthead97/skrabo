@@ -10,6 +10,7 @@ export class UserData {
         public points: number,
         public message: string,
         public color: string,
+        public isTurn: boolean,
         public isAdmin: boolean
     ) {
         const indexColor: number = Math.floor(Math.random() * colors.length);

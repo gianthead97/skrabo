@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Controller = require('../controllers/controller');
 
+const wordModel = require('../models/word');
 
 /**
  * @description
@@ -14,7 +15,7 @@ router.post("/createRoom", Controller.createRoom);
  * dummy route
  */
 router.get("/socketPort", (req, res, next) => {
-    res.json({url: (process.env.PORT || 3000)});
+    res.json({ url: (process.env.PORT || 3000) });
 });
 
 /**
@@ -30,6 +31,29 @@ router.get("/getName/:idSobe", Controller.getNameOfRoom);
  */
 router.patch("/sendRules", Controller.setRules);
 
+/**
+ * @description
+ * route which takes words from databse
+ * and sends only three to choose from
+ */
+router.get("/getWords", (req, res) => {
+    wordModel.find({ })
+        .then((data) => {
+            console.log(data.length);
+            const index1 = Math.floor(Math.random() * data.length);
+            const index2 = Math.floor(Math.random() * data.length);
+            const index3 = Math.floor(Math.random() * data.length); 
+
+            const d1 = data[index1];
+            const d2 = data[index2];
+            const d3 = data[index3];
+
+            res.json([d1, d2, d3]);
+        })
+        .catch((error) => {
+            console.log('Error while getting words.')
+        });
+});
 
 /**
  * @description

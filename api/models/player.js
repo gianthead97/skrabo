@@ -13,7 +13,10 @@ module.exports = class Player {
         this._admin = admin;
         this._code = code;
 
-        const num = Math.floor(Math.random() * 27);
+        let num = 1;
+        if (!admin) {
+            num = Math.ceil((Math.random() * 26)) + 1;
+        }
         this._profile = "../../assets/pandice/" + num + ".png";
     }
 

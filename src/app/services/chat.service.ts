@@ -12,6 +12,7 @@ import { SocketService } from './socket.service';
 import { Rules, Language } from '../models/rules.model';
 import { Subscription } from 'rxjs';
 import { Player } from '../models/player.model';
+import { Word } from '../models/word.model';
 
 import * as Constants from '../../../const.js';
 import { PlayerListComponent } from '../player-list/player-list.component';
@@ -38,7 +39,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
-        this.user = new UserData('', 0, '', '', false);
+        this.user = new UserData('', 0, '', '', false, false);
     }
 
     ngOnDestroy(): void {
@@ -48,11 +49,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public joinToRoom(code: string): void {
         this._code = code;
-        this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username });
+        this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username, admin: false });
     }
 
     public createNewRoomRequest(roomName: string): void {
         this.adminPermission = true;
+        this.isUserTurn = true;
         this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
             .pipe(catchError(super.handleError()))
             .subscribe((code: string) => {
@@ -82,8 +84,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     getRoomName(): Observable<string> {
-
         return this.http.get<string>(this.url + '/getName/' + this._code);
+    }
+
+    getProfileIndex(): Observable<string> {
+        return this.http.get<string>(this.url + '/getProfileIndex/' + this._code);
     }
 
     public sendRules(data): void {
@@ -100,6 +105,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public getPlayers(): Observable<Player[]> {
         return this.http.get<Player[]>(this.url + '/getPlayers/' + this._code);
+    }
+
+    public getWords(): Observable<Word[]> {
+        return this.http.get<Word[]>(this.url + '/getWords');
     }
 
     get getSocketService() {
@@ -127,6 +136,14 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     set adminPermission(newValue: boolean) {
         this.user.isAdmin = newValue;
+    }
+
+    get isUserTurn() {
+        return this.user.isTurn;
+    }
+
+    set isUserTurn(newValue: boolean) {
+        this.user.isTurn = newValue;
     }
 
     get userColor() {
