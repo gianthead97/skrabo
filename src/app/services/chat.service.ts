@@ -83,6 +83,13 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         });
     }
 
+    /**
+    * @description Function that signals to server to start game.
+    */
+    public startGame(): void {
+        this.socketService.socket.emit(Constants.startGame, {});
+    }
+
     getRoomName(): Observable<string> {
         return this.http.get<string>(this.url + '/getName/' + this._code);
     }

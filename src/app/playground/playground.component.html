@@ -9,7 +9,8 @@
     <div class="row" style="/*background-color: yellow;*/">
         <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
             <!--spisak ljudi u sobi-->
-            <app-player-list></app-player-list>
+            <app-player-list></app-player-list><br>
+            <button *ngIf="isCreator()" type="submit" class="btn btn-primary btn-block btn-warning" (click)="onStartGame($event)"> Start game</button>
         </div>
 
         <div *ngIf="isUserTurn(); then thenBlock else elseBlock"></div>

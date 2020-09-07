@@ -50,6 +50,18 @@ module.exports = class SocketController {
     }
 
 
+    /**
+     * @description Callback which sets flag gameStarted to true.
+     * @param {string} code, id of room
+     */
+    static onStartGame(code) {
+        try {
+            Controller.rooms.find((room) => room.roomId === code).startGame();
+        } catch {
+            console.error("Room not found!");
+        };
+    }
+
 
     /**
      * @description Main function that handle connection event of new clients to server, and call all other
@@ -78,6 +90,9 @@ module.exports = class SocketController {
                 //waiting for message data and broadcast
                 socket.on(Constants.newMessage, SocketController.onNewMessage(code).bind(this));
 
+                //waiting for start game signal
+                socket.on(Constants.startGame, SocketController.onStartGame(code));
+
             } else {
                 socket.emit(Constants.errorMsg, `Room with code: ${code} does not exist.`);
             }
@@ -85,6 +100,7 @@ module.exports = class SocketController {
         };
     }
 
+    
 
     /**
      * @description Function which log when some user is gone

@@ -11,7 +11,7 @@ const LanguageEnum = Object.freeze({"ENGLISH": 0, "SRPSKI": 1});
 module.exports = class Room {
     players = [];
     language
-    closed = false;
+    startedGame = false;
     numOfRounds;
     duration;
 
@@ -21,6 +21,10 @@ module.exports = class Room {
     }
     get roomId() {
         return this.id;
+    }
+
+    get isGameStarted() {
+        return this.startedGame;
     }
 
     set numberOfRounds(num) {
@@ -35,6 +39,10 @@ module.exports = class Room {
         this.duration = duration;
     }
 
+    startGame() {
+        this.startedGame = true;
+        
+    }
    
 
     /**
@@ -43,6 +51,9 @@ module.exports = class Room {
      */
     joinNewPlayer(player) {    
         console.log("new player ", player.name);
+        if (this.startedGame) {
+            return;
+        }
         this.players.push(player);   
     }
     

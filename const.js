@@ -8,5 +8,6 @@ module.exports = {
     connection: 'connection',
     disconnect: 'disconnect',
     joinGame: 'joinGame',
+    startGame: 'startGame',
     urlString: 'http://localhost:3000',
 };

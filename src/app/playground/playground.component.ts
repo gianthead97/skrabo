@@ -4,6 +4,7 @@ import { ChatService } from '../services/chat.service';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GameInfoFormComponent } from '../game-info-form/game-info-form.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-playground',
@@ -35,5 +36,14 @@ export class PlaygroundComponent implements OnInit {
 
   isUserTurn(): boolean {
     return this.chatService.isUserTurn;
+  }
+
+  isCreator(): boolean {
+    return this.chatService.adminPermission;
+  }
+
+  onStartGame(event: Event): void {
+    (event.target as HTMLElement).hidden = true;
+    this.chatService.startGame();
   }
 }
