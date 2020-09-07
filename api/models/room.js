@@ -13,7 +13,7 @@ module.exports = class Room {
     closed = false;
     numOfRounds;
     duration;
-    choosenWord = '';
+    word = '';
 
     constructor(roomId, roomName) {
         this.id = roomId;
@@ -21,6 +21,10 @@ module.exports = class Room {
     }
     get roomId() {
         return this.id;
+    }
+
+    get chosenWord() {
+        return this.word;
     }
 
     set numberOfRounds(num) {

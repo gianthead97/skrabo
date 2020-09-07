@@ -42,6 +42,13 @@ module.exports = class SocketController {
      */
     static onNewMessage(code) {
         return function({ message, color }) {
+            let room = Controller.rooms.find(x => x.roomId === code);
+            let chosenWord = room.chosenWord;
+            let word = (message.split(':')[1]).trim();
+            if (word == chosenWord) {
+                message = (message.split(':')[1]).trim() + 'guessed the word!';
+                color = 'lightseagreen';
+            }
             this.io.in(code).emit(Constants.message, {
                 'message': message,
                 'color': color
