@@ -18,9 +18,10 @@ export class WordPickerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  wordChosen() {
+  wordChosen(index) {
     console.log(this.chatService.isUserTurn);
     this.chatService.isUserTurn = false;
+    this.chatService.sendWord(this.words[index]);
   }
 
   pickFrom() {

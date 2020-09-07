@@ -1,23 +1,39 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-#cards {
-    margin-top: 80px;
-}
-
-
-.bg {
-    background: url("../../assets/pozadina.jpg");
-    width: 100%;
-    background-size: cover;
-}
-
-h1 {
-    padding: 2%;
-    font-size: 5vw; font-weight: 600;
-    color: lightseagreen;
-    font-family: 'Annie Use Your Telescope';
-    cursor: default;
-  }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #cards {
+        margin-top: 80px;
+    }
+    
+    .bg {
+        background: url("../../assets/pozadina.jpg");
+        width: 100%;
+        background-size: cover;
+    }
+    
+    h1 {
+        padding: 2%;
+        font-size: 5vw;
+        font-weight: 600;
+        color: lightseagreen;
+        font-family: 'Annie Use Your Telescope';
+        cursor: default;
+        margin-right: 4%;
+    }
+    
+    .dashes {
+        font-size: 2vw;
+        font-weight: 600;
+        color: lightseagreen;
+        margin: 0.5%;
+        display: inline;
+    }
+    
+    #dashes {
+        height: 80px;
+        margin: 2%;
+        display: block;
+        text-align: center;
+    }

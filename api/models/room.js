@@ -1,8 +1,7 @@
-
 /**
  * @enum
  */
-const LanguageEnum = Object.freeze({"ENGLISH": 0, "SRPSKI": 1});
+const LanguageEnum = Object.freeze({ "ENGLISH": 0, "SRPSKI": 1 });
 
 
 /**
@@ -14,6 +13,8 @@ module.exports = class Room {
     startedGame = false;
     numOfRounds;
     duration;
+    word = '';
+    dashes = '';
 
     constructor(roomId, roomName) {
         this.id = roomId;
@@ -25,6 +26,9 @@ module.exports = class Room {
 
     get isGameStarted() {
         return this.startedGame;
+    }
+    get chosenWord() {
+        return this.word;
     }
 
     set numberOfRounds(num) {
@@ -49,12 +53,37 @@ module.exports = class Room {
      * @summary add new player in private room
      * @param {player} player 
      */
-    joinNewPlayer(player) {    
+    joinNewPlayer(player) {
         console.log("new player ", player.name);
         if (this.startedGame) {
             return;
         }
         this.players.push(player);   
     }
-    
+
+    /**
+     * @summary change current word after every round
+     * @param {word} word 
+     */
+    setWord(word) {
+        console.log("new word ", word);
+        this.word = word;
+    }
+
+    /**
+     * @summary get dashes instead of letters
+     * @param {word} word 
+     */
+    getDashes() {
+        this.dashes = '';
+        for (let i = 0; i < this.word.length; i++) {
+            if (this.word[i] === ' ') {
+                this.dashes += ' ';
+            } else {
+                this.dashes += '_';
+            }
+        }
+        return this.dashes;
+    }
+
 }
