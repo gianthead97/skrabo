@@ -6,6 +6,8 @@ import { CanvasData } from '../models/canvasData.model';
 import { SocketService } from './socket.service';
 import * as Constants from '../../../const.js';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +26,13 @@ export class CanvasService {
       this.socketService.socket.on(Constants.drawing, (data: CanvasData) => {
         observer.next(data);
       });
+    });
+  }
+
+
+  public setTogglingCanvas(board: HTMLCanvasElement, init: () => void, deinit: () => void): void {
+    this.socketService.socket.on(Constants.toggleCanvas, (playerName: string) => {
+      playerName === this.socketService.user.name ? init() : deinit();
     });
   }
 }

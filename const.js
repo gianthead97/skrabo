@@ -12,5 +12,9 @@ module.exports = {
     wordChosen: 'wordChosen',
     getDashes: 'getDashes',
     guessedSound: 'guessedSound',
+    toggleCanvas: 'toggleCanvas',
+    selectAWord: 'selectAWord',
+    emitSelectedWord: 'emitSelectedWord',
+    turnIsOver: 'turnIsOver',
     urlString: 'http://localhost:3000'
 };

@@ -8,9 +8,9 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./whiteboard.component.css']
 })
 export class WhiteboardComponent implements OnInit, OnDestroy {
-  
 
-  
+
+
   board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   active = false;
@@ -20,7 +20,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(private canvasService: CanvasService) {
-
+    
     this.subscriptions.push(this.canvasService
       .getCanvasEvent()
       .subscribe((data: string) => {
@@ -40,8 +40,12 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
     this.board.height = this.board.offsetHeight;
     this.board.width = this.board.offsetWidth;
     // ***********************
+    this.initalizeMousesListeners();
+    this.canvasService.setTogglingCanvas(this.board, this.initalizeMousesListeners.bind(this), this.deinitializeMouseListeners.bind(this));
+  }
 
 
+  public initalizeMousesListeners() {
     this.board.addEventListener('mousedown', (evt) => {
       this.sendCanvasData();
       this.startDrawing(evt);
@@ -57,13 +61,18 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
   }
 
 
-
+  /**
+   * This is a hack, source: https://techoverflow.net/2019/12/26/how-to-remove-all-event-listeners-from-a-dom-element-in-javascript/
+   */
+  public deinitializeMouseListeners(): void {
+    this.board.replaceWith(this.board.cloneNode(true));
+  }
 
 
   ngOnDestroy(): void {
    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-  
+
 
 
   sendCanvasData() {

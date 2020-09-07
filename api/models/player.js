@@ -43,5 +43,10 @@ module.exports = class Player {
     }
 
 
+    async waitToPickAWord() {
+        await SocketController.selectWord(this.name, this.code);
+        return new Promise();
+    }
+
 }
 

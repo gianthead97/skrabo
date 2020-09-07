@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Constants } from '../../../const';
 import { Observable, of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { GameInfoFormComponent } from '../game-info-form/game-info-form.component';
 import { element } from 'protractor';
 
@@ -16,19 +15,16 @@ export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
   word = [];
 
-  constructor(private chatService: ChatService, private dialog: MatDialog) {
+  constructor(private chatService: ChatService) {
     this.roomName = this.getRoomName();
-    // if (this.chatService.adminPermission) {
-    //   this.dialog.open(GameInfoFormComponent, {
-    //     width: "450"
-    //   });
-    // }
 
     this.chatService
       .getWord()
       .subscribe(({ word }) => {
         this.word = word.split('');
       });
+
+    
   }
 
   ngOnInit(): void {

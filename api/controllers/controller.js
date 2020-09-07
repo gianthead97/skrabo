@@ -1,4 +1,5 @@
 const Room = require('../models/room');
+const SocketController = require('./socketController')
 const uuid = require('uuid');
 
 
@@ -9,11 +10,7 @@ module.exports = class Controller {
 
     constructor() {}
 
-    /**
-     * @static
-     * @private
-     */
-    static rooms = [];
+    
 
 
 
@@ -27,7 +24,7 @@ module.exports = class Controller {
     static createRoom(req, res, next) {
         console.log(req.body.name);
         let room = new Room(uuid.v1().substr(0, 6), req.body.name);
-        Controller.rooms.push(room);
+        SocketController.rooms.push(room);
         res.status(201).json(room.id);
     }
 
@@ -39,7 +36,7 @@ module.exports = class Controller {
      */
     static getNameOfRoom(req, res, next) {
 
-        let room = Controller.rooms.find(x => x.roomId === req.params.idSobe);
+        let room = SocketController.rooms.find(x => x.roomId === req.params.idSobe);
         if (room === undefined) {
             next();
         } else {
@@ -51,7 +48,7 @@ module.exports = class Controller {
         console.log(req.body);
         let { id, duration, numOfRounds, language } = req.body;
 
-        let room = Controller.rooms.find(value => (value.roomId === id));
+        let room = SocketController.rooms.find(value => (value.roomId === id));
         if (room !== undefined) {
             room.duration = duration;
             room.numberOfRounds = numOfRounds;
@@ -71,7 +68,7 @@ module.exports = class Controller {
      */
     static getPlayers(req, res, next) {
         let roomId = req.params.roomId;
-        let room = Controller.rooms.find(value => (value.roomId === roomId));
+        let room = SocketController.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
             res.status(200).json(room.players);
         } else {
@@ -87,7 +84,7 @@ module.exports = class Controller {
      */
     static getDashes(req, res, next) {
         let roomId = req.params.roomId;
-        let room = Controller.rooms.find(value => (value.roomId === roomId));
+        let room = SocketController.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
             res.status(200).json(room.getDashes());
         } else {

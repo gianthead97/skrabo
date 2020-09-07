@@ -23,7 +23,6 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 
 export class ChatService extends HttpErrorHandler implements OnDestroy {
 
-    private user: UserData;
     private formData: Rules;
     private _code: string;
     private _roomName: string;
@@ -39,7 +38,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
-        this.user = new UserData('', 0, '', '', false, false);
     }
 
     ngOnDestroy(): void {
@@ -66,11 +64,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public sendMessage(message) {
-        this.user.message = message;
-        if (this.user.message.trim().length !== 0) {
+        this.socketService.user.message = message;
+        if (this.socketService.user.message.trim().length !== 0) {
             this.socketService.socket.emit(Constants.newMessage, {
-                message: `${this.user.name}: ${this.user.message}`,
-                color: this.user.color
+                message: `${this.socketService.user.name}: ${this.socketService.user.message}`,
+                color: this.socketService.user.color
             });
         }
     }
@@ -84,7 +82,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     /**
-    * @description Function that signals to server to start game.
+    * description: Function that signals to server to start game.
     */
     public startGame(): void {
         this.socketService.socket.emit(Constants.startGame, {});
@@ -165,31 +163,31 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     get adminPermission(): boolean {
-        return this.user.isAdmin;
+        return this.socketService.user.isAdmin;
     }
 
     set adminPermission(newValue: boolean) {
-        this.user.isAdmin = newValue;
+        this.socketService.user.isAdmin = newValue;
     }
 
     get isUserTurn() {
-        return this.user.isTurn;
+        return this.socketService.user.isTurn;
     }
 
     set isUserTurn(newValue: boolean) {
-        this.user.isTurn = newValue;
+        this.socketService.user.isTurn = newValue;
     }
 
     get userColor() {
-        return this.user.color;
+        return this.socketService.user.color;
     }
 
     get username() {
-        return this.user.name;
+        return this.socketService.user.name;
     }
     set username(username: string) {
         if (username.trim().length !== 0) {
-            this.user.name = username;
+            this.socketService.user.name = username;
         }
     }
 

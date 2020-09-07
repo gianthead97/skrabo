@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
+
 import { urlString } from '../../../const';
+import { UserData } from '../models/user.model';
 
 
 @Injectable({
@@ -12,8 +14,9 @@ export class SocketService {
   // private URL = '';
   private URL = urlString;
   private sock = io(this.URL);
+  public user: UserData;
   constructor(private http: HttpClient) {
-
+    this.user = new UserData('', 0, '', '', false, false);
   }
 
   get socket() {

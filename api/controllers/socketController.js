@@ -1,7 +1,5 @@
 const Constants = require('../../const');
-const Player = require('../models/player');
-const Controller = require('../controllers/controller');
-
+const {once, EventEmitter} = require('events');
 
 
 /**
@@ -13,11 +11,25 @@ module.exports = class SocketController {
 
     constructor() {}
 
+
+    /**
+     * @static
+     * @private
+     */
+    static rooms = [];
+
     /**
      * @description Map that contains all channel ids and their associated sockets
      */
     static sockets = new Map();
 
+    /**
+     * @description Map that contains rooms codes and their EventEmitter instances, to signalize some stuff internal on server
+     */
+    static eventEmmitters = new Map();
+
+
+    static intervalVars = new Map();
 
     /**
      * @description Function which handle event that contains data for drawing
@@ -42,11 +54,17 @@ module.exports = class SocketController {
      */
     static onNewMessage(code) {
         return function({ message, color }) {
-            let room = Controller.rooms.find(x => x.roomId === code);
+            let room = SocketController.rooms.find(x => x.roomId === code);
             let chosenWord = room.chosenWord;
             let word = (message.split(':')[1]).trim();
             if (word == chosenWord) {
-                message = (message.split(':')[0]).trim() + ' guessed the word!';
+                let playerName = message.split(':')[0].trim();
+                message =  playerName + ' guessed the word!';
+                room.players.forEach(player => {
+                    if (player.name = playerName) {
+                        player.increasePoints(1);
+                    }
+                })
                 color = 'lightseagreen';
                 this.io.in(code).emit(Constants.guessedSound);
             }
@@ -65,7 +83,7 @@ module.exports = class SocketController {
      */
     static onStartGame(code) {
         try {
-            Controller.rooms.find((room) => room.roomId === code).startGame();
+            SocketController.rooms.find((room) => room.roomId === code).startGame();
         } catch {
             console.error("Room not found!");
         };
@@ -80,17 +98,18 @@ module.exports = class SocketController {
     static onJoinGame(socket) {
         return function({ code, username, admin }) {
 
-            let room = Controller.rooms.find((room) => room.roomId === code);
+            let room = SocketController.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
                 console.log('New user is in the room.');
                 socket.join(code);
-                let newPlayer = new Player(username, admin, code);
-                room.joinNewPlayer(newPlayer);
+                room.joinNewPlayer(username, admin, code);
                 if (SocketController.sockets.has(code)) {
-                    SocketController.sockets.get(code).push(socket);
+                    SocketController.sockets.get(code).set(username, socket);
                 } else {
-                    SocketController.sockets.set(code, new Array(socket));
+                    SocketController.sockets.set(code, new Map());
+                    SocketController.sockets.get(code).set(username, socket);
+                    SocketController.eventEmmitters.set(code, new EventEmitter());
                 }
                 SocketController.emitChangeInRoom(code);
                 //waiting for drawing event and broadast data to all players in room
@@ -119,7 +138,8 @@ module.exports = class SocketController {
      */
     static onWordChosen(code) {
         return function({ word }) {
-            let room = Controller.rooms.find(x => x.roomId === code);
+            SocketController.eventEmmitters.get(code).emit(Constants.emitSelectedWord, word);
+            let room = SocketController.rooms.find(x => x.roomId === code);
             room.setWord(word);
             let dashes = '';
             for (let i = 0; i < word.length; i++) {
@@ -150,5 +170,49 @@ module.exports = class SocketController {
      */
     static emitChangeInRoom(code) {
         SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.changeInRoom));
+    }
+
+    /**
+     * @description Function that signals clients to toggle canvas on enable/disable mode 
+     * @param {string} playerName 
+     * @param {string} code 
+     */
+    static toggleCanvas(playerName, code) {
+        SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.toggleCanvas, playerName));
+    }
+
+
+    /**
+     * @description 
+     * @param {string} playerName 
+     * @param {string} code 
+     */
+    static async selectWord(playerName, code) {
+        SocketController.sockets.get(code).forEach((socket, username) => {
+            if (playerName === username) {
+                socket.emit(Constants.selectAWord);
+            }
+        });
+        await once(SocketController.eventEmmitters.get(code), Constants.emitSelectedWord);
+        return ;
+    }
+
+
+    /**
+     * @description 
+     * @param {string} code 
+     * @param {number} duration 
+     */
+    static runTimer(code, duration) {
+        let timestamp = duration;
+        SocketController.intervalVars.set(code, setInterval(() => {
+            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, timestamp--));
+            console.log(timestamp);
+            if (timestamp == 0) {
+                clearInterval(SocketController.intervalVars.get(code));
+                SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
+            }      
+        }, 1000));
+        await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
     }
 }

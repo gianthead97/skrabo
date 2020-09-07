@@ -1,3 +1,5 @@
+const SocketController = require('../controllers/socketController');
+const Player = require('./player');
 /**
  * @enum
  */
@@ -43,9 +45,37 @@ module.exports = class Room {
         this.duration = duration;
     }
 
-    startGame() {
+    /**
+     * @description Counting times until end of turn while players guess
+     */
+    async startGuessing() {
+        await SocketController.runTimer(this.roomId, parseInt(this.duration));
+    }
+
+    /**
+     * @description Function that handles turn by one player in one round
+     * @param {number} index 
+     */
+    async runTurn(index) {
+        SocketController.toggleCanvas(this.players[index].name, this.roomId);
+        await this.players[index].waitToPickAWord();
+        await this.startGuessing();
+    }
+
+    /**
+    *   @description Entrypoint to handling gameplay   
+    */
+    async startGame() {
         this.startedGame = true;
-        
+        for (let i = 0; i < parseInt(this.numOfRounds); i++) {
+            for (let j = 0; j < this.players.length; j++) {
+                await runTurn(j);
+            }
+        }
+
+
+        console.log("GAME IS OVER IN ROOM: ", this.roomName);
+        console.log("IM DONEEEEEEEE");
     }
    
 
@@ -53,7 +83,8 @@ module.exports = class Room {
      * @summary add new player in private room
      * @param {player} player 
      */
-    joinNewPlayer(player) {
+    joinNewPlayer(username, admin, code) {
+        let newPlayer = new Player(username, admin, code);
         console.log("new player ", player.name);
         if (this.startedGame) {
             return;
