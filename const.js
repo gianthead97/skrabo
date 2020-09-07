@@ -10,5 +10,6 @@ module.exports = {
     joinGame: 'joinGame',
     wordChosen: 'wordChosen',
     getDashes: 'getDashes',
+    guessedSound: 'guessedSound',
     urlString: 'http://localhost:3000',
 };

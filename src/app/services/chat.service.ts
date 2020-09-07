@@ -83,6 +83,15 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         });
     }
 
+    // get guessed
+    public getSound(): Observable<any> {
+        return new Observable((observer) => {
+            this.socketService.socket.on(Constants.guessedSound, () => {
+                observer.next();
+            });
+        });
+    }
+
     // wordChosen
     public getWord(): Observable<any> {
         return new Observable((observer) => {

@@ -14,6 +14,7 @@ module.exports = class Room {
     numOfRounds;
     duration;
     word = '';
+    dashes = '';
 
     constructor(roomId, roomName) {
         this.id = roomId;
@@ -64,15 +65,15 @@ module.exports = class Room {
      * @param {word} word 
      */
     getDashes() {
-        let dashes = '';
+        this.dashes = '';
         for (let i = 0; i < this.word.length; i++) {
             if (this.word[i] === ' ') {
-                dashes += ' ';
+                this.dashes += ' ';
             } else {
-                dashes += '_';
+                this.dashes += '_';
             }
         }
-        return dashes;
+        return this.dashes;
     }
 
 }

@@ -46,9 +46,11 @@ module.exports = class SocketController {
             let chosenWord = room.chosenWord;
             let word = (message.split(':')[1]).trim();
             if (word == chosenWord) {
-                message = (message.split(':')[1]).trim() + 'guessed the word!';
+                message = (message.split(':')[0]).trim() + ' guessed the word!';
                 color = 'lightseagreen';
+                this.io.in(code).emit(Constants.guessedSound);
             }
+
             this.io.in(code).emit(Constants.message, {
                 'message': message,
                 'color': color
