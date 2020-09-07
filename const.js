@@ -9,5 +9,6 @@ module.exports = {
     disconnect: 'disconnect',
     joinGame: 'joinGame',
     wordChosen: 'wordChosen',
+    getDashes: 'getDashes',
     urlString: 'http://localhost:3000',
 };

@@ -92,6 +92,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         });
     }
 
+    public getDashes(): Observable<any> {
+        return this.http.get<string>(this.url + '/getDashes/' + this._code);
+    }
+
+
+
     public sendWord(word) {
         this.socketService.socket.emit(Constants.wordChosen, {
             word

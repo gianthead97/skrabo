@@ -37,12 +37,12 @@ router.patch("/sendRules", Controller.setRules);
  * and sends only three to choose from
  */
 router.get("/getWords", (req, res) => {
-    wordModel.find({ })
+    wordModel.find({})
         .then((data) => {
             console.log(data.length);
             const index1 = Math.floor(Math.random() * data.length);
             const index2 = Math.floor(Math.random() * data.length);
-            const index3 = Math.floor(Math.random() * data.length); 
+            const index3 = Math.floor(Math.random() * data.length);
 
             const d1 = data[index1];
             const d2 = data[index2];
@@ -61,4 +61,5 @@ router.get("/getWords", (req, res) => {
  */
 
 router.get("/getPlayers/:roomId", Controller.getPlayers);
+router.get("/getDashes/:roomId", Controller.getDashes);
 module.exports = router;

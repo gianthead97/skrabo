@@ -7,7 +7,7 @@ const uuid = require('uuid');
  */
 module.exports = class Controller {
 
-    constructor() { }
+    constructor() {}
 
     /**
      * @static
@@ -80,21 +80,44 @@ module.exports = class Controller {
         }
     }
 
-        /**
+    /**
      * @summary Callback which sends data about players in room to client 
      * @param {Function} req 
      * @param {Function} res 
      * @param {Function} next 
      */
-    static getWord(req, res, next) {
+    static getDashes(req, res, next) {
         let roomId = req.params.roomId;
         let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
             // console.log(JSON.stringify(room.players));
-            res.status(200).json(room.word);
+            res.status(200).json(room.getDashes());
         } else {
             next();
         }
     }
-}
 
+    /**
+     * @summary Callback which sends words to client 
+     * @param {Function} req 
+     * @param {Function} res 
+     */
+    static getWord(req, res) {
+        wordModel.find({})
+            .then((data) => {
+                console.log(data.length);
+                const index1 = Math.floor(Math.random() * data.length);
+                const index2 = Math.floor(Math.random() * data.length);
+                const index3 = Math.floor(Math.random() * data.length);
+
+                const d1 = data[index1];
+                const d2 = data[index2];
+                const d3 = data[index3];
+
+                res.json([d1, d2, d3]);
+            })
+            .catch((error) => {
+                console.log('Error while getting words.')
+            });
+    }
+}

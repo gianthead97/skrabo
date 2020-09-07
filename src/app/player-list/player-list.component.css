@@ -1,8 +1,9 @@
 #card {
-    border: 2px solid palevioletred;
+    border: 2px solid rgb(216, 112, 147);
     margin: 1px;
-    background-color: #ffeeee;
+    background-color: rgb(255, 238, 238, 0.5);
     display: block;
+    border-radius: 8px;
 }
 
 #pic {
@@ -10,6 +11,6 @@
 }
 
 p {
-    margin-top: 0em ;
-    margin-bottom: 0em ;
+    margin-top: 0em;
+    margin-bottom: 0em;
 }
