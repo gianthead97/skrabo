@@ -32,7 +32,7 @@ module.exports = class Controller {
     }
 
     /**
-     * @summary Callback which send name of room for players that arent admin of room
+     * @summary Callback which send name of room for players that aren't admin of room
      * @param {Function} req 
      * @param {Function} res 
      * @param {Function} next 
@@ -64,7 +64,7 @@ module.exports = class Controller {
     }
 
     /**
-     * @summary Callback which sends data about players in room to client 
+     * @summary Callback for sending data about players in room to client 
      * @param {Function} req 
      * @param {Function} res 
      * @param {Function} next 
@@ -73,7 +73,6 @@ module.exports = class Controller {
         let roomId = req.params.roomId;
         let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
-            // console.log(JSON.stringify(room.players));
             res.status(200).json(room.players);
         } else {
             next();
@@ -81,7 +80,7 @@ module.exports = class Controller {
     }
 
     /**
-     * @summary Callback which sends data about players in room to client 
+     * @summary Callback for sending dashes instead of words for clients that aren't drawing
      * @param {Function} req 
      * @param {Function} res 
      * @param {Function} next 
@@ -90,7 +89,6 @@ module.exports = class Controller {
         let roomId = req.params.roomId;
         let room = Controller.rooms.find(value => (value.roomId === roomId));
         if (room !== undefined) {
-            // console.log(JSON.stringify(room.players));
             res.status(200).json(room.getDashes());
         } else {
             next();
@@ -98,7 +96,7 @@ module.exports = class Controller {
     }
 
     /**
-     * @summary Callback which sends words to client 
+     * @summary Callback for sending words to choose from to client
      * @param {Function} req 
      * @param {Function} res 
      */

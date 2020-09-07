@@ -99,10 +99,9 @@ module.exports = class SocketController {
     }
 
     /**
-     * @description Function which handle message which comes from channel with some code
-     *               and broadcasts to all other clients that listening on same channel
+     * @description Function for sending dashes instead of word to client
      * @param {string} code Channel id
-     * @returns {Function} Callback function which will broadcast new message when some client sends to channel
+     * @returns {Function} Callback function which will broadcast number of letter of chosen word
      */
     static onWordChosen(code) {
         return function({ word }) {

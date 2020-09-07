@@ -59,7 +59,10 @@ router.get("/getWords", (req, res) => {
  * @description
  * route for delivering data for users in private with params_id 
  */
-
 router.get("/getPlayers/:roomId", Controller.getPlayers);
+/**
+ * @description
+ * route for delivering dashes instead of words to clients 
+ */
 router.get("/getDashes/:roomId", Controller.getDashes);
 module.exports = router;
