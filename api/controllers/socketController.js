@@ -61,7 +61,7 @@ module.exports = class SocketController {
                 let playerName = message.split(':')[0].trim();
                 message =  playerName + ' guessed the word!';
                 room.players.forEach(player => {
-                    if (player.name = playerName) {
+                    if (player.name == playerName) {
                         player.increasePoints(1);
                     }
                 })
@@ -82,11 +82,13 @@ module.exports = class SocketController {
      * @param {string} code, id of room
      */
     static onStartGame(code) {
-        try {
-            SocketController.rooms.find((room) => room.roomId === code).startGame();
-        } catch {
-            console.error("Room not found!");
-        };
+        return () => {
+            try {
+                SocketController.rooms.find((room) => room.roomId === code).startGame();
+            } catch {
+                console.error("Room not found!");
+            };
+        }
     }
 
 
@@ -188,9 +190,12 @@ module.exports = class SocketController {
      * @param {string} code 
      */
     static async selectWord(playerName, code) {
+        
         SocketController.sockets.get(code).forEach((socket, username) => {
             if (playerName === username) {
                 socket.emit(Constants.selectAWord);
+            } else {
+                socket.emit(Constants.youWillPlay, username);
             }
         });
         await once(SocketController.eventEmmitters.get(code), Constants.emitSelectedWord);
@@ -203,11 +208,12 @@ module.exports = class SocketController {
      * @param {string} code 
      * @param {number} duration 
      */
-    static runTimer(code, duration) {
+    static async runTimer(code, duration) {
         let timestamp = duration;
         SocketController.intervalVars.set(code, setInterval(() => {
-            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, timestamp--));
-            console.log(timestamp);
+            timestamp--;
+            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, timestamp));
+            console.log("timestamp: ", timestamp);
             if (timestamp == 0) {
                 clearInterval(SocketController.intervalVars.get(code));
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});

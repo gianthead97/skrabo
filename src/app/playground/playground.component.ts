@@ -17,7 +17,7 @@ export class PlaygroundComponent implements OnInit {
 
   constructor(private chatService: ChatService) {
     this.roomName = this.getRoomName();
-
+    this.chatService.listenToMyTurn();
     this.chatService
       .getWord()
       .subscribe(({ word }) => {
@@ -28,9 +28,9 @@ export class PlaygroundComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chatService.getDashes().subscribe((word) => {
-      this.word = word.split('');
-    });
+    // this.chatService.getDashes().subscribe((word) => {
+    //   this.word = word.split('');
+    // });
   }
 
   getRoomName(): Observable<string> {
@@ -52,5 +52,10 @@ export class PlaygroundComponent implements OnInit {
   onStartGame(event: Event): void {
     (event.target as HTMLElement).hidden = true;
     this.chatService.startGame();
+  }
+
+
+  getTimestamp() {
+    return this.chatService.turnTimestamp;
   }
 }

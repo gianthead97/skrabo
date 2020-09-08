@@ -21,6 +21,7 @@ mongoose.connection.on('connected', () => {
 
 
 app.use(cors());
+// app.use(morgan());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

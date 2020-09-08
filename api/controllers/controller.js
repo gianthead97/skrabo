@@ -46,12 +46,11 @@ module.exports = class Controller {
 
     static setRules(req, res, next) {
         console.log(req.body);
-        let { id, duration, numOfRounds, language } = req.body;
-
+        let { id, duration, rounds, language} = req.body;
         let room = SocketController.rooms.find(value => (value.roomId === id));
         if (room !== undefined) {
             room.duration = duration;
-            room.numberOfRounds = numOfRounds;
+            room.numberOfRounds = rounds;
             room.language = language;
             res.status(201).json(id);
         } else {

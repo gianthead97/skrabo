@@ -23,6 +23,7 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 
 export class ChatService extends HttpErrorHandler implements OnDestroy {
 
+
     private formData: Rules;
     private _code: string;
     private _roomName: string;
@@ -35,6 +36,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     private url = Constants.urlString;
     private subscriptions: Subscription[] = [];
+    private whoDraws: string;
+    private timestamp: string;
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
         super(router);
@@ -52,7 +55,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public createNewRoomRequest(roomName: string): void {
         this.adminPermission = true;
-        this.isUserTurn = true;
         this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
             .pipe(catchError(super.handleError()))
             .subscribe((code: string) => {
@@ -87,6 +89,22 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     public startGame(): void {
         this.socketService.socket.emit(Constants.startGame, {});
     }
+
+    listenToMyTurn() {
+        this.socketService.socket.on(Constants.selectAWord, () => {
+            this.socketService.user.isTurn = true;
+        });
+        this.socketService.socket.on(Constants.youWillPlay, (playerName) => {
+            this.socketService.user.isTurn = false;
+            this.whoDraws = playerName;
+        });
+        this.socketService.socket.on(Constants.newTimestamp, (timestamp) => {
+            this.timestamp = timestamp;
+            console.log(this.timestamp);
+        });
+    }
+
+
     // get guessed
     public getSound(): Observable<any> {
         return new Observable((observer) => {
@@ -197,5 +215,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     set rules(data) {
         this.rulesData = data;
+    }
+
+
+    get turnTimestamp() {
+        return this.timestamp;
     }
 }
