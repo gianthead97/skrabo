@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Word } from '../models/word.model';
+import { CanvasService } from '../services/canvas.service';
 
 @Component({
   selector: 'app-word-picker',
@@ -11,7 +12,7 @@ export class WordPickerComponent implements OnInit {
 
   words = [];
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private canvasService: CanvasService) {
     this.pickFrom();
   }
 
@@ -19,7 +20,6 @@ export class WordPickerComponent implements OnInit {
   }
 
   wordChosen(index) {
-    console.log(this.chatService.isUserTurn);
     this.chatService.isUserTurn = false;
     this.chatService.sendWord(this.words[index]);
   }

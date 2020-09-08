@@ -10,11 +10,6 @@ module.exports = class Controller {
 
     constructor() {}
 
-    
-
-
-
-
     /**
      * @summary Callback for handling post request for creating new private room
      * @param {Function} req 
@@ -46,7 +41,7 @@ module.exports = class Controller {
 
     static setRules(req, res, next) {
         console.log(req.body);
-        let { id, duration, rounds, language} = req.body;
+        let { id, duration, rounds, language } = req.body;
         let room = SocketController.rooms.find(value => (value.roomId === id));
         if (room !== undefined) {
             room.duration = duration;

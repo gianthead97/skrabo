@@ -49,7 +49,9 @@ module.exports = class Room {
      * @description Counting times until end of turn while players guess
      */
     async startGuessing() {
+        SocketController.sockets.get(this.id).forEach(socket => socket.to(this.id).emit('turnStarted', {}));
         await SocketController.runTimer(this.roomId, parseInt(this.duration));
+        SocketController.sockets.get(this.id).forEach(socket => socket.to(this.id).emit('turnEnded', {}));
     }
 
     /**
@@ -63,8 +65,8 @@ module.exports = class Room {
     }
 
     /**
-    *   @description Entrypoint to handling gameplay   
-    */
+     *   @description Entrypoint to handling gameplay   
+     */
     async startGame() {
         this.startedGame = true;
         for (let i = 0; i < parseInt(this.numOfRounds); i++) {
@@ -78,7 +80,7 @@ module.exports = class Room {
         console.log("GAME IS OVER IN ROOM: ", this.roomName);
         console.log("IM DONEEEEEEEE");
     }
-   
+
 
     /**
      * @summary add new player in private room

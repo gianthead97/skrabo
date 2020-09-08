@@ -14,6 +14,7 @@ import { element } from 'protractor';
 export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
   word = [];
+  public canvas = false;
 
   constructor(private chatService: ChatService) {
     this.roomName = this.getRoomName();
@@ -23,14 +24,16 @@ export class PlaygroundComponent implements OnInit {
       .subscribe(({ word }) => {
         this.word = word.split('');
       });
-
-    
   }
 
   ngOnInit(): void {
-    // this.chatService.getDashes().subscribe((word) => {
-    //   this.word = word.split('');
-    // });
+    this.chatService.turnStarted().subscribe(() => {
+      this.canvas = true;
+    });
+
+    this.chatService.turnFinished().subscribe(() => {
+      this.canvas = true;
+    });
   }
 
   getRoomName(): Observable<string> {
@@ -45,6 +48,10 @@ export class PlaygroundComponent implements OnInit {
     return this.chatService.isUserTurn;
   }
 
+  isCanvas(): boolean {
+    return !(this.chatService.isCanvas);
+  }
+
   isCreator(): boolean {
     return this.chatService.adminPermission;
   }
@@ -54,8 +61,8 @@ export class PlaygroundComponent implements OnInit {
     this.chatService.startGame();
   }
 
-
   getTimestamp() {
+    console.log(this.chatService.turnTimestamp);
     return this.chatService.turnTimestamp;
   }
 }

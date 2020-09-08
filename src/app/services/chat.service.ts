@@ -30,6 +30,8 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     private _roomLanguage: Language;
     private _roomTime: Rules;
     private rulesData;
+    private canvas = false;
+    private myTurn = false;
 
     // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
@@ -93,17 +95,27 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     listenToMyTurn() {
         this.socketService.socket.on(Constants.selectAWord, () => {
             this.socketService.user.isTurn = true;
+            this.myTurn = true;
+            this.canvas = false;
         });
         this.socketService.socket.on(Constants.youWillPlay, (playerName) => {
             this.socketService.user.isTurn = false;
+            this.myTurn = false;
+            this.canvas = false;
+
             this.whoDraws = playerName;
         });
         this.socketService.socket.on(Constants.newTimestamp, (timestamp) => {
             this.timestamp = timestamp;
+            this.canvas = true;
             console.log(this.timestamp);
         });
     }
 
+    get isCanvas() {
+        console.log(this.canvas);
+        return this.canvas;
+    }
 
     // get guessed
     public getSound(): Observable<any> {
@@ -119,6 +131,21 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         return new Observable((observer) => {
             this.socketService.socket.on(Constants.wordChosen, ({ word }) => {
                 observer.next({ word });
+            });
+        });
+    }
+
+    public turnStarted(): Observable<any> {
+        return new Observable((observer) => {
+            this.socketService.socket.on(Constants.turnStarted, ({ }) => {
+                observer.next({});
+            });
+        });
+    }
+    public turnFinished(): Observable<any> {
+        return new Observable((observer) => {
+            this.socketService.socket.on(Constants.turnEnded, ({ }) => {
+                observer.next({});
             });
         });
     }
@@ -190,6 +217,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     get isUserTurn() {
         return this.socketService.user.isTurn;
+    }
+
+    get userTurn() {
+        return this.myTurn;
     }
 
     set isUserTurn(newValue: boolean) {

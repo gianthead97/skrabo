@@ -1,6 +1,7 @@
-import {Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CanvasService } from '../services/canvas.service';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-whiteboard',
@@ -8,9 +9,6 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./whiteboard.component.css']
 })
 export class WhiteboardComponent implements OnInit, OnDestroy {
-
-
-
   board: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   active = false;
@@ -19,8 +17,8 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
   penColor: string;
   subscriptions: Subscription[] = [];
 
-  constructor(private canvasService: CanvasService) {
-    
+  constructor(private canvasService: CanvasService, private chatService: ChatService) {
+
     this.subscriptions.push(this.canvasService
       .getCanvasEvent()
       .subscribe((data: string) => {
@@ -28,7 +26,6 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
         img.src = data;
         this.ctx.drawImage(img, 0, 0);
       }));
-
   }
   ngOnInit(): void {
     this.penColor = 'black';
@@ -40,10 +37,11 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
     this.board.height = this.board.offsetHeight;
     this.board.width = this.board.offsetWidth;
     // ***********************
-    this.initalizeMousesListeners();
-    this.canvasService.setTogglingCanvas(this.board, this.initalizeMousesListeners.bind(this), this.deinitializeMouseListeners.bind(this));
+    // this.canvasService.setTogglingCanvas(this.board, this.initalizeMousesListeners.bind(this), this.deinitializeMouseListeners.bind(this));
+    if (this.chatService.userTurn) {
+      this.initalizeMousesListeners();
+    }
   }
-
 
   public initalizeMousesListeners() {
     this.board.addEventListener('mousedown', (evt) => {
@@ -70,7 +68,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-   this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 

@@ -16,6 +16,7 @@ import { GameInfoFormComponent } from './game-info-form/game-info-form.component
 import { PlayerComponent } from './player/player.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { WordPickerComponent } from './word-picker/word-picker.component';
+import { IsPlayingComponent } from './is-playing/is-playing.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { WordPickerComponent } from './word-picker/word-picker.component';
     GameInfoFormComponent,
     PlayerComponent,
     PlayerListComponent,
-    WordPickerComponent
+    WordPickerComponent,
+    IsPlayingComponent
   ],
   imports: [
     BrowserModule,

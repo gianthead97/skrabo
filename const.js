@@ -17,5 +17,8 @@ module.exports = {
     emitSelectedWord: 'emitSelectedWord',
     turnIsOver: 'turnIsOver',
     youWillPlay: 'youWillPlay',
+    newTimestamp: 'newTimestamp',
+    turnStarted: 'turnStarted',
+    turnEnded: 'turnEnded',
     urlString: 'http://localhost:3000'
 };

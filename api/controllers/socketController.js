@@ -1,5 +1,5 @@
 const Constants = require('../../const');
-const {once, EventEmitter} = require('events');
+const { once, EventEmitter } = require('events');
 
 
 /**
@@ -59,7 +59,7 @@ module.exports = class SocketController {
             let word = (message.split(':')[1]).trim();
             if (word == chosenWord) {
                 let playerName = message.split(':')[0].trim();
-                message =  playerName + ' guessed the word!';
+                message = playerName + ' guessed the word!';
                 room.players.forEach(player => {
                     if (player.name == playerName) {
                         player.increasePoints(1);
@@ -190,7 +190,6 @@ module.exports = class SocketController {
      * @param {string} code 
      */
     static async selectWord(playerName, code) {
-        
         SocketController.sockets.get(code).forEach((socket, username) => {
             if (playerName === username) {
                 socket.emit(Constants.selectAWord);
@@ -199,7 +198,7 @@ module.exports = class SocketController {
             }
         });
         await once(SocketController.eventEmmitters.get(code), Constants.emitSelectedWord);
-        return ;
+        return;
     }
 
 
@@ -212,12 +211,12 @@ module.exports = class SocketController {
         let timestamp = duration;
         SocketController.intervalVars.set(code, setInterval(() => {
             timestamp--;
-            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, timestamp));
+            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, (timestamp + '')));
             console.log("timestamp: ", timestamp);
             if (timestamp == 0) {
                 clearInterval(SocketController.intervalVars.get(code));
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
-            }      
+            }
         }, 1000));
         await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
     }

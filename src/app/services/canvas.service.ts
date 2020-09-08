@@ -5,6 +5,7 @@ import * as io from 'socket.io-client';
 import { CanvasData } from '../models/canvasData.model';
 import { SocketService } from './socket.service';
 import * as Constants from '../../../const.js';
+import { ChatService } from './chat.service';
 
 
 
@@ -13,7 +14,8 @@ import * as Constants from '../../../const.js';
 })
 export class CanvasService {
 
-  constructor(private socketService: SocketService) {
+  constructor(private socketService: SocketService, private chatService: ChatService) {
+
 
   }
 
@@ -29,6 +31,11 @@ export class CanvasService {
     });
   }
 
+  public getUserTurn() {
+    return new Observable((observer) => {
+      observer.next(this.chatService.isUserTurn);
+    });
+  }
 
   public setTogglingCanvas(board: HTMLCanvasElement, init: () => void, deinit: () => void): void {
     this.socketService.socket.on(Constants.toggleCanvas, (playerName: string) => {

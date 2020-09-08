@@ -13,14 +13,26 @@
             <button *ngIf="isCreator()" type="submit" class="btn btn-primary btn-block btn-warning" (click)="onStartGame($event)"> Start game</button>
         </div>
 
-        <div *ngIf="isUserTurn(); then thenBlock else elseBlock"></div>
+        <div *ngIf="isCanvas(); then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-            <div class="col-6">
-                <div class="justify-content-center" id="dashes">
-                    <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
+            <div *ngIf="isUserTurn(); then thenBlock1 else elseBlock1"></div>
+            <ng-template #thenBlock1>
+                <div class="col-6">
+                    <div class="justify-content-center" id="dashes">
+                        <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
+                    </div>
+                    <app-word-picker></app-word-picker>
                 </div>
-                <app-word-picker></app-word-picker>
-            </div>
+            </ng-template>
+
+            <ng-template #elseBlock1>
+                <div class="col-6">
+                    <div class="justify-content-center" id="dashes">
+                        <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
+                    </div>
+                    <app-is-playing></app-is-playing>
+                </div>
+            </ng-template>
         </ng-template>
 
         <ng-template #elseBlock>
@@ -32,8 +44,6 @@
             </div>
         </ng-template>
 
-
-        {{getTimestamp()}}
         <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
             <h4 style="padding-bottom: 10%">{{roomName | async }}</h4>
             <!--zbog ovoga je cet spusten-->
