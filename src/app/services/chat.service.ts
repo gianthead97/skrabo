@@ -70,7 +70,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public sendMessage(message) {
-        this.socketService.user.message = message;
+        if (this.userTurn) {
+            this.socketService.user.message = 'IS DRAWING, AND HELPING IS NOT OKAY!!!';
+        } else {
+            this.socketService.user.message = message;
+        }
+
         if (this.socketService.user.message.trim().length !== 0) {
             this.socketService.socket.emit(Constants.newMessage, {
                 message: `${this.socketService.user.name}: ${this.socketService.user.message}`,
@@ -101,6 +106,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             this.gameStarted = false;
             this.myTurn = true;
             this.canvas = false;
+            this.setPlayerDrawing = this.username;
         });
         this.socketService.socket.on(Constants.youWillPlay, (playerName) => {
             this.socketService.user.isTurn = false;
@@ -114,7 +120,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         this.socketService.socket.on(Constants.newTimestamp, (timestamp) => {
             this.timestamp = timestamp;
             this.canvas = true;
-            console.log(this.timestamp);
+            //console.log(this.timestamp);
         });
     }
 
@@ -123,12 +129,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     set setPlayerDrawing(newValue: string) {
-        console.log(newValue);
+        //console.log(newValue);
         this.whoDraws = newValue;
     }
 
     get isCanvas() {
-        console.log(this.canvas);
+        // console.log(this.canvas);
         return this.canvas;
     }
 
@@ -184,7 +190,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public sendRules(data): void {
-        console.log({ id: this._code, ...data });
+        // console.log({ id: this._code, ...data });
         let sub: Subscription;
         sub = this.http.patch<Rules>(this.url + '/sendRules', { id: this._code, ...data })
             .pipe(catchError(super.handleError))

@@ -49,6 +49,7 @@ module.exports = class SocketController {
     /**
      * @description Function which handle message which comes from channel with some code
      *               and broadcasts to all other clients that listening on same channel
+     *              and checking does word match with selected word in specific room
      * @param {string} code Channel id
      * @returns {Function} Callback function which will broadcast new message when some client sends to channel
      */
@@ -62,7 +63,11 @@ module.exports = class SocketController {
                 message = playerName + ' guessed the word!';
                 room.players.forEach(player => {
                     if (player.name == playerName) {
-                        player.increasePoints(1);
+                        const timestampFactor = 2;
+                        const maxPoints = 500;
+                        const rankFactor = Math.round(300 / room.players.length);
+                        let points = (parseInt(room.duration) - room.timestamp) * timestampFactor + maxPoints - rankFactor * room.playersThatGueseed++; 
+                        player.increasePoints(points);
                     }
                 })
                 color = 'lightseagreen';
@@ -152,7 +157,7 @@ module.exports = class SocketController {
                 }
             }
             this.io.in(code).emit(Constants.wordChosen, {
-                'word': dashes
+                word: dashes
             });
         }
     }
@@ -203,19 +208,21 @@ module.exports = class SocketController {
 
 
     /**
-     * @description 
+     * @description Function that handler timer during one turn and reset all important variables for next turn
      * @param {string} code 
      * @param {number} duration 
      */
     static async runTimer(code, duration) {
-        let timestamp = duration;
+        let room = SocketController.rooms.find(x => x.roomId === code);
+        room.timestamp = duration;
         SocketController.intervalVars.set(code, setInterval(() => {
-            timestamp--;
-            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, (timestamp + '')));
-            console.log("timestamp: ", timestamp);
-            if (timestamp == 0) {
+            room.timestamp--;
+            SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, (room.timestamp + '')));
+            console.log("timestamp: ", room.timestamp);
+            if (room.timestamp == 0) {
                 clearInterval(SocketController.intervalVars.get(code));
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
+                room.playersThatGueseed = 0;
             }
         }, 1000));
         await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
