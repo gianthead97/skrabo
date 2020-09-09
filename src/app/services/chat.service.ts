@@ -25,7 +25,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
 
     private formData: Rules;
-    private _code: string;
+    private _code: string = '';
     private _roomName: string;
     private _roomLanguage: Language;
     private _roomTime: Rules;
@@ -40,7 +40,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     private url = Constants.urlString;
     private subscriptions: Subscription[] = [];
-    private whoDraws: string = this.username;
+    private whoDraws: string;
     private timestamp: string;
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
@@ -62,7 +62,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
             .pipe(catchError(super.handleError()))
             .subscribe((code: string) => {
-                window.alert(code);
+                // window.alert(code);
                 this._code = code;
                 this.socketService.socket.emit(Constants.joinGame, { code, username: this.username, admin: true });
                 this.sendRules({ id: this._code, ...this.rulesData });
@@ -98,15 +98,18 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     listenToMyTurn() {
         this.socketService.socket.on(Constants.selectAWord, () => {
             this.socketService.user.isTurn = true;
+            this.gameStarted = false;
             this.myTurn = true;
             this.canvas = false;
         });
         this.socketService.socket.on(Constants.youWillPlay, (playerName) => {
             this.socketService.user.isTurn = false;
+            this.gameStarted = true;
             this.myTurn = false;
             this.canvas = false;
 
-            this.whoDraws = playerName;
+            // this.whoDraws = playerName;
+            this.setPlayerDrawing = playerName;
         });
         this.socketService.socket.on(Constants.newTimestamp, (timestamp) => {
             this.timestamp = timestamp;
@@ -116,8 +119,12 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     get getPlayerDrawing() {
-        console.log(this.whoDraws);
         return this.whoDraws;
+    }
+
+    set setPlayerDrawing(newValue: string) {
+        console.log(newValue);
+        this.whoDraws = newValue;
     }
 
     get isCanvas() {
@@ -269,7 +276,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         this.numberOfPlayers = newValue;
     }
 
-    get isStarted() {
+    get hasStarted() {
         return this.gameStarted;
     }
 }

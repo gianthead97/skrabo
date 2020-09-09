@@ -1,13 +1,36 @@
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Annie Use Your Telescope' rel='stylesheet'>
+</head>
+
 <div id="parent">
-    <div *ngIf="isEmptyRoom(); then thenBlock else elseBlock">
-    </div>
+    <p *ngIf="isEmptyRoom(); then thenBlock else elseBlock">
+    </p>
     <ng-template #thenBlock>
-        <p>Tugy plaky! Nemoj sam da igras.</p>
+        <div>
+            <p>
+                Tugy plaky! <br> Nemoj da igraš sam!<br> Kopiraj kod i pošalji drugarima!
+            </p>
+            <p>
+                {{getCode()}}
+            </p>
+        </div>
     </ng-template>
     <ng-template #elseBlock>
-        <div *ngIf="hasStarted(); then elseBlock1"></div>
+        <p *ngIf="hasStarted(); then thenBlock1 else elseBlock1"></p>
+        <ng-template #thenBlock1>
+            <p *ngIf="isEmptyString(); then thenBlock2 else elseBlock2"></p>
+            <ng-template #thenBlock2>
+                <p>
+                    {{getPlayerOnTurn()}} je na redu.
+                </p>
+            </ng-template>
+            <ng-template #elseBlock2>
+                <p>Čekamo da igra počne.</p>
+            </ng-template>
+        </ng-template>
+
         <ng-template #elseBlock1>
-            <p>Cekamo da igra pocne.</p>
+            <p>Čekamo da igra počne.</p>
         </ng-template>
     </ng-template>
 </div>

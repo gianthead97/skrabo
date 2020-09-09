@@ -7,11 +7,7 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./is-playing.component.css']
 })
 export class IsPlayingComponent implements OnInit {
-  public playerOnTurn = '';
-
   constructor(private chatService: ChatService) {
-    console.log(this.chatService.getPlayerDrawing);
-    this.playerOnTurn = this.chatService.getPlayerDrawing;
   }
 
   ngOnInit(): void {
@@ -27,7 +23,22 @@ export class IsPlayingComponent implements OnInit {
   }
 
   hasStarted() {
-    return this.chatService.isStarted;
+    console.log(this.chatService.hasStarted)
+    return this.chatService.hasStarted;
+  }
+
+  isEmptyString() {
+    console.log(this.chatService.getPlayerDrawing);
+    return (this.chatService.getPlayerDrawing.length);
+  }
+
+  getPlayerOnTurn() {
+    console.log(this.chatService.getPlayerDrawing);
+    return this.chatService.getPlayerDrawing;
+  }
+
+  getCode() {
+    return this.chatService.code;
   }
 
 }

@@ -14,6 +14,7 @@ import { element } from 'protractor';
 export class PlaygroundComponent implements OnInit {
   roomName: Observable<string>;
   word = [];
+  timestamp = '';
   public canvas = false;
 
   constructor(private chatService: ChatService) {

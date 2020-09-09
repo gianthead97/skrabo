@@ -194,7 +194,7 @@ module.exports = class SocketController {
             if (playerName === username) {
                 socket.emit(Constants.selectAWord);
             } else {
-                socket.emit(Constants.youWillPlay, username);
+                socket.emit(Constants.youWillPlay, playerName);
             }
         });
         await once(SocketController.eventEmmitters.get(code), Constants.emitSelectedWord);
