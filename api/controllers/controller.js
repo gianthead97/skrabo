@@ -92,6 +92,7 @@ module.exports = class Controller {
      * @param {Function} res 
      */
     static getWord(req, res) {
+        // if (req.params.lang == 'eng') {
         wordModel.find({})
             .then((data) => {
                 console.log(data.length);

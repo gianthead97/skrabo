@@ -91,6 +91,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     * description: Function that signals to server to start game.
     */
     public startGame(): void {
+        console.log();
         this.gameStarted = true;
         this.socketService.socket.emit(Constants.startGame, {});
     }
@@ -123,12 +124,10 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     set setPlayerDrawing(newValue: string) {
-        console.log(newValue);
         this.whoDraws = newValue;
     }
 
     get isCanvas() {
-        console.log(this.canvas);
         return this.canvas;
     }
 
@@ -184,7 +183,6 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public sendRules(data): void {
-        console.log({ id: this._code, ...data });
         let sub: Subscription;
         sub = this.http.patch<Rules>(this.url + '/sendRules', { id: this._code, ...data })
             .pipe(catchError(super.handleError))
@@ -200,7 +198,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     }
 
     public getWords(): Observable<Word[]> {
-        return this.http.get<Word[]>(this.url + '/getWords');
+        return this.http.get<Word[]>(this.url + '/getWords/' + this.rules.language);
     }
 
     get getSocketService() {

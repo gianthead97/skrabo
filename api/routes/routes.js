@@ -36,23 +36,44 @@ router.patch("/sendRules", Controller.setRules);
  * route which takes words from databse
  * and sends only three to choose from
  */
-router.get("/getWords", (req, res) => {
-    wordModel.find({})
-        .then((data) => {
-            console.log(data.length);
-            const index1 = Math.floor(Math.random() * data.length);
-            const index2 = Math.floor(Math.random() * data.length);
-            const index3 = Math.floor(Math.random() * data.length);
+// /:lang
+router.get("/getWords/:lang", (req, res) => {
+    if (req.params.lang == 'engleski') {
+        (wordModel.eng).find({})
+            .then((data) => {
+                console.log(data.length);
+                const index1 = Math.floor(Math.random() * data.length);
+                const index2 = Math.floor(Math.random() * data.length);
+                const index3 = Math.floor(Math.random() * data.length);
 
-            const d1 = data[index1];
-            const d2 = data[index2];
-            const d3 = data[index3];
+                const d1 = data[index1];
+                const d2 = data[index2];
+                const d3 = data[index3];
 
-            res.json([d1, d2, d3]);
-        })
-        .catch((error) => {
-            console.log('Error while getting words.')
-        });
+                res.json([d1, d2, d3]);
+            })
+            .catch((error) => {
+                console.log('Error while getting words.')
+            });
+    } else if (req.params.lang == 'srpski') {
+        console.log('here');
+        (wordModel.srb).find({})
+            .then((data) => {
+                console.log(data.length);
+                const index1 = Math.floor(Math.random() * data.length);
+                const index2 = Math.floor(Math.random() * data.length);
+                const index3 = Math.floor(Math.random() * data.length);
+
+                const d1 = data[index1];
+                const d2 = data[index2];
+                const d3 = data[index3];
+
+                res.json([d1, d2, d3]);
+            })
+            .catch((error) => {
+                console.log('Error while getting words.')
+            });
+    }
 });
 
 /**

@@ -3,15 +3,16 @@ const mongoose = require('mongoose')
 // Schema
 const Schema = mongoose.Schema;
 const wordSchema = new Schema({
-  word: String,
-  chosen: Number,
-  given: Number,
-  hit: Number
+    word: String,
+    chosen: Number,
+    given: Number,
+    hit: Number
 });
 
 // Model - it will automatically give collection a name 
 // with suffix s
-const wordModel = mongoose.model('word', wordSchema);
+const wordModel = mongoose.model('word', wordSchema, 'words');
+const wordModelSrb = mongoose.model('srb_word', wordSchema, 'srb_words');
 
 // .save
 // data = {
@@ -30,4 +31,4 @@ const wordModel = mongoose.model('word', wordSchema);
 //   }
 // })
 
-module.exports = wordModel;
+module.exports = { eng: wordModel, srb: wordModelSrb };
