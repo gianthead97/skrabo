@@ -37,3 +37,15 @@
         display: block;
         text-align: center;
     }
+    
+    #satic {
+        display: inline-block;
+        background-image: url('../../assets/satic.png');
+        background-repeat: no-repeat;
+        /* background-color: aliceblue; */
+        height: 135px;
+        width: 135px;
+        padding-top: 28px;
+        justify-content: center;
+        align-items: center;
+    }

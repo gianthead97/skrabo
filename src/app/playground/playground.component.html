@@ -5,10 +5,10 @@
 
 <div class="container-fluid bg flex-column d-flex">
 
-    <div class="row" style="/*background-color: yellow;*/">
+    <div class="row">
         <div class="col-3" style="padding-left: 2%; padding-right: 2%;">
             <!--spisak ljudi u sobi-->
-            <h1>Škrabo</h1>
+            <h1 id="naslov">Škrabo</h1>
             <app-player-list></app-player-list><br>
             <button *ngIf="isCreator()" type="submit" class="btn btn-primary btn-block btn-warning" (click)="onStartGame($event)"> Start game</button>
         </div>
@@ -19,7 +19,6 @@
             <ng-template #thenBlock1>
                 <div class="col-6">
                     <div class="justify-content-center" id="dashes">
-                        <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
                     </div>
                     <app-word-picker></app-word-picker>
                 </div>
@@ -28,7 +27,6 @@
             <ng-template #elseBlock1>
                 <div class="col-6">
                     <div class="justify-content-center" id="dashes">
-                        <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
                     </div>
                     <app-is-playing></app-is-playing>
                 </div>
@@ -38,6 +36,10 @@
         <ng-template #elseBlock>
             <div class="col-6">
                 <div class="justify-content-center" id="dashes">
+                    <div id="satic">
+                        <p>{{getTimestamp()}}
+                        </p>
+                    </div>
                     <p *ngFor="let letter of word" class="dashes"> {{letter}} </p>
                 </div>
                 <app-whiteboard></app-whiteboard>

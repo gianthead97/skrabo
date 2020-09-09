@@ -30,6 +30,7 @@ export class PlayerListComponent implements OnInit, OnChanges {
         this.players = [];
         data.forEach(player => this.players.push(player));
         data.forEach(player => console.log(player));
+        this.chatService.isEmptyRoom = data.length;
       });
     });
   }

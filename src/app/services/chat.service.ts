@@ -32,13 +32,15 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     private rulesData;
     private canvas = false;
     private myTurn = false;
+    private numberOfPlayers = 0;
+    private gameStarted = false;
 
     // TODO url kada se deployuje na heroku treba biti prazan string, ovo se mora uraditi programaticno a ne ovako
     // private url = '';
 
     private url = Constants.urlString;
     private subscriptions: Subscription[] = [];
-    private whoDraws: string;
+    private whoDraws: string = this.username;
     private timestamp: string;
 
     constructor(private socketService: SocketService, private http: HttpClient, router: Router) {
@@ -89,6 +91,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     * description: Function that signals to server to start game.
     */
     public startGame(): void {
+        this.gameStarted = true;
         this.socketService.socket.emit(Constants.startGame, {});
     }
 
@@ -110,6 +113,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             this.canvas = true;
             console.log(this.timestamp);
         });
+    }
+
+    get getPlayerDrawing() {
+        console.log(this.whoDraws);
+        return this.whoDraws;
     }
 
     get isCanvas() {
@@ -251,5 +259,17 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     get turnTimestamp() {
         return this.timestamp;
+    }
+
+    get isEmptyRoom() {
+        return this.numberOfPlayers;
+    }
+
+    set isEmptyRoom(newValue: number) {
+        this.numberOfPlayers = newValue;
+    }
+
+    get isStarted() {
+        return this.gameStarted;
     }
 }

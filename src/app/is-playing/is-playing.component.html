@@ -1,2 +1,13 @@
 <div id="parent">
+    <div *ngIf="isEmptyRoom(); then thenBlock else elseBlock">
+    </div>
+    <ng-template #thenBlock>
+        <p>Tugy plaky! Nemoj sam da igras.</p>
+    </ng-template>
+    <ng-template #elseBlock>
+        <div *ngIf="hasStarted(); then elseBlock1"></div>
+        <ng-template #elseBlock1>
+            <p>Cekamo da igra pocne.</p>
+        </ng-template>
+    </ng-template>
 </div>
