@@ -42,7 +42,9 @@ module.exports = class Player {
         SocketController.emitChangeInRoom(this._code);
     }
 
-
+    /**
+     * @description Just inner_layer function, set to better readability of code
+     */
     async waitToPickAWord() {
         await SocketController.selectWord(this.name, this._code);
         return;

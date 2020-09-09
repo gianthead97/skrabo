@@ -12,6 +12,10 @@ class SocketServer {
         this.io = socketIO(server);
     }
 
+
+    /**
+     * @summary Main 'thread' of server
+     */
     start() {
         //Wait for 'connection' event
         this.io.on(Constants.connection, (socket) => {

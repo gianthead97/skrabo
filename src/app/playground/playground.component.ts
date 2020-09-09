@@ -63,7 +63,7 @@ export class PlaygroundComponent implements OnInit {
   }
 
   getTimestamp() {
-    console.log(this.chatService.turnTimestamp);
+    // console.log(this.chatService.turnTimestamp);
     return this.chatService.turnTimestamp;
   }
 }

@@ -14,7 +14,7 @@ export class IsPlayingComponent implements OnInit {
   }
 
   isEmptyRoom() {
-    console.log(this.chatService.isEmptyRoom);
+//    console.log(this.chatService.isEmptyRoom);
     return !(this.chatService.isEmptyRoom);
   }
 
@@ -23,17 +23,17 @@ export class IsPlayingComponent implements OnInit {
   }
 
   hasStarted() {
-    console.log(this.chatService.hasStarted)
+//    console.log(this.chatService.hasStarted)
     return this.chatService.hasStarted;
   }
 
   isEmptyString() {
-    console.log(this.chatService.getPlayerDrawing);
+//    console.log(this.chatService.getPlayerDrawing);
     return (this.chatService.getPlayerDrawing.length);
   }
 
   getPlayerOnTurn() {
-    console.log(this.chatService.getPlayerDrawing);
+//    console.log(this.chatService.getPlayerDrawing);
     return this.chatService.getPlayerDrawing;
   }
 

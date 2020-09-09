@@ -17,6 +17,8 @@ module.exports = class Room {
     duration;
     word = '';
     dashes = '';
+    playersThatGueseed = 0;
+    timestamp = 0;
 
     constructor(roomId, roomName) {
         this.id = roomId;
