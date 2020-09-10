@@ -17,6 +17,7 @@ class SocketServer {
      * @summary Main 'thread' of server
      */
     start() {
+        SocketController.ioVar = this.io;
         //Wait for 'connection' event
         this.io.on(Constants.connection, (socket) => {
             // console.log('New user is here');

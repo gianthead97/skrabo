@@ -31,6 +31,12 @@ module.exports = class SocketController {
 
     static intervalVars = new Map();
 
+
+
+    /**
+     * @description Reference to io variable from socketServer
+     */
+    static ioVar = {};
     /**
      * @description Function which handle event that contains data for drawing
      *              which comes from channel with some code
@@ -59,12 +65,18 @@ module.exports = class SocketController {
             let chosenWord = room.chosenWord;
             let word = (message.split(':')[1]).trim();
             let playerName = message.split(':')[0].trim();
-            if (playerName === "BOT" && !room.doesBotReact) {
-                SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.message, {
+            
+            if (playerName === "BOT") {
+                
+                let socket = SocketController.sockets.get(code).values().next().value;
+                socket.to(code).emit(Constants.message, {
                     message,
                     color
-                }));
-                room.doesBotReact = true;
+                });
+                socket.emit(Constants.message, {
+                    message,
+                    color
+                });
                 return;
             }
             if (word == chosenWord) {
@@ -114,7 +126,6 @@ module.exports = class SocketController {
      */
     static onJoinGame(socket) {
         return function({ code, username, admin }) {
-
             let room = SocketController.rooms.find((room) => room.roomId === code);
             if (room) {
                 //set socket to listen on concrete channel
@@ -257,8 +268,9 @@ module.exports = class SocketController {
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
                 room.playersThatGueseed = 0;
                 room.players.forEach((player) => player.guessed = false);
-                room.doesBotReact = false;
+                console.log("pozvao bot msg");
                 SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
+                room.doesBotReact = false;
             }
         }, 1000));
         await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
