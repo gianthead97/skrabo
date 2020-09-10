@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           .getSound()
           .subscribe(() => {
             const audio = new Audio(
-              'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
+              '../../assets/accomplished.mp3');
             audio.play();
           })
       );

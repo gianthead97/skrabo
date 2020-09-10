@@ -61,17 +61,17 @@ module.exports = class SocketController {
             if (word == chosenWord) {
                 let playerName = message.split(':')[0].trim();
                 message = playerName + ' guessed the word!';
+                color = 'lightseagreen';
+                this.io.in(code).emit(Constants.guessedSound);
                 room.players.forEach(player => {
                     if (player.name == playerName) {
                         const timestampFactor = 2;
                         const maxPoints = 500;
                         const rankFactor = Math.round(300 / room.players.length);
-                        let points = (parseInt(room.duration) - room.timestamp) * timestampFactor + maxPoints - rankFactor * room.playersThatGueseed++; 
+                        let points = (parseInt(room.duration) - room.timestamp) * timestampFactor + maxPoints - rankFactor * room.playersThatGueseed++;
                         player.increasePoints(points);
                     }
                 })
-                color = 'lightseagreen';
-                this.io.in(code).emit(Constants.guessedSound);
             }
 
             this.io.in(code).emit(Constants.message, {
