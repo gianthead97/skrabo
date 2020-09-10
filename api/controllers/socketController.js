@@ -75,7 +75,7 @@ module.exports = class SocketController {
                     if (player.name === playerName) {
                         const timestampFactor = 2;
                         const maxPoints = 500;
-                        const rankFactor = Math.round(300 / room.players.length);
+                        const rankFactor = Math.round(500 / room.players.length);
                         let points = (parseInt(room.duration) - room.timestamp) * timestampFactor + maxPoints - rankFactor * room.playersThatGueseed++;
                         player.increasePoints(points);
                         player.guessed = true;
@@ -248,13 +248,15 @@ module.exports = class SocketController {
         room.timestamp = duration;
         SocketController.intervalVars.set(code, setInterval(() => {
             room.timestamp--;
+            if (room.timestamp === 0) {
+                SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
+            }
             SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, (room.timestamp + '')));
             console.log("timestamp: ", room.timestamp);
-            if (room.timestamp == 0) {
+            if (room.timestamp === 0) {
                 clearInterval(SocketController.intervalVars.get(code));
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
                 room.playersThatGueseed = 0;
-                SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
                 room.players.forEach((player) => player.guessed = false);
             }
         }, 1000));
