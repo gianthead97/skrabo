@@ -23,7 +23,7 @@ class SocketServer {
             //after connection happens wait on socket for event 'JoinGame'
             socket.on(Constants.joinGame, SocketController.onJoinGame(socket).bind(this));
             //check for disconnection
-            socket.on(Constants.disconnect, SocketController.onDisconnect);
+            socket.on(Constants.disconnect, SocketController.onDisconnect(socket));
         });
     }
 

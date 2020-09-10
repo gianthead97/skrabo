@@ -175,11 +175,33 @@ module.exports = class SocketController {
     /**
      * @description Function which log when some user is gone
      */
-    static onDisconnect() {
-        console.log('User is disconnected');
+    static onDisconnect(socket) {
+        return () => {
+            SocketController.sockets.forEach((channel, code) => {
+                channel.forEach((savedSocket, username) => {
+                    if (savedSocket === socket) {
+                        SocketController.eliminatePlayer(code, username);
+                        channel.delete(username);
+                        return;
+                    }
+                });
+            });
+        }
     }
 
-
+    static eliminatePlayer(code, username) {
+        let room = SocketController.rooms.find(x => x.roomId === code);
+        for (let i = 0; i < room.players.length; i++) {
+            if (room.players[i].name === username) {
+                room.players.splice(i, 1);
+                SocketController.emitChangeInRoom(code);
+            }
+        }
+        if (room.players.length === 0) {
+            console.log("praznim sobu");
+            SocketController.sockets.delete(code);
+        }
+    }
     /**
      * @description For every change in room with `code` notify all cients that something happened.
      * @param {string} code
@@ -248,6 +270,7 @@ module.exports = class SocketController {
         let room = SocketController.rooms.find(x => x.roomId === code);
         room.players.sort((a, b) =>  b.points - a.points);
         let bestPlayer = room.players[0];
+        console.log(bestPlayer);
         SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.gameIsOver, {
             'name' : bestPlayer.name,
             'points' : bestPlayer.points
