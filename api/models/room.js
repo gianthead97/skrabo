@@ -78,7 +78,7 @@ module.exports = class Room {
             }
         }
 
-
+        SocketController.finishGame(this.roomId);
         console.log("GAME IS OVER IN ROOM: ", this.roomName);
         console.log("IM DONEEEEEEEE");
     }
@@ -91,9 +91,7 @@ module.exports = class Room {
     joinNewPlayer(username, admin, code) {
         let newPlayer = new Player(username, admin, code);
         console.log("new player ", newPlayer.name);
-        if (this.startedGame) {
-            return;
-        }
+        
         this.players.push(newPlayer);
     }
 

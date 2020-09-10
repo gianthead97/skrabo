@@ -28,6 +28,8 @@ export class PlaygroundComponent implements OnInit, OnDestroy {
           this.word = word.split('');
         })
     );
+
+    this.chatService.registerGameOver();
   }
 
   ngOnInit(): void {

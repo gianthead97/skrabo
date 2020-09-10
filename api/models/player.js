@@ -7,6 +7,7 @@ const SocketController = require("../controllers/socketController");
  */
 module.exports = class Player {
     _points = 0;
+    _isGuessed = false;
 
     constructor(name, admin, code) {
         this._name = name;
@@ -37,6 +38,15 @@ module.exports = class Player {
         return this._profile;
     }
 
+
+    get isGuessed() {
+        return this._isGuessed;
+    }
+
+    set guessed(newValue) {
+        this._isGuessed = newValue;
+    }
+    
     increasePoints(newPoints) {
         this._points += newPoints;
         SocketController.emitChangeInRoom(this._code);

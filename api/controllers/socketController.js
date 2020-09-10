@@ -58,16 +58,25 @@ module.exports = class SocketController {
             let room = SocketController.rooms.find(x => x.roomId === code);
             let chosenWord = room.chosenWord;
             let word = (message.split(':')[1]).trim();
+            let playerName = message.split(':')[0].trim();
+            if (playerName === "BOT") {
+                SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.message, {
+                    message,
+                    color
+                }));
+                return;
+            }
             if (word == chosenWord) {
-                let playerName = message.split(':')[0].trim();
                 message = playerName + ' guessed the word!';
                 room.players.forEach(player => {
-                    if (player.name == playerName) {
+                    if (player.isGuessed) { return; }
+                    if (player.name === playerName) {
                         const timestampFactor = 2;
                         const maxPoints = 500;
                         const rankFactor = Math.round(300 / room.players.length);
                         let points = (parseInt(room.duration) - room.timestamp) * timestampFactor + maxPoints - rankFactor * room.playersThatGueseed++; 
                         player.increasePoints(points);
+                        player.guessed = true;
                     }
                 })
                 color = 'lightseagreen';
@@ -223,8 +232,37 @@ module.exports = class SocketController {
                 clearInterval(SocketController.intervalVars.get(code));
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
                 room.playersThatGueseed = 0;
+                SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
+                room.players.forEach((player) => player.guessed = false);
             }
         }, 1000));
         await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
+    }
+
+
+    /**
+     * @description Signals to all clients on that channel that game is over and sends data about winner.
+     * @param {string} code 
+     */
+    static finishGame(code) {
+        let room = SocketController.rooms.find(x => x.roomId === code);
+        room.players.sort((a, b) =>  b.points - a.points);
+        let bestPlayer = room.players[0];
+        SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.gameIsOver, {
+            'name' : bestPlayer.name,
+            'points' : bestPlayer.points
+        }));
+        SocketController.cleanRoom(code);
+    }
+
+
+    /**
+     * @description Deleting referencing on room cause server is going to work infinitely (possibly).
+     * @param {string} code 
+     */
+    static cleanRoom(code) {
+        SocketController.sockets.delete(code);
+        SocketController.eventEmmitters.delete(code);
+        SocketController.intervalVars.delete(code);
     }
 }

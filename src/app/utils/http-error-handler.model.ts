@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 export abstract class HttpErrorHandler {
   constructor(private router: Router) {}
 
+  protected getRouter(): Router {
+    return this.router;
+  }
   protected handleError() {
     return (error: HttpErrorResponse): Observable<never> => {
       if (error.error instanceof ErrorEvent) {

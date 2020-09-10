@@ -20,5 +20,6 @@ module.exports = {
     newTimestamp: 'newTimestamp',
     turnStarted: 'turnStarted',
     turnEnded: 'turnEnded',
+    gameIsOver: 'gameIsOver',
     urlString: 'http://localhost:3000'
 };

@@ -22,6 +22,7 @@ import { PlayerListComponent } from '../player-list/player-list.component';
 })
 
 export class ChatService extends HttpErrorHandler implements OnDestroy {
+  
 
 
     private formData: Rules;
@@ -50,11 +51,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
-
-
+    
+    
     public joinToRoom(code: string): void {
         this._code = code;
-        this.socketService.socket.emit(Constants.joinGame, { code: code, username: this.username, admin: false });
+        this.socketService.socket.emit(Constants.joinGame, { code, username: this.username, admin: false });
     }
 
     public createNewRoomRequest(roomName: string): void {
@@ -94,9 +95,7 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         });
     }
 
-    /*
-    * description: Function that signals to server to start game.
-    */
+   
     public startGame(): void {
         console.log();
         this.gameStarted = true;
@@ -126,6 +125,14 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
             // console.log(this.timestamp);
         });
     }
+
+
+    registerGameOver() {
+        this.socketService.socket.on(Constants.gameIsOver, ({name, points}) => {
+            this.navigateToEndPage(name, points);
+        });
+    }
+
 
     get getPlayerDrawing() {
         return this.whoDraws;
@@ -182,6 +189,11 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
         this.socketService.socket.emit(Constants.wordChosen, {
             word
         });
+    }
+
+    public navigateToEndPage(name: string, points: string): void {
+        console.warn(super.getRouter());
+        super.getRouter().navigate(['/end', { name, points }]);
     }
 
     getRoomName(): Observable<string> {
