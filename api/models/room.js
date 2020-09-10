@@ -19,6 +19,7 @@ module.exports = class Room {
     dashes = '';
     playersThatGueseed = 0;
     timestamp = 0;
+    doesBotReact = false;
 
     constructor(roomId, roomName) {
         this.id = roomId;

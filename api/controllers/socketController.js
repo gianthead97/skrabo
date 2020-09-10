@@ -59,11 +59,12 @@ module.exports = class SocketController {
             let chosenWord = room.chosenWord;
             let word = (message.split(':')[1]).trim();
             let playerName = message.split(':')[0].trim();
-            if (playerName === "BOT") {
+            if (playerName === "BOT" && !room.doesBotReact) {
                 SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.message, {
                     message,
                     color
                 }));
+                room.doesBotReact = true;
                 return;
             }
             if (word == chosenWord) {
@@ -248,9 +249,7 @@ module.exports = class SocketController {
         room.timestamp = duration;
         SocketController.intervalVars.set(code, setInterval(() => {
             room.timestamp--;
-            if (room.timestamp === 0) {
-                SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
-            }
+            
             SocketController.sockets.get(code).forEach(socket => socket.to(code).emit(Constants.newTimestamp, (room.timestamp + '')));
             console.log("timestamp: ", room.timestamp);
             if (room.timestamp === 0) {
@@ -258,6 +257,8 @@ module.exports = class SocketController {
                 SocketController.eventEmmitters.get(code).emit(Constants.turnIsOver, {});
                 room.playersThatGueseed = 0;
                 room.players.forEach((player) => player.guessed = false);
+                room.doesBotReact = false;
+                SocketController.onNewMessage(code)({ message: `BOT:word was ${room.chosenWord}`, color: 'black' });
             }
         }, 1000));
         await once(SocketController.eventEmmitters.get(code), Constants.turnIsOver);
