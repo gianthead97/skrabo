@@ -113,6 +113,7 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
 
   onClearCanvas(): void {
+    if (!this.canvasService.getUserTurn()) { return; }
     this.ctx.clearRect(0, 0, this.board.width, this.board.height);
     this.sendCanvasData();
   }
