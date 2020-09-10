@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,13 +12,11 @@ export class GameOverComponent implements OnInit, OnDestroy {
   name: string;
   points: string;
   sub: Subscription;
-  constructor(private route: ActivatedRoute) { 
-    // this.sub = route.paramMap.subscribe((params) => {
-    //   this.name = params.get('name');
-    //   this.points = params.get('points');
-    // });
-    this.name = 'Zeljko';
-    this.points = '320';
+  constructor(private route: ActivatedRoute, private router: Router) { 
+    this.sub = route.paramMap.subscribe((params) => {
+      this.name = params.get('name');
+      this.points = params.get('points');
+    });
   }
 
   ngOnInit(): void {
@@ -27,4 +25,6 @@ export class GameOverComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+
+  
 }
