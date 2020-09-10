@@ -59,14 +59,16 @@ export class ChatService extends HttpErrorHandler implements OnDestroy {
 
     public createNewRoomRequest(roomName: string): void {
         this.adminPermission = true;
-        this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
-            .pipe(catchError(super.handleError()))
-            .subscribe((code: string) => {
-                // window.alert(code);
-                this._code = code;
-                this.socketService.socket.emit(Constants.joinGame, { code, username: this.username, admin: true });
-                this.sendRules({ id: this._code, ...this.rulesData });
-            });
+        this.subscriptions.push(
+            this.http.post<string>(this.socketService.url + '/createRoom', { name: roomName })
+                .pipe(catchError(super.handleError()))
+                .subscribe((code: string) => {
+                    // window.alert(code);
+                    this._code = code;
+                    this.socketService.socket.emit(Constants.joinGame, { code, username: this.username, admin: true });
+                    this.sendRules({ id: this._code, ...this.rulesData });
+                })
+        );
     }
 
     public sendMessage(message) {

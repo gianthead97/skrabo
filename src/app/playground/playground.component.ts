@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ChatService } from '../services/chat.service';
 import { Constants } from '../../../const';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { GameInfoFormComponent } from '../game-info-form/game-info-form.component';
 import { element } from 'protractor';
 
@@ -11,30 +11,41 @@ import { element } from 'protractor';
   templateUrl: './playground.component.html',
   styleUrls: ['./playground.component.css']
 })
-export class PlaygroundComponent implements OnInit {
+export class PlaygroundComponent implements OnInit, OnDestroy {
   roomName: Observable<string>;
   word = [];
   timestamp = '';
   public canvas = false;
+  private subscriptions: Subscription[] = [];
 
   constructor(private chatService: ChatService) {
     this.roomName = this.getRoomName();
     this.chatService.listenToMyTurn();
-    this.chatService
-      .getWord()
-      .subscribe(({ word }) => {
-        this.word = word.split('');
-      });
+    this.subscriptions.push(
+      this.chatService
+        .getWord()
+        .subscribe(({ word }) => {
+          this.word = word.split('');
+        })
+    );
   }
 
   ngOnInit(): void {
-    this.chatService.turnStarted().subscribe(() => {
-      this.canvas = true;
-    });
+    this.subscriptions.push(
+      this.chatService.turnStarted().subscribe(() => {
+        this.canvas = true;
+      })
+    );
 
-    this.chatService.turnFinished().subscribe(() => {
-      this.canvas = true;
-    });
+    this.subscriptions.push(
+      this.chatService.turnFinished().subscribe(() => {
+        this.canvas = true;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   getRoomName(): Observable<string> {

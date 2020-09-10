@@ -19,13 +19,14 @@ export class WhiteboardComponent implements OnInit, OnDestroy {
 
   constructor(private canvasService: CanvasService, private chatService: ChatService) {
 
-    this.subscriptions.push(this.canvasService
-      .getCanvasEvent()
-      .subscribe((data: string) => {
-        const img = new Image();
-        img.src = data;
-        this.ctx.drawImage(img, 0, 0);
-      }));
+    this.subscriptions.push(
+      this.canvasService
+        .getCanvasEvent()
+        .subscribe((data: string) => {
+          const img = new Image();
+          img.src = data;
+          this.ctx.drawImage(img, 0, 0);
+        }));
   }
   ngOnInit(): void {
     this.penColor = 'black';

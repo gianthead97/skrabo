@@ -1,36 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Word } from '../models/word.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements OnInit {
-
+export class ChatComponent implements OnInit, OnDestroy {
   message: string;
   data = {
     messages: [],
     colors: []
   };
   input: HTMLElement;
+  private subscriptions: Subscription[] = [];
 
   constructor(private chatService: ChatService) {
-    this.chatService
-      .getMessages()
-      .subscribe(({ message, color }) => {
-        this.data.messages.push(message);
-        this.data.colors.push(color);
-      });
+    this.subscriptions
+      .push(
+        this.chatService
+          .getMessages()
+          .subscribe(({ message, color }) => {
+            this.data.messages.push(message);
+            this.data.colors.push(color);
+          })
+      );
 
-    this.chatService
-      .getSound()
-      .subscribe(() => {
-        const audio = new Audio(
-          'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
-        audio.play();
-      });
+    this.subscriptions
+      .push(
+        this.chatService
+          .getSound()
+          .subscribe(() => {
+            const audio = new Audio(
+              'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
+            audio.play();
+          })
+      );
   }
 
   sendMessage() {
@@ -47,6 +54,9 @@ export class ChatComponent implements OnInit {
         document.getElementById('send').click();
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }
