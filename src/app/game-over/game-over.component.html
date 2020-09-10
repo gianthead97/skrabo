@@ -6,10 +6,12 @@
 <div class="container-fluid bg flex-column d-flex">
 	<div class="row justify-content-center"> <h1>Škrabo</h1> </div>
 
-    <div class="jumbotron" style="padding-left: 20%; color: lightseagreen;">
-        <h2>WINNER</h2><br>
-        {{name}}:{{points}}
-    </div>
+    <div class="jumbotron" style="margin-left: auto; margin-right: auto; color: lightseagreen;">
+        <h2>WINNER is {{name}}:{{points}} points</h2><br>
+        
+	</div>
+	
+	<button class="btn btn-success" style="margin: auto; width: 40%; height: 10%;" [routerLink]="['/']">NOVA IGRA</button>
 	
 	<!--
 	<div class="row justify-content-center" style="margin-top: 5%;">

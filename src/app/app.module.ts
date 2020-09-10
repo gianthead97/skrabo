@@ -17,6 +17,7 @@ import { PlayerComponent } from './player/player.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { WordPickerComponent } from './word-picker/word-picker.component';
 import { IsPlayingComponent } from './is-playing/is-playing.component';
+import { GameOverComponent } from './game-over/game-over.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { IsPlayingComponent } from './is-playing/is-playing.component';
     PlayerComponent,
     PlayerListComponent,
     WordPickerComponent,
-    IsPlayingComponent
+    IsPlayingComponent,
+    GameOverComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +41,7 @@ import { IsPlayingComponent } from './is-playing/is-playing.component';
     // tslint:disable-next-line: deprecation
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule,
-    
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],

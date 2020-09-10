@@ -6,7 +6,7 @@ import { GameOverComponent } from './game-over/game-over.component';
 
 
 const routes: Routes = [
-  { path: '', component: FormComponent },
+  { path: '', component:  FormComponent },
   { path: 'game', component: PlaygroundComponent },
   { path: 'end', component: GameOverComponent}
 ];
