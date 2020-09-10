@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Controller = require('../controllers/controller');
+const SocketController = require('../controllers/socketController');
 
 const wordModel = require('../models/word');
 
@@ -37,8 +38,9 @@ router.patch("/sendRules", Controller.setRules);
  * and sends only three to choose from
  */
 // /:lang
-router.get("/getWords/:lang", (req, res) => {
-    if (req.params.lang == 'engleski') {
+router.get("/getWords/:idSobe", (req, res) => {
+    let room = SocketController.rooms.find(x => x.roomId === req.params.idSobe);
+    if (room.language == 'engleski') {
         (wordModel.eng).find({})
             .then((data) => {
                 console.log(data.length);
@@ -55,7 +57,7 @@ router.get("/getWords/:lang", (req, res) => {
             .catch((error) => {
                 console.log('Error while getting words.')
             });
-    } else if (req.params.lang == 'srpski') {
+    } else if (room.language == 'srpski') {
         console.log('here');
         (wordModel.srb).find({})
             .then((data) => {
