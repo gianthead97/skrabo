@@ -74,7 +74,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "madge": "^3.9.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.20",
     "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "^6.1.3",
